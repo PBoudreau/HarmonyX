@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A60430C1A0A887B0074D6A5 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A60430B1A0A887B0074D6A5 /* NotificationCenter.framework */; };
+		1A6043121A0A887B0074D6A5 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A6043111A0A887B0074D6A5 /* TodayViewController.m */; };
+		1A6043141A0A887B0074D6A5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6043131A0A887B0074D6A5 /* MainInterface.storyboard */; };
+		1A6043171A0A887B0074D6A5 /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1A60430A1A0A887B0074D6A5 /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1A60431C1A0A89060074D6A5 /* FSCHarmonyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F43C1A004A6B00860482 /* FSCHarmonyController.m */; };
+		1A60431D1A0A890A0074D6A5 /* FSCHarmonyAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F43F1A004A8200860482 /* FSCHarmonyAuthController.m */; };
+		1A60431E1A0A890D0074D6A5 /* FSCHarmonyClientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F4421A004A9D00860482 /* FSCHarmonyClientController.m */; };
 		1A69F4181A00497000860482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F4171A00497000860482 /* main.m */; };
 		1A69F41B1A00497000860482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F41A1A00497000860482 /* AppDelegate.m */; };
 		1A69F41E1A00497000860482 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F41D1A00497000860482 /* ViewController.m */; };
@@ -19,7 +26,37 @@
 		9A62F38490611F1CF944D4BC /* libPods-HarmonyX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1A6043151A0A887B0074D6A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A69F40A1A00497000860482 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1A6043091A0A887B0074D6A5;
+			remoteInfo = TodayExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1A60431B1A0A887B0074D6A5 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1A6043171A0A887B0074D6A5 /* TodayExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		1A60430A1A0A887B0074D6A5 /* TodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A60430B1A0A887B0074D6A5 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		1A60430F1A0A887B0074D6A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A6043101A0A887B0074D6A5 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		1A6043111A0A887B0074D6A5 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		1A6043131A0A887B0074D6A5 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		1A69F4121A00497000860482 /* HarmonyX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonyX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A69F4161A00497000860482 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A69F4171A00497000860482 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -43,6 +80,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1A6043071A0A887B0074D6A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A60430C1A0A887B0074D6A5 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1A69F40F1A00497000860482 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -54,10 +99,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A60430D1A0A887B0074D6A5 /* TodayExtension */ = {
+			isa = PBXGroup;
+			children = (
+				1A6043101A0A887B0074D6A5 /* TodayViewController.h */,
+				1A6043111A0A887B0074D6A5 /* TodayViewController.m */,
+				1A6043131A0A887B0074D6A5 /* MainInterface.storyboard */,
+				1A60430E1A0A887B0074D6A5 /* Supporting Files */,
+			);
+			path = TodayExtension;
+			sourceTree = "<group>";
+		};
+		1A60430E1A0A887B0074D6A5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1A60430F1A0A887B0074D6A5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		1A69F4091A00497000860482 = {
 			isa = PBXGroup;
 			children = (
 				1A69F4141A00497000860482 /* HarmonyX */,
+				1A60430D1A0A887B0074D6A5 /* TodayExtension */,
 				1A69F4131A00497000860482 /* Products */,
 				6C9BB0B337799E64ACD2170A /* Pods */,
 				9192D6F6BC8535EE12E2BE45 /* Frameworks */,
@@ -68,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				1A69F4121A00497000860482 /* HarmonyX.app */,
+				1A60430A1A0A887B0074D6A5 /* TodayExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -116,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */,
+				1A60430B1A0A887B0074D6A5 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -123,6 +190,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1A6043091A0A887B0074D6A5 /* TodayExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A60431A1A0A887B0074D6A5 /* Build configuration list for PBXNativeTarget "TodayExtension" */;
+			buildPhases = (
+				1A6043061A0A887B0074D6A5 /* Sources */,
+				1A6043071A0A887B0074D6A5 /* Frameworks */,
+				1A6043081A0A887B0074D6A5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TodayExtension;
+			productName = TodayExtension;
+			productReference = 1A60430A1A0A887B0074D6A5 /* TodayExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		1A69F4111A00497000860482 /* HarmonyX */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1A69F4351A00497000860482 /* Build configuration list for PBXNativeTarget "HarmonyX" */;
@@ -132,10 +216,12 @@
 				1A69F40F1A00497000860482 /* Frameworks */,
 				1A69F4101A00497000860482 /* Resources */,
 				46A8E1BD8E196AFCEFA95CFB /* Copy Pods Resources */,
+				1A60431B1A0A887B0074D6A5 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1A6043161A0A887B0074D6A5 /* PBXTargetDependency */,
 			);
 			name = HarmonyX;
 			productName = HarmonyX;
@@ -151,6 +237,9 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Fasterre;
 				TargetAttributes = {
+					1A6043091A0A887B0074D6A5 = {
+						CreatedOnToolsVersion = 6.1;
+					};
 					1A69F4111A00497000860482 = {
 						CreatedOnToolsVersion = 6.1;
 					};
@@ -170,11 +259,20 @@
 			projectRoot = "";
 			targets = (
 				1A69F4111A00497000860482 /* HarmonyX */,
+				1A6043091A0A887B0074D6A5 /* TodayExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1A6043081A0A887B0074D6A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A6043141A0A887B0074D6A5 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1A69F4101A00497000860482 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -221,6 +319,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1A6043061A0A887B0074D6A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A60431E1A0A890D0074D6A5 /* FSCHarmonyClientController.m in Sources */,
+				1A6043121A0A887B0074D6A5 /* TodayViewController.m in Sources */,
+				1A60431C1A0A89060074D6A5 /* FSCHarmonyController.m in Sources */,
+				1A60431D1A0A890A0074D6A5 /* FSCHarmonyAuthController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1A69F40E1A00497000860482 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -235,6 +344,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1A6043161A0A887B0074D6A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1A6043091A0A887B0074D6A5 /* TodayExtension */;
+			targetProxy = 1A6043151A0A887B0074D6A5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		1A69F41F1A00497000860482 /* Main.storyboard */ = {
@@ -256,6 +373,30 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1A6043181A0A887B0074D6A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TodayExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		1A6043191A0A887B0074D6A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TodayExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		1A69F4331A00497000860482 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -359,6 +500,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1A60431A1A0A887B0074D6A5 /* Build configuration list for PBXNativeTarget "TodayExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A6043181A0A887B0074D6A5 /* Debug */,
+				1A6043191A0A887B0074D6A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		1A69F40D1A00497000860482 /* Build configuration list for PBXProject "HarmonyX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
