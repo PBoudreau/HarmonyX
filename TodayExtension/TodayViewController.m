@@ -16,11 +16,20 @@ static NSString * const PASSWORD = @"J9TwoaQGDVCOTz6{V_qK";
 static NSString * const HARMONY_IP = @"10.0.1.4";
 static NSUInteger HARMONY_PORT = 5222;
 
+static const CGFloat extensionHeight = 40.0;
+
 @interface TodayViewController () <NCWidgetProviding>
 
 @end
 
 @implementation TodayViewController
+
+- (void) awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [self setPreferredContentSize: CGSizeMake(0.0, extensionHeight)];
+}
 
 - (IBAction) chromecastButtonTapped: (id) sender
 {
@@ -31,6 +40,24 @@ static NSUInteger HARMONY_PORT = 5222;
                                                        completion: ^(FSCHarmonyClientController *client) {
                                                            
                                                            [client startActivity: @"9204546"
+                                                                  withCompletion: ^(id result) {
+                                                                      
+                                                                      NSLog(@"Activity startup result: %@", result);
+                                                                      
+                                                                      [client disconnect];
+                                                                  }];
+                                                       }];
+}
+
+- (IBAction) teleButtonPressed: (id) sender
+{
+    [[FSCHarmonyController sharedInstance] clientWithWithUsername: USERNAME
+                                                         password: PASSWORD
+                                                            forIP: HARMONY_IP
+                                                             port: HARMONY_PORT
+                                                       completion: ^(FSCHarmonyClientController *client) {
+                                                           
+                                                           [client startActivity: @"5881221"
                                                                   withCompletion: ^(id result) {
                                                                       
                                                                       NSLog(@"Activity startup result: %@", result);
