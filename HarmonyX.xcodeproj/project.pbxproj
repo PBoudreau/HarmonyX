@@ -14,6 +14,7 @@
 		1A60431C1A0A89060074D6A5 /* FSCHarmonyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F43C1A004A6B00860482 /* FSCHarmonyController.m */; };
 		1A60431D1A0A890A0074D6A5 /* FSCHarmonyAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F43F1A004A8200860482 /* FSCHarmonyAuthController.m */; };
 		1A60431E1A0A890D0074D6A5 /* FSCHarmonyClientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F4421A004A9D00860482 /* FSCHarmonyClientController.m */; };
+		1A6043201A0A89CF0074D6A5 /* libPods-HarmonyX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A60431F1A0A89CF0074D6A5 /* libPods-HarmonyX.a */; };
 		1A69F4181A00497000860482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F4171A00497000860482 /* main.m */; };
 		1A69F41B1A00497000860482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F41A1A00497000860482 /* AppDelegate.m */; };
 		1A69F41E1A00497000860482 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F41D1A00497000860482 /* ViewController.m */; };
@@ -57,6 +58,7 @@
 		1A6043101A0A887B0074D6A5 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		1A6043111A0A887B0074D6A5 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		1A6043131A0A887B0074D6A5 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
+		1A60431F1A0A89CF0074D6A5 /* libPods-HarmonyX.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-HarmonyX.a"; path = "Pods/build/Debug-iphoneos/libPods-HarmonyX.a"; sourceTree = "<group>"; };
 		1A69F4121A00497000860482 /* HarmonyX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonyX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A69F4161A00497000860482 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A69F4171A00497000860482 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A6043201A0A89CF0074D6A5 /* libPods-HarmonyX.a in Frameworks */,
 				1A60430C1A0A887B0074D6A5 /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,6 +184,7 @@
 		9192D6F6BC8535EE12E2BE45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A60431F1A0A89CF0074D6A5 /* libPods-HarmonyX.a */,
 				37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */,
 				1A60430B1A0A887B0074D6A5 /* NotificationCenter.framework */,
 			);
@@ -375,6 +379,7 @@
 /* Begin XCBuildConfiguration section */
 		1A6043181A0A887B0074D6A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A53D7F1A523A83F84823D85F /* Pods-HarmonyX.debug.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -389,6 +394,7 @@
 		};
 		1A6043191A0A887B0074D6A5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A384876B9C2DE38E228004E /* Pods-HarmonyX.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = TodayExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -507,6 +513,7 @@
 				1A6043191A0A887B0074D6A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1A69F40D1A00497000860482 /* Build configuration list for PBXProject "HarmonyX" */ = {
 			isa = XCConfigurationList;
