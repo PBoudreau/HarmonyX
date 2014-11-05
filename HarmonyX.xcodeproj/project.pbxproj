@@ -1,0 +1,383 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1A69F4181A00497000860482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F4171A00497000860482 /* main.m */; };
+		1A69F41B1A00497000860482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F41A1A00497000860482 /* AppDelegate.m */; };
+		1A69F41E1A00497000860482 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F41D1A00497000860482 /* ViewController.m */; };
+		1A69F4211A00497000860482 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A69F41F1A00497000860482 /* Main.storyboard */; };
+		1A69F4231A00497000860482 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A69F4221A00497000860482 /* Images.xcassets */; };
+		1A69F4261A00497000860482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A69F4241A00497000860482 /* LaunchScreen.xib */; };
+		1A69F43D1A004A6B00860482 /* FSCHarmonyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F43C1A004A6B00860482 /* FSCHarmonyController.m */; };
+		1A69F4401A004A8200860482 /* FSCHarmonyAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F43F1A004A8200860482 /* FSCHarmonyAuthController.m */; };
+		1A69F4431A004A9D00860482 /* FSCHarmonyClientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F4421A004A9D00860482 /* FSCHarmonyClientController.m */; };
+		9A62F38490611F1CF944D4BC /* libPods-HarmonyX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1A69F4121A00497000860482 /* HarmonyX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonyX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A69F4161A00497000860482 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A69F4171A00497000860482 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1A69F4191A00497000860482 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1A69F41A1A00497000860482 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1A69F41C1A00497000860482 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		1A69F41D1A00497000860482 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		1A69F4201A00497000860482 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1A69F4221A00497000860482 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1A69F4251A00497000860482 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		1A69F43B1A004A6B00860482 /* FSCHarmonyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyController.h; sourceTree = "<group>"; };
+		1A69F43C1A004A6B00860482 /* FSCHarmonyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyController.m; sourceTree = "<group>"; };
+		1A69F43E1A004A8200860482 /* FSCHarmonyAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyAuthController.h; sourceTree = "<group>"; };
+		1A69F43F1A004A8200860482 /* FSCHarmonyAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyAuthController.m; sourceTree = "<group>"; };
+		1A69F4411A004A9D00860482 /* FSCHarmonyClientController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyClientController.h; sourceTree = "<group>"; };
+		1A69F4421A004A9D00860482 /* FSCHarmonyClientController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyClientController.m; sourceTree = "<group>"; };
+		1A69F4441A00533B00860482 /* FSCHarmonyCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyCommon.h; sourceTree = "<group>"; };
+		37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HarmonyX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A384876B9C2DE38E228004E /* Pods-HarmonyX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyX.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyX/Pods-HarmonyX.release.xcconfig"; sourceTree = "<group>"; };
+		A53D7F1A523A83F84823D85F /* Pods-HarmonyX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyX/Pods-HarmonyX.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1A69F40F1A00497000860482 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A62F38490611F1CF944D4BC /* libPods-HarmonyX.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1A69F4091A00497000860482 = {
+			isa = PBXGroup;
+			children = (
+				1A69F4141A00497000860482 /* HarmonyX */,
+				1A69F4131A00497000860482 /* Products */,
+				6C9BB0B337799E64ACD2170A /* Pods */,
+				9192D6F6BC8535EE12E2BE45 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		1A69F4131A00497000860482 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1A69F4121A00497000860482 /* HarmonyX.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1A69F4141A00497000860482 /* HarmonyX */ = {
+			isa = PBXGroup;
+			children = (
+				1A69F4191A00497000860482 /* AppDelegate.h */,
+				1A69F41A1A00497000860482 /* AppDelegate.m */,
+				1A69F41C1A00497000860482 /* ViewController.h */,
+				1A69F41D1A00497000860482 /* ViewController.m */,
+				1A69F4441A00533B00860482 /* FSCHarmonyCommon.h */,
+				1A69F43B1A004A6B00860482 /* FSCHarmonyController.h */,
+				1A69F43C1A004A6B00860482 /* FSCHarmonyController.m */,
+				1A69F43E1A004A8200860482 /* FSCHarmonyAuthController.h */,
+				1A69F43F1A004A8200860482 /* FSCHarmonyAuthController.m */,
+				1A69F4411A004A9D00860482 /* FSCHarmonyClientController.h */,
+				1A69F4421A004A9D00860482 /* FSCHarmonyClientController.m */,
+				1A69F41F1A00497000860482 /* Main.storyboard */,
+				1A69F4221A00497000860482 /* Images.xcassets */,
+				1A69F4241A00497000860482 /* LaunchScreen.xib */,
+				1A69F4151A00497000860482 /* Supporting Files */,
+			);
+			path = HarmonyX;
+			sourceTree = "<group>";
+		};
+		1A69F4151A00497000860482 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1A69F4161A00497000860482 /* Info.plist */,
+				1A69F4171A00497000860482 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6C9BB0B337799E64ACD2170A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A53D7F1A523A83F84823D85F /* Pods-HarmonyX.debug.xcconfig */,
+				7A384876B9C2DE38E228004E /* Pods-HarmonyX.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9192D6F6BC8535EE12E2BE45 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1A69F4111A00497000860482 /* HarmonyX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A69F4351A00497000860482 /* Build configuration list for PBXNativeTarget "HarmonyX" */;
+			buildPhases = (
+				07EA257FEC805E76E9D47DFD /* Check Pods Manifest.lock */,
+				1A69F40E1A00497000860482 /* Sources */,
+				1A69F40F1A00497000860482 /* Frameworks */,
+				1A69F4101A00497000860482 /* Resources */,
+				46A8E1BD8E196AFCEFA95CFB /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HarmonyX;
+			productName = HarmonyX;
+			productReference = 1A69F4121A00497000860482 /* HarmonyX.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1A69F40A1A00497000860482 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Fasterre;
+				TargetAttributes = {
+					1A69F4111A00497000860482 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = 1A69F40D1A00497000860482 /* Build configuration list for PBXProject "HarmonyX" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1A69F4091A00497000860482;
+			productRefGroup = 1A69F4131A00497000860482 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1A69F4111A00497000860482 /* HarmonyX */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1A69F4101A00497000860482 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A69F4211A00497000860482 /* Main.storyboard in Resources */,
+				1A69F4261A00497000860482 /* LaunchScreen.xib in Resources */,
+				1A69F4231A00497000860482 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		07EA257FEC805E76E9D47DFD /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		46A8E1BD8E196AFCEFA95CFB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HarmonyX/Pods-HarmonyX-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1A69F40E1A00497000860482 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A69F4431A004A9D00860482 /* FSCHarmonyClientController.m in Sources */,
+				1A69F41E1A00497000860482 /* ViewController.m in Sources */,
+				1A69F41B1A00497000860482 /* AppDelegate.m in Sources */,
+				1A69F4181A00497000860482 /* main.m in Sources */,
+				1A69F43D1A004A6B00860482 /* FSCHarmonyController.m in Sources */,
+				1A69F4401A004A8200860482 /* FSCHarmonyAuthController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1A69F41F1A00497000860482 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A69F4201A00497000860482 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1A69F4241A00497000860482 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A69F4251A00497000860482 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1A69F4331A00497000860482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1A69F4341A00497000860482 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1A69F4361A00497000860482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A53D7F1A523A83F84823D85F /* Pods-HarmonyX.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = HarmonyX/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1A69F4371A00497000860482 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A384876B9C2DE38E228004E /* Pods-HarmonyX.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = HarmonyX/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1A69F40D1A00497000860482 /* Build configuration list for PBXProject "HarmonyX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A69F4331A00497000860482 /* Debug */,
+				1A69F4341A00497000860482 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1A69F4351A00497000860482 /* Build configuration list for PBXNativeTarget "HarmonyX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A69F4361A00497000860482 /* Debug */,
+				1A69F4371A00497000860482 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1A69F40A1A00497000860482 /* Project object */;
+}
