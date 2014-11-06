@@ -24,6 +24,8 @@
 		1A69F43D1A004A6B00860482 /* FSCHarmonyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F43C1A004A6B00860482 /* FSCHarmonyController.m */; };
 		1A69F4401A004A8200860482 /* FSCHarmonyAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F43F1A004A8200860482 /* FSCHarmonyAuthController.m */; };
 		1A69F4431A004A9D00860482 /* FSCHarmonyClientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F4421A004A9D00860482 /* FSCHarmonyClientController.m */; };
+		1A8AE5E11A0BA3630047436B /* FSCSharingDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E01A0BA3630047436B /* FSCSharingDefaultsController.m */; };
+		1A8AE5E21A0BA6900047436B /* FSCSharingDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E01A0BA3630047436B /* FSCSharingDefaultsController.m */; };
 		9A62F38490611F1CF944D4BC /* libPods-HarmonyX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,8 @@
 		1A6043111A0A887B0074D6A5 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		1A6043131A0A887B0074D6A5 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		1A60431F1A0A89CF0074D6A5 /* libPods-HarmonyX.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-HarmonyX.a"; path = "Pods/build/Debug-iphoneos/libPods-HarmonyX.a"; sourceTree = "<group>"; };
+		1A6043211A0AB67E0074D6A5 /* TodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TodayExtension.entitlements; sourceTree = "<group>"; };
+		1A6043221A0AB6E70074D6A5 /* HarmonyX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HarmonyX.entitlements; sourceTree = "<group>"; };
 		1A69F4121A00497000860482 /* HarmonyX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonyX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A69F4161A00497000860482 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A69F4171A00497000860482 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -76,6 +80,8 @@
 		1A69F4411A004A9D00860482 /* FSCHarmonyClientController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyClientController.h; sourceTree = "<group>"; };
 		1A69F4421A004A9D00860482 /* FSCHarmonyClientController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyClientController.m; sourceTree = "<group>"; };
 		1A69F4441A00533B00860482 /* FSCHarmonyCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyCommon.h; sourceTree = "<group>"; };
+		1A8AE5DF1A0BA3630047436B /* FSCSharingDefaultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCSharingDefaultsController.h; sourceTree = "<group>"; };
+		1A8AE5E01A0BA3630047436B /* FSCSharingDefaultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCSharingDefaultsController.m; sourceTree = "<group>"; };
 		37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HarmonyX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A384876B9C2DE38E228004E /* Pods-HarmonyX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyX.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyX/Pods-HarmonyX.release.xcconfig"; sourceTree = "<group>"; };
 		A53D7F1A523A83F84823D85F /* Pods-HarmonyX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyX/Pods-HarmonyX.debug.xcconfig"; sourceTree = "<group>"; };
@@ -108,6 +114,7 @@
 				1A6043101A0A887B0074D6A5 /* TodayViewController.h */,
 				1A6043111A0A887B0074D6A5 /* TodayViewController.m */,
 				1A6043131A0A887B0074D6A5 /* MainInterface.storyboard */,
+				1A6043211A0AB67E0074D6A5 /* TodayExtension.entitlements */,
 				1A60430E1A0A887B0074D6A5 /* Supporting Files */,
 			);
 			path = TodayExtension;
@@ -144,11 +151,13 @@
 		1A69F4141A00497000860482 /* HarmonyX */ = {
 			isa = PBXGroup;
 			children = (
+				1A69F4441A00533B00860482 /* FSCHarmonyCommon.h */,
 				1A69F4191A00497000860482 /* AppDelegate.h */,
 				1A69F41A1A00497000860482 /* AppDelegate.m */,
 				1A69F41C1A00497000860482 /* ViewController.h */,
 				1A69F41D1A00497000860482 /* ViewController.m */,
-				1A69F4441A00533B00860482 /* FSCHarmonyCommon.h */,
+				1A8AE5DF1A0BA3630047436B /* FSCSharingDefaultsController.h */,
+				1A8AE5E01A0BA3630047436B /* FSCSharingDefaultsController.m */,
 				1A69F43B1A004A6B00860482 /* FSCHarmonyController.h */,
 				1A69F43C1A004A6B00860482 /* FSCHarmonyController.m */,
 				1A69F43E1A004A8200860482 /* FSCHarmonyAuthController.h */,
@@ -158,6 +167,7 @@
 				1A69F41F1A00497000860482 /* Main.storyboard */,
 				1A69F4221A00497000860482 /* Images.xcassets */,
 				1A69F4241A00497000860482 /* LaunchScreen.xib */,
+				1A6043221A0AB6E70074D6A5 /* HarmonyX.entitlements */,
 				1A69F4151A00497000860482 /* Supporting Files */,
 			);
 			path = HarmonyX;
@@ -243,9 +253,21 @@
 				TargetAttributes = {
 					1A6043091A0A887B0074D6A5 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 239SMQFQ7S;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					1A69F4111A00497000860482 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 239SMQFQ7S;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -331,6 +353,7 @@
 				1A6043121A0A887B0074D6A5 /* TodayViewController.m in Sources */,
 				1A60431C1A0A89060074D6A5 /* FSCHarmonyController.m in Sources */,
 				1A60431D1A0A890A0074D6A5 /* FSCHarmonyAuthController.m in Sources */,
+				1A8AE5E21A0BA6900047436B /* FSCSharingDefaultsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A69F4431A004A9D00860482 /* FSCHarmonyClientController.m in Sources */,
+				1A8AE5E11A0BA3630047436B /* FSCSharingDefaultsController.m in Sources */,
 				1A69F41E1A00497000860482 /* ViewController.m in Sources */,
 				1A69F41B1A00497000860482 /* AppDelegate.m in Sources */,
 				1A69F4181A00497000860482 /* main.m in Sources */,
@@ -381,6 +405,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A53D7F1A523A83F84823D85F /* Pods-HarmonyX.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = TodayExtension/TodayExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -388,6 +415,7 @@
 				INFOPLIST_FILE = TodayExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -396,9 +424,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A384876B9C2DE38E228004E /* Pods-HarmonyX.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = TodayExtension/TodayExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = TodayExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -486,9 +518,13 @@
 			baseConfigurationReference = A53D7F1A523A83F84823D85F /* Pods-HarmonyX.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HarmonyX/HarmonyX.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HarmonyX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -497,9 +533,13 @@
 			baseConfigurationReference = 7A384876B9C2DE38E228004E /* Pods-HarmonyX.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HarmonyX/HarmonyX.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HarmonyX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

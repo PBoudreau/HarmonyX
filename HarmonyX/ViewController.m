@@ -8,14 +8,20 @@
 
 #import "ViewController.h"
 
+#import "FSCSharingDefaultsController.h"
 #import "FSCHarmonyController.h"
 
-static NSString * const USERNAME = @"boudreau.philippe@gmail.com";
-static NSString * const PASSWORD = @"J9TwoaQGDVCOTz6{V_qK";
-static NSString * const HARMONY_IP = @"10.0.1.4";
-static NSUInteger HARMONY_PORT = 5222;
-
 @interface ViewController ()
+
+@property (weak, nonatomic) IBOutlet UILabel *harmonyLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *harmonyLabelCenterYConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *harmonyLabelTopSpaceConstraint;
+
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *IPAddressTextField;
+@property (weak, nonatomic) IBOutlet UITextField *portTextField;
 
 @end
 
@@ -23,88 +29,118 @@ static NSUInteger HARMONY_PORT = 5222;
 
 #pragma mark - Superclass Methods
 
+- (void) viewDidAppear: (BOOL) animated
+{
+    [super viewDidAppear: animated];
+    
+    [self loadValues];
+    
+    [[self view] layoutIfNeeded];
+    
+    [[self view] removeConstraint: [self harmonyLabelCenterYConstraint]];
+    [self setHarmonyLabelCenterYConstraint: nil];
+    [[self harmonyLabelTopSpaceConstraint] setConstant: 50.0];
+    
+    [UIView animateWithDuration: 1
+                          delay: 0
+                        options: UIViewAnimationOptionCurveEaseInOut
+                     animations: ^{
+                         [[self view] layoutIfNeeded];
+                     }
+                     completion: ^(BOOL finished) {
+                         
+                         [UIView animateWithDuration: 1
+                                          animations: ^{
+                                              
+                                              [[self contentView] setAlpha: 1.0];
+                                          }];
+                     }];
+}
+
 #pragma mark - Class Methods
 
-- (IBAction) loginButtonPressed: (id) sender
+- (void) loadValues
 {
-    [[FSCHarmonyController sharedInstance] loginToLogitechWithUsername: USERNAME
-                                                              password: PASSWORD
-                                                                 forIP: HARMONY_IP
-                                                                  port: HARMONY_PORT
-                                                            completion: ^(NSString *token)
-     {
-         NSLog(@"%@: token = %@", NSStringFromSelector(_cmd), token);
-     }];
-}
-
-- (IBAction) configButtonPressed: (id) sender
-{
-    [[FSCHarmonyController sharedInstance] clientWithWithUsername: USERNAME
-                                                         password: PASSWORD
-                                                            forIP: HARMONY_IP
-                                                             port: HARMONY_PORT
-                                                       completion: ^(FSCHarmonyClientController *client) {
-                                                           
-                                                           [client configWithCompletion: ^void(id result) {
-                                                               
-                                                               NSLog(@"Harmony config: %@", result);
-                                                               
-                                                               [client disconnect];
-                                                           }];
-                                                       }];
-}
-
-- (IBAction) currentActivityButtonPressed: (id) sender
-{
-    [[FSCHarmonyController sharedInstance] clientWithWithUsername: USERNAME
-                                                         password: PASSWORD
-                                                            forIP: HARMONY_IP
-                                                             port: HARMONY_PORT
-                                                       completion: ^(FSCHarmonyClientController *client) {
-                                                           
-                                                           [client currentActivityWithCompletion: ^void(NSString * activityId) {
-                                                               
-                                                               NSLog(@"Current activity ID: %@", activityId);
-                                                               
-                                                               [client disconnect];
-                                                           }];
-                                                       }];
-}
-
-- (IBAction) regarderChromecastButtonPressed: (id) sender
-{
-    [[FSCHarmonyController sharedInstance] clientWithWithUsername: USERNAME
-                                                         password: PASSWORD
-                                                            forIP: HARMONY_IP
-                                                             port: HARMONY_PORT
-                                                       completion: ^(FSCHarmonyClientController *client) {
-                                                           
-                                                           [client startActivity: @"9204546"
-                                                                  withCompletion: ^(id result) {
-                                                               
-                                                               NSLog(@"Activity startup result: %@", result);
-                                                               
-                                                               [client disconnect];
-                                                           }];
-                                                       }];
-}
-
-- (IBAction) offButtonPressed: (id) sender
-{
-    [[FSCHarmonyController sharedInstance] clientWithWithUsername: USERNAME
-                                                         password: PASSWORD
-                                                            forIP: HARMONY_IP
-                                                             port: HARMONY_PORT
-                                                       completion: ^(FSCHarmonyClientController *client) {
-                                                           
-                                                           [client turnOffWithCompletion: ^(id result) {
-                                                               
-                                                                      NSLog(@"Turn off result: %@", result);
-                                                                      
-                                                                      [client disconnect];
-                                                                  }];
-                                                       }];
+    NSString * username;
+    NSString * password;
+    NSString * IPAddress;
+    NSUInteger port;
     
+    [FSCSharingDefaultsController loadUsername: &username
+                                      password: &password
+                                     IPAddress: &IPAddress
+                                          port: &port];
+    
+    [[self usernameTextField] setText: username];
+    [[self passwordTextField] setText: password];
+    [[self IPAddressTextField] setText: IPAddress];
+    [[self portTextField] setText: [NSString stringWithFormat: @"%lu", (unsigned long)port]];
+}
+
+- (IBAction) connectButtonTapped: (id) sender
+{
+    NSString * username = [[self usernameTextField] text];
+    NSString * passsord = [[self passwordTextField] text];
+    NSString * IPAddress = [[self IPAddressTextField] text];
+    NSUInteger port = [[[self portTextField] text] integerValue];
+    
+    NSString * errorMessage = nil;
+    
+    if (!username ||
+        [username isEqualToString: @""])
+    {
+        errorMessage = @"Username is required.";
+    }
+    else if (!passsord ||
+             [passsord isEqualToString: @""])
+    {
+        errorMessage = @"Password is required.";
+    }
+    else if (!IPAddress ||
+             [IPAddress isEqualToString: @""])
+    {
+        errorMessage = @"IP Address is required.";
+    }
+    else if (port == 0)
+    {
+        errorMessage = @"Invalid port number.";
+    }
+    
+    if (errorMessage)
+    {
+        UIAlertController * controller = [UIAlertController alertControllerWithTitle: @""
+                                                                             message: errorMessage
+                                                                      preferredStyle: UIAlertControllerStyleAlert];
+        [controller addAction: [UIAlertAction actionWithTitle: @"OK"
+                                                        style: UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction *action) {
+                                                          
+                                                          [controller dismissViewControllerAnimated: YES
+                                                                                         completion: nil];
+                                                      }]];
+        
+        [self presentViewController: controller
+                           animated: YES
+                         completion: nil];
+    }
+    else
+    {
+        [FSCSharingDefaultsController saveUsername: username
+                                          password: passsord
+                                         IPAddress: IPAddress
+                                              port: port];
+        
+        [[FSCHarmonyController sharedInstance] clientWithWithUsername: username
+                                                             password: passsord
+                                                                forIP: IPAddress
+                                                                 port: port
+                                                           completion: ^(FSCHarmonyClientController *client) {
+                                                               
+                                                               NSLog(@"Client created successfully");
+                                                               
+                                                               [client disconnect];
+                                                           }];
+    }
 }
 
 @end
