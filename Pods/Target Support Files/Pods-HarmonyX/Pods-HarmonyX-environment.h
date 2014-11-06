@@ -75,6 +75,12 @@
 // Please contact the author.
 // Version: 1.6.5.1.
 
+// SimpleKeychain
+#define COCOAPODS_POD_AVAILABLE_SimpleKeychain
+#define COCOAPODS_VERSION_MAJOR_SimpleKeychain 0
+#define COCOAPODS_VERSION_MINOR_SimpleKeychain 2
+#define COCOAPODS_VERSION_PATCH_SimpleKeychain 0
+
 // XMPPFramework
 #define COCOAPODS_POD_AVAILABLE_XMPPFramework
 #define COCOAPODS_VERSION_MAJOR_XMPPFramework 3

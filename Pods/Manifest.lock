@@ -27,6 +27,7 @@ PODS:
   - CocoaLumberjack/Core (1.6.5.1)
   - CocoaLumberjack/Extensions (1.6.5.1):
     - CocoaLumberjack/Core
+  - SimpleKeychain (0.2.0)
   - XMPPFramework (3.6.4):
     - XMPPFramework/Authentication
     - XMPPFramework/BandwidthMonitor
@@ -170,12 +171,14 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.4)
+  - SimpleKeychain (~> 0.2)
   - XMPPFramework (~> 3.6)
 
 SPEC CHECKSUMS:
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
   CocoaAsyncSocket: 45bdbbc1c0a5ed0640ff4c42af325ba43a2f099a
   CocoaLumberjack: baf4a09a3bcbdfea3363556a90104e026d3504e2
+  SimpleKeychain: f7c55140169037f7540c949b25da53096036b231
   XMPPFramework: 5a8555132822ebb3e11d2bac0258e62754315bc5
 
 COCOAPODS: 0.34.4

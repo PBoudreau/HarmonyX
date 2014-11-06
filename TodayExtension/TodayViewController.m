@@ -9,7 +9,7 @@
 #import "TodayViewController.h"
 #import <NotificationCenter/NotificationCenter.h>
 
-#import "FSCSharingDefaultsController.h"
+#import "FSCDataSharingController.h"
 #import "FSCHarmonyController.h"
 
 static const CGFloat extensionHeight = 37.0;
@@ -43,7 +43,7 @@ static const CGFloat extensionHeight = 37.0;
     NSString * IPAddress;
     NSUInteger port;
     
-    [FSCSharingDefaultsController loadUsername: &username
+    [FSCDataSharingController loadUsername: &username
                                       password: &password
                                      IPAddress: &IPAddress
                                           port: &port];

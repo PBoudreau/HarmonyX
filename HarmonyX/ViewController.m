@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-#import "FSCSharingDefaultsController.h"
+#import "FSCDataSharingController.h"
 #import "FSCHarmonyController.h"
 
 @interface ViewController ()
@@ -66,7 +66,7 @@
     NSString * IPAddress;
     NSUInteger port;
     
-    [FSCSharingDefaultsController loadUsername: &username
+    [FSCDataSharingController loadUsername: &username
                                       password: &password
                                      IPAddress: &IPAddress
                                           port: &port];
@@ -125,7 +125,7 @@
     }
     else
     {
-        [FSCSharingDefaultsController saveUsername: username
+        [FSCDataSharingController saveUsername: username
                                           password: passsord
                                          IPAddress: IPAddress
                                               port: port];

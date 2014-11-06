@@ -7,6 +7,7 @@ target 'HarmonyX' do
 
 pod 'AFNetworking', '~> 2.4'
 pod 'XMPPFramework', '~> 3.6'
+pod 'SimpleKeychain', '~> 0.2'
 
 end
 

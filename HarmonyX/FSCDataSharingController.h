@@ -8,12 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString * const FSCTodayExtensionSharingDefaultsGroupName = @"group.fasterre.HarmonyXTodayExtensionSharingDefaults";
-static NSString * const FSCTodayExtensionSharingDefaultsKeyUsername = @"username";
-static NSString * const FSCTodayExtensionSharingDefaultsKeyIPAddress = @"ipaddress";
-static NSString * const FSCTodayExtensionSharingDefaultsKeyPort = @"port";
-
-@interface FSCSharingDefaultsController : NSObject
+@interface FSCDataSharingController : NSObject
 
 + (void) saveUsername: (NSString *) username
              password: (NSString *) password
