@@ -8,8 +8,9 @@
 
 #import "ViewController.h"
 
+#import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
-#import "FSCHarmonyController.h"
+#import "FSCHarmonyClient.h"
 
 @interface ViewController ()
 
@@ -130,16 +131,73 @@
                                          IPAddress: IPAddress
                                               port: port];
         
-        [[FSCHarmonyController sharedInstance] clientWithWithUsername: username
-                                                             password: passsord
-                                                                forIP: IPAddress
-                                                                 port: port
-                                                           completion: ^(FSCHarmonyClientController *client) {
-                                                               
-                                                               NSLog(@"Client created successfully");
-                                                               
-                                                               [client disconnect];
-                                                           }];
+//        [[FSCHarmonyController sharedInstance] clientWithWithUsername: username
+//                                                             password: passsord
+//                                                                forIP: IPAddress
+//                                                                 port: port
+//                                                           completion: ^(FSCHarmonyClientController *client) {
+//                                                               
+//                                                               NSLog(@"Client created successfully");
+//                                                               
+//                                                               [client disconnect];
+//                                                           }];
+        
+        FSCHarmonyClient * client = nil;
+        NSString * userTitle = @"";
+        NSString * userMessage = nil;
+        
+        @try
+        {
+            client = [FSCHarmonyClient clientWithMyHarmonyUsername: username
+                                                 myHarmonyPassword: passsord
+                                               harmonyHubIPAddress: IPAddress
+                                                    harmonyHubPort: port];
+            
+            userMessage = @"Sucessfully connected to Harmony Hub.";
+        }
+        @catch (NSException * exception)
+        {
+            userTitle = @"Error";
+            
+            if ([[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
+            {
+                userMessage = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
+            }
+            else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
+            {
+                userMessage = @"Could not connect to Harmony Hub with the provided IP address and port.";
+            }
+            
+            if (!userMessage)
+            {
+                @throw exception;
+            }
+        }
+        @finally
+        {
+            if (client)
+            {
+                [client disconnect];
+            }
+        }
+        
+        if (userMessage)
+        {
+            UIAlertController * controller = [UIAlertController alertControllerWithTitle: userTitle
+                                                                                 message: userMessage
+                                                                          preferredStyle: UIAlertControllerStyleAlert];
+            [controller addAction: [UIAlertAction actionWithTitle: @"OK"
+                                                            style: UIAlertActionStyleDefault
+                                                          handler: ^(UIAlertAction *action) {
+                                                              
+                                                              [self dismissViewControllerAnimated: controller
+                                                                                       completion: nil];
+                                                          }]];
+            
+            [self presentViewController: controller
+                               animated: YES
+                             completion: nil];
+        }
     }
 }
 

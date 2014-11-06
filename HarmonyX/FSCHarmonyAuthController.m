@@ -12,8 +12,7 @@
 
 #import "AFHTTPRequestOperationManager.h"
 
-#import "XMPPFramework.h"
-#import "XMPPIQ.h"
+#import <XMPPFramework/XMPP.h>
 
 static NSString * const LOGITECH_AUTH_URL = @"https://svcs.myharmony.com/CompositeSecurityServices/Security.svc/json/GetUserAuthToken";
 static NSString * const HARMONY_USERNAME = @"guest@connect.logitech.com/harmony";

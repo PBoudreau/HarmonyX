@@ -10,8 +10,7 @@
 
 #import "FSCHarmonyCommon.h"
 
-#import "XMPPFramework.h"
-#import "XMPPIQ.h"
+#import <XMPPFramework/XMPP.h>
 
 @interface FSCHarmonyClientController ()
 {
@@ -186,7 +185,7 @@
     if ([[self xmppStream] isDisconnected])
     {
         [[self xmppStream] setMyJID: [XMPPJID jidWithString: [NSString stringWithFormat:
-                                                              @"%@@connect.logitech.com/gatorade",
+                                                              @"%@@connect.logitech.com/harmony",
                                                               [self token]]]];
         
         result = [[self xmppStream] connectWithTimeout: XMPPStreamTimeoutNone

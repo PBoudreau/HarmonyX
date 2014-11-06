@@ -1,5 +1,5 @@
 //
-//  FSCSharingDefaultsController.h
+//  FSCDataSharingController.h
 //  HarmonyX
 //
 //  Created by Philippe Boudreau on 2014-11-06.
