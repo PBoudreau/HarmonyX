@@ -68,12 +68,6 @@
 		1A69F4201A00497000860482 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1A69F4221A00497000860482 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1A69F4251A00497000860482 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		1A69F43B1A004A6B00860482 /* FSCHarmonyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyController.h; sourceTree = "<group>"; };
-		1A69F43C1A004A6B00860482 /* FSCHarmonyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyController.m; sourceTree = "<group>"; };
-		1A69F43E1A004A8200860482 /* FSCHarmonyAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyAuthController.h; sourceTree = "<group>"; };
-		1A69F43F1A004A8200860482 /* FSCHarmonyAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyAuthController.m; sourceTree = "<group>"; };
-		1A69F4411A004A9D00860482 /* FSCHarmonyClientController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyClientController.h; sourceTree = "<group>"; };
-		1A69F4421A004A9D00860482 /* FSCHarmonyClientController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyClientController.m; sourceTree = "<group>"; };
 		1A69F4441A00533B00860482 /* FSCHarmonyCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyCommon.h; sourceTree = "<group>"; };
 		1A8AE5DF1A0BA3630047436B /* FSCDataSharingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCDataSharingController.h; sourceTree = "<group>"; };
 		1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCDataSharingController.m; sourceTree = "<group>"; };
@@ -148,21 +142,15 @@
 		1A69F4141A00497000860482 /* HarmonyX */ = {
 			isa = PBXGroup;
 			children = (
-				1A69F4441A00533B00860482 /* FSCHarmonyCommon.h */,
 				1A69F4191A00497000860482 /* AppDelegate.h */,
 				1A69F41A1A00497000860482 /* AppDelegate.m */,
 				1A69F41C1A00497000860482 /* ViewController.h */,
 				1A69F41D1A00497000860482 /* ViewController.m */,
-				1A8AE5DF1A0BA3630047436B /* FSCDataSharingController.h */,
-				1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */,
-				1A69F43B1A004A6B00860482 /* FSCHarmonyController.h */,
-				1A69F43C1A004A6B00860482 /* FSCHarmonyController.m */,
-				1A69F43E1A004A8200860482 /* FSCHarmonyAuthController.h */,
-				1A69F43F1A004A8200860482 /* FSCHarmonyAuthController.m */,
-				1A69F4411A004A9D00860482 /* FSCHarmonyClientController.h */,
-				1A69F4421A004A9D00860482 /* FSCHarmonyClientController.m */,
+				1A69F4441A00533B00860482 /* FSCHarmonyCommon.h */,
 				1A8AE5E31A0BC10F0047436B /* FSCHarmonyClient.h */,
 				1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */,
+				1A8AE5DF1A0BA3630047436B /* FSCDataSharingController.h */,
+				1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */,
 				1A69F41F1A00497000860482 /* Main.storyboard */,
 				1A69F4221A00497000860482 /* Images.xcassets */,
 				1A69F4241A00497000860482 /* LaunchScreen.xib */,

@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 
+#import <MBProgressHUDExtensions/UIViewController+MBProgressHUD.h>
+
 #import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
 #import "FSCHarmonyClient.h"
@@ -127,77 +129,78 @@
     else
     {
         [FSCDataSharingController saveUsername: username
-                                          password: passsord
-                                         IPAddress: IPAddress
-                                              port: port];
+                                      password: passsord
+                                     IPAddress: IPAddress
+                                          port: port];
         
-//        [[FSCHarmonyController sharedInstance] clientWithWithUsername: username
-//                                                             password: passsord
-//                                                                forIP: IPAddress
-//                                                                 port: port
-//                                                           completion: ^(FSCHarmonyClientController *client) {
-//                                                               
-//                                                               NSLog(@"Client created successfully");
-//                                                               
-//                                                               [client disconnect];
-//                                                           }];
+        [self showHUD];
         
-        FSCHarmonyClient * client = nil;
-        NSString * userTitle = @"";
-        NSString * userMessage = nil;
-        
-        @try
-        {
-            client = [FSCHarmonyClient clientWithMyHarmonyUsername: username
-                                                 myHarmonyPassword: passsord
-                                               harmonyHubIPAddress: IPAddress
-                                                    harmonyHubPort: port];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            userMessage = @"Sucessfully connected to Harmony Hub.";
-        }
-        @catch (NSException * exception)
-        {
-            userTitle = @"Error";
+            FSCHarmonyClient * client = nil;
+            NSString * userTitle = @"";
+            NSString * userMessage = nil;
             
-            if ([[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
+            @try
             {
-                userMessage = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
+                client = [FSCHarmonyClient clientWithMyHarmonyUsername: username
+                                                     myHarmonyPassword: passsord
+                                                   harmonyHubIPAddress: IPAddress
+                                                        harmonyHubPort: port];
+                
+                userMessage = @"Sucessfully connected to Harmony Hub.";
+                
+                NSLog(@"Current activity: %@", [client currentActivity]);
             }
-            else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
+            @catch (NSException * exception)
             {
-                userMessage = @"Could not connect to Harmony Hub with the provided IP address and port.";
+                userTitle = @"Error";
+                
+                if ([[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
+                {
+                    userMessage = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
+                }
+                else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
+                {
+                    userMessage = @"Could not connect to Harmony Hub with the provided IP address and port.";
+                }
+                
+                if (!userMessage)
+                {
+                    @throw exception;
+                }
+            }
+            @finally
+            {
+                if (client)
+                {
+                    [client disconnect];
+                }
             }
             
-            if (!userMessage)
-            {
-                @throw exception;
-            }
-        }
-        @finally
-        {
-            if (client)
-            {
-                [client disconnect];
-            }
-        }
-        
-        if (userMessage)
-        {
-            UIAlertController * controller = [UIAlertController alertControllerWithTitle: userTitle
-                                                                                 message: userMessage
-                                                                          preferredStyle: UIAlertControllerStyleAlert];
-            [controller addAction: [UIAlertAction actionWithTitle: @"OK"
-                                                            style: UIAlertActionStyleDefault
-                                                          handler: ^(UIAlertAction *action) {
-                                                              
-                                                              [self dismissViewControllerAnimated: controller
-                                                                                       completion: nil];
-                                                          }]];
-            
-            [self presentViewController: controller
-                               animated: YES
-                             completion: nil];
-        }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self hideHUD];
+                
+                if (userMessage)
+                {
+                    UIAlertController * controller = [UIAlertController alertControllerWithTitle: userTitle
+                                                                                         message: userMessage
+                                                                                  preferredStyle: UIAlertControllerStyleAlert];
+                    [controller addAction: [UIAlertAction actionWithTitle: @"OK"
+                                                                    style: UIAlertActionStyleDefault
+                                                                  handler: ^(UIAlertAction *action) {
+                                                                      
+                                                                      [self dismissViewControllerAnimated: controller
+                                                                                               completion: nil];
+                                                                  }]];
+                    
+                    [self presentViewController: controller
+                                       animated: YES
+                                     completion: nil];
+                }
+            });
+        });
     }
 }
 

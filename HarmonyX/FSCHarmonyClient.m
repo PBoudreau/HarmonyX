@@ -15,8 +15,8 @@
 
 static NSString * const MY_HARMONY_AUTH_URL = @"https://svcs.myharmony.com/CompositeSecurityServices/Security.svc/json/GetUserAuthToken";
 
-static NSString * const GENERAL_HARMONY_HUB_USERNAME = @"guest@connect.logitech.com/harmony";
-static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmony";
+static NSString * const GENERAL_HARMONY_HUB_USERNAME = @"guest@connect.logitech.com/harmonyx";
+static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 @interface FSCHarmonyClient ()
 {
@@ -76,8 +76,6 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmony";
                                                       myHarmonyPassword: password
                                                     harmonyHubIPAddress: IPAddress
                                                          harmonyHubPort: port];
-    
-    [client setupXMPPStream];
     
     [client connectToHarmonyHub];
     
@@ -204,6 +202,8 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmony";
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
+    [self setupXMPPStream];
+    
     if ([[self xmppStream] isDisconnected])
     {
         [[self xmppStream] setMyJID: [XMPPJID jidWithString: username]];
@@ -232,6 +232,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmony";
         if (didDisconnectWhileConnecting)
         {
             didDisconnectWhileConnecting = NO;
+            [self setXmppStream: nil];
             
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                            reason: [NSString stringWithFormat:
@@ -291,12 +292,12 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmony";
                                 myHarmonyToken,
                                 @"harmony#iOS6.0.1#iPhone"]];
     
-    XMPPIQ * iqCmd = [XMPPIQ iqWithType: @"get"
+    XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
                                   child: actionCmd];
     
     __block NSString * OAAttributesAndValuesString = nil;
     
-    [self sendIQCmd: iqCmd
+    [self sendIQCmd: IQCmd
 andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     {
         BOOL validResponse = NO;
@@ -366,6 +367,93 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
 
 #pragma mark - Operations
 
+- (id) configuration
+{
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    
+    NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
+                                                            xmlns: @"connect.logitech.com"];
+    [actionCmd addAttributeWithName: @"mime"
+                        stringValue: @"vnd.logitech.harmony/vnd.logitech.harmony.engine?config"];
+    
+    XMPPIQ * iqCmd = [XMPPIQ iqWithType: @"get"
+                                  child: actionCmd];
+    
+    __block id configuration = nil;
+    
+    [self sendIQCmd: iqCmd
+andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
+    {
+        configuration = OAResponse;
+        
+        return YES;
+    }];
+    
+    return configuration;
+}
+
+- (NSString *) currentActivity
+{
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    
+    NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
+                                                            xmlns: @"connect.logitech.com"];
+    [actionCmd addAttributeWithName: @"mime"
+                        stringValue: @"vnd.logitech.harmony/vnd.logitech.harmony.engine?getCurrentActivity"];
+    
+    XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
+                                  child: actionCmd];
+
+    __block NSString * currentActivity = nil;
+    
+    [self sendIQCmd: IQCmd
+andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
+    {
+        NSString * stringValue = [OAResponse stringValue];
+        NSArray * attributeAndvalue = [stringValue componentsSeparatedByString: @"="];
+        
+        if ([attributeAndvalue count] == 2)
+        {
+            currentActivity = attributeAndvalue[1];
+        }
+        
+        return YES;
+    }];
+    
+    return currentActivity;
+}
+
+- (void) startActivity: (NSString *) activityId
+{
+    NSLog(@"%@ %@", NSStringFromSelector(_cmd), activityId);
+    
+    NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
+                                                            xmlns: @"connect.logitech.com"];
+    [actionCmd addAttributeWithName: @"mime"
+                        stringValue: @"harmony.engine?startactivity"];
+    [actionCmd setStringValue: [NSString stringWithFormat:
+                                @"activityId=%@:timestamp=0",
+                                activityId]];
+    
+    XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
+                                  child: actionCmd];
+    
+    [self sendIQCmd: IQCmd
+andWaitForValidResponse: nil];
+}
+
+- (void) turnOff
+{
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    
+    NSString * currentActivity = [self currentActivity];
+    
+    if (![currentActivity isEqualToString: @"-1"])
+    {
+        [self startActivity: @"-1"];
+    }
+}
+
 - (void) disconnect
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
@@ -379,6 +467,8 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
             [NSThread sleepForTimeInterval: 0.25];
         }
     });
+    
+    [self setXmppStream: nil];
 }
 
 #pragma mark XMPPStream Delegate
