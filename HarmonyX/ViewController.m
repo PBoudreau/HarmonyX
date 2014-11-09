@@ -151,6 +151,15 @@
                 userMessage = @"Sucessfully connected to Harmony Hub.";
                 
                 NSLog(@"Current activity: %@", [client currentActivity]);
+                
+                NSDictionary * config = [client configuration];
+                
+                NSError * error;
+                NSData * data = [NSJSONSerialization dataWithJSONObject: config
+                                                                options: NSJSONWritingPrettyPrinted
+                                                                  error: &error];
+                [data writeToFile: @"/Volumes/pboudreau/Work/HarmonyX/harmony_config-ios-v2.txt"
+                       atomically: YES];
             }
             @catch (NSException * exception)
             {
