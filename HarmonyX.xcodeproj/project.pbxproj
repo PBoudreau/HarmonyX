@@ -21,6 +21,7 @@
 		1A8AE5E11A0BA3630047436B /* FSCDataSharingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */; };
 		1A8AE5E21A0BA6900047436B /* FSCDataSharingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */; };
 		1A8AE5E51A0BC10F0047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
+		1A8AE5E61A0C1AE40047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
 		9A62F38490611F1CF944D4BC /* libPods-HarmonyX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */; };
 /* End PBXBuildFile section */
 
@@ -342,6 +343,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A8AE5E61A0C1AE40047436B /* FSCHarmonyClient.m in Sources */,
 				1A6043121A0A887B0074D6A5 /* TodayViewController.m in Sources */,
 				1A8AE5E21A0BA6900047436B /* FSCDataSharingController.m in Sources */,
 			);
@@ -482,7 +484,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

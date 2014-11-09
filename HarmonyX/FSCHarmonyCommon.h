@@ -13,6 +13,8 @@
 
 static NSString * const FSCExceptionMyHarmonyConnection = @"FSCExceptionMyHarmonyConnection";
 static NSString * const FSCExceptionHarmonyHubConnection = @"FSCExceptionHarmonyHubConnection";
+static NSString * const FSCExceptionHarmonyHubConfiguration = @"FSCExceptionHarmonyHubConfiguration";
+static NSString * const FSCExceptionHarmonyHubCurrentActivity = @"FSCExceptionHarmonyHubCurrentActivity";
 
 static NSString * const FSCErrorDomain = @"com.trov.trov";
 

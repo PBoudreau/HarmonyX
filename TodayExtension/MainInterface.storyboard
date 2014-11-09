@@ -40,6 +40,16 @@
                                     <action selector="teleButtonPressed:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="t6v-sQ-vQF"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qZH-Dt-v3y">
+                                <rect key="frame" x="166" y="4" width="30" height="30"/>
+                                <state key="normal" title="Up">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="upButtonTapped:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="1nZ-50-BCU"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vVs-bj-0He">
                                 <rect key="frame" x="274" y="4" width="30" height="30"/>
                                 <state key="normal" title="OFF">
@@ -48,6 +58,16 @@
                                 </state>
                                 <connections>
                                     <action selector="offButtonTapped:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="zvD-s1-OQm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hy7-vp-pcP">
+                                <rect key="frame" x="204" y="4" width="40" height="30"/>
+                                <state key="normal" title="Down">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="downButtonTapped:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="kDi-lF-iFD"/>
                                 </connections>
                             </button>
                         </subviews>

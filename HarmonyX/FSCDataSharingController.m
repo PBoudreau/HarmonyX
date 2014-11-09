@@ -33,9 +33,16 @@ static NSString * const FSCDataSharingKeychainKeyPassword = @"password";
                        forKey: FSCDataSharingDefaultsKeyUsername];
     
     A0SimpleKeychain * keychain = [A0SimpleKeychain keychainWithService: FSCDataSharingKeychainService
-                                                            accessGroup: FSCDataSharingKeychainGroupName];
-    [keychain setString: password
-                 forKey: FSCDataSharingKeychainKeyPassword];
+                                                            accessGroup: [NSString stringWithFormat: @"%@.%@",
+                                                                          FSCTeamID,
+                                                                          FSCDataSharingKeychainGroupName]];
+    BOOL result = [keychain setString: password
+                               forKey: FSCDataSharingKeychainKeyPassword];
+    
+    if (!result)
+    {
+        NSLog(@"Could not save password to the keychain");
+    }
     
     [sharedDefaults setObject: IPAddress
                        forKey: FSCDataSharingDefaultsKeyIPAddress];
@@ -57,7 +64,9 @@ static NSString * const FSCDataSharingKeychainKeyPassword = @"password";
     *username = [sharedDefaults stringForKey: FSCDataSharingDefaultsKeyUsername];
     
     A0SimpleKeychain * keychain = [A0SimpleKeychain keychainWithService: FSCDataSharingKeychainService
-                                                            accessGroup: FSCDataSharingKeychainGroupName];
+                                                            accessGroup: [NSString stringWithFormat: @"%@.%@",
+                                                                          FSCTeamID,
+                                                                          FSCDataSharingKeychainGroupName]];
     *password = [keychain stringForKey: FSCDataSharingKeychainKeyPassword];
     
     *IPAddress = [sharedDefaults stringForKey: FSCDataSharingDefaultsKeyIPAddress];

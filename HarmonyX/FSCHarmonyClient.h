@@ -15,7 +15,7 @@
                harmonyHubIPAddress: (NSString *) IPAddress
                     harmonyHubPort: (NSUInteger) port;
 
-- (id) configuration;
+- (NSDictionary *) configuration;
 
 - (NSString *) currentActivity;
 
