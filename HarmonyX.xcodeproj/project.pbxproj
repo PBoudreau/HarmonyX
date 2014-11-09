@@ -21,6 +21,21 @@
 		1A8AE5E11A0BA3630047436B /* FSCDataSharingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */; };
 		1A8AE5E21A0BA6900047436B /* FSCDataSharingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */; };
 		1A8AE5E51A0BC10F0047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
+		1A8AE5E61A0C1AE40047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
+		1AC092321A10074400602E69 /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; };
+		1AC092331A10074400602E69 /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; };
+		1AC092341A10074400602E69 /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; };
+		1AC092351A10074400602E69 /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; };
+		1AC092361A10074400602E69 /* FSCControlGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921B1A10074400602E69 /* FSCControlGroup.m */; };
+		1AC092371A10074400602E69 /* FSCControlGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921B1A10074400602E69 /* FSCControlGroup.m */; };
+		1AC092381A10074400602E69 /* FSCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921D1A10074400602E69 /* FSCDevice.m */; };
+		1AC092391A10074400602E69 /* FSCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921D1A10074400602E69 /* FSCDevice.m */; };
+		1AC0923C1A10074400602E69 /* FSCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092211A10074400602E69 /* FSCFunction.m */; };
+		1AC0923D1A10074400602E69 /* FSCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092211A10074400602E69 /* FSCFunction.m */; };
+		1AC0923E1A10074400602E69 /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; };
+		1AC0923F1A10074400602E69 /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; };
+		1AC092401A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; };
+		1AC092411A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; };
 		9A62F38490611F1CF944D4BC /* libPods-HarmonyX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +88,20 @@
 		1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCDataSharingController.m; sourceTree = "<group>"; };
 		1A8AE5E31A0BC10F0047436B /* FSCHarmonyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyClient.h; sourceTree = "<group>"; };
 		1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyClient.m; sourceTree = "<group>"; };
+		1AC092161A10074400602E69 /* FSCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCActivity.h; sourceTree = "<group>"; };
+		1AC092171A10074400602E69 /* FSCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCActivity.m; sourceTree = "<group>"; };
+		1AC092181A10074400602E69 /* FSCContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCContent.h; sourceTree = "<group>"; };
+		1AC092191A10074400602E69 /* FSCContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCContent.m; sourceTree = "<group>"; };
+		1AC0921A1A10074400602E69 /* FSCControlGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCControlGroup.h; sourceTree = "<group>"; };
+		1AC0921B1A10074400602E69 /* FSCControlGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCControlGroup.m; sourceTree = "<group>"; };
+		1AC0921C1A10074400602E69 /* FSCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCDevice.h; sourceTree = "<group>"; };
+		1AC0921D1A10074400602E69 /* FSCDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCDevice.m; sourceTree = "<group>"; };
+		1AC092201A10074400602E69 /* FSCFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCFunction.h; sourceTree = "<group>"; };
+		1AC092211A10074400602E69 /* FSCFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCFunction.m; sourceTree = "<group>"; };
+		1AC092221A10074400602E69 /* FSCGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCGlobal.h; sourceTree = "<group>"; };
+		1AC092231A10074400602E69 /* FSCGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCGlobal.m; sourceTree = "<group>"; };
+		1AC092241A10074400602E69 /* FSCHarmonyConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyConfiguration.h; sourceTree = "<group>"; };
+		1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyConfiguration.m; sourceTree = "<group>"; };
 		37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HarmonyX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A384876B9C2DE38E228004E /* Pods-HarmonyX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyX.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyX/Pods-HarmonyX.release.xcconfig"; sourceTree = "<group>"; };
 		A53D7F1A523A83F84823D85F /* Pods-HarmonyX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyX/Pods-HarmonyX.debug.xcconfig"; sourceTree = "<group>"; };
@@ -142,6 +171,7 @@
 		1A69F4141A00497000860482 /* HarmonyX */ = {
 			isa = PBXGroup;
 			children = (
+				1AC092081A1006FD00602E69 /* Harmony Config */,
 				1A69F4191A00497000860482 /* AppDelegate.h */,
 				1A69F41A1A00497000860482 /* AppDelegate.m */,
 				1A69F41C1A00497000860482 /* ViewController.h */,
@@ -167,6 +197,28 @@
 				1A69F4171A00497000860482 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1AC092081A1006FD00602E69 /* Harmony Config */ = {
+			isa = PBXGroup;
+			children = (
+				1AC092161A10074400602E69 /* FSCActivity.h */,
+				1AC092171A10074400602E69 /* FSCActivity.m */,
+				1AC092181A10074400602E69 /* FSCContent.h */,
+				1AC092191A10074400602E69 /* FSCContent.m */,
+				1AC0921A1A10074400602E69 /* FSCControlGroup.h */,
+				1AC0921B1A10074400602E69 /* FSCControlGroup.m */,
+				1AC0921C1A10074400602E69 /* FSCDevice.h */,
+				1AC0921D1A10074400602E69 /* FSCDevice.m */,
+				1AC092201A10074400602E69 /* FSCFunction.h */,
+				1AC092211A10074400602E69 /* FSCFunction.m */,
+				1AC092221A10074400602E69 /* FSCGlobal.h */,
+				1AC092231A10074400602E69 /* FSCGlobal.m */,
+				1AC092241A10074400602E69 /* FSCHarmonyConfiguration.h */,
+				1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */,
+			);
+			name = "Harmony Config";
+			path = HarmonyConfig;
 			sourceTree = "<group>";
 		};
 		6C9BB0B337799E64ACD2170A /* Pods */ = {
@@ -342,8 +394,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A8AE5E61A0C1AE40047436B /* FSCHarmonyClient.m in Sources */,
+				1AC0923F1A10074400602E69 /* FSCGlobal.m in Sources */,
+				1AC092411A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */,
+				1AC092331A10074400602E69 /* FSCActivity.m in Sources */,
 				1A6043121A0A887B0074D6A5 /* TodayViewController.m in Sources */,
+				1AC092371A10074400602E69 /* FSCControlGroup.m in Sources */,
+				1AC092391A10074400602E69 /* FSCDevice.m in Sources */,
 				1A8AE5E21A0BA6900047436B /* FSCDataSharingController.m in Sources */,
+				1AC092351A10074400602E69 /* FSCContent.m in Sources */,
+				1AC0923D1A10074400602E69 /* FSCFunction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,9 +412,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A8AE5E11A0BA3630047436B /* FSCDataSharingController.m in Sources */,
+				1AC092381A10074400602E69 /* FSCDevice.m in Sources */,
+				1AC092321A10074400602E69 /* FSCActivity.m in Sources */,
+				1AC0923E1A10074400602E69 /* FSCGlobal.m in Sources */,
+				1AC092361A10074400602E69 /* FSCControlGroup.m in Sources */,
 				1A69F41E1A00497000860482 /* ViewController.m in Sources */,
+				1AC0923C1A10074400602E69 /* FSCFunction.m in Sources */,
 				1A69F41B1A00497000860482 /* AppDelegate.m in Sources */,
+				1AC092341A10074400602E69 /* FSCContent.m in Sources */,
 				1A69F4181A00497000860482 /* main.m in Sources */,
+				1AC092401A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */,
 				1A8AE5E51A0BC10F0047436B /* FSCHarmonyClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,7 +549,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

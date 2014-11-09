@@ -77,6 +77,8 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
                                                     harmonyHubIPAddress: IPAddress
                                                          harmonyHubPort: port];
     
+    [client setupXMPPStream];
+    
     [client connectToHarmonyHub];
     
     return  client;
@@ -202,8 +204,6 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    [self setupXMPPStream];
-    
     if ([[self xmppStream] isDisconnected])
     {
         [[self xmppStream] setMyJID: [XMPPJID jidWithString: username]];
@@ -232,7 +232,6 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
         if (didDisconnectWhileConnecting)
         {
             didDisconnectWhileConnecting = NO;
-            [self setXmppStream: nil];
             
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                            reason: [NSString stringWithFormat:
@@ -300,34 +299,28 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     [self sendIQCmd: IQCmd
 andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     {
-        BOOL validResponse = NO;
+        OAAttributesAndValuesString = [OAResponse stringValue];
         
-        NSString * OAString = [OAResponse stringValue];
-        
-        if (OAString)
-        {
-            validResponse = YES;
-            
-            OAAttributesAndValuesString = OAString;
-        }
-        
-        return validResponse;
+        return YES;
     }];
     
     NSString * harmonyHubToken = nil;
     
-    NSArray * OAAttributesAndValues = [OAAttributesAndValuesString componentsSeparatedByString: @":"];
-    
-    for (NSString * anAttributeAndValue in OAAttributesAndValues)
+    if (OAAttributesAndValuesString)
     {
-        NSArray * attributeAndValue = [anAttributeAndValue componentsSeparatedByString: @"="];
+        NSArray * OAAttributesAndValues = [OAAttributesAndValuesString componentsSeparatedByString: @":"];
         
-        if ([attributeAndValue count] == 2 &&
-            [attributeAndValue[0] isEqualToString: @"identity"])
+        for (NSString * anAttributeAndValue in OAAttributesAndValues)
         {
-            harmonyHubToken = attributeAndValue[1];
+            NSArray * attributeAndValue = [anAttributeAndValue componentsSeparatedByString: @"="];
             
-            break;
+            if ([attributeAndValue count] == 2 &&
+                [attributeAndValue[0] isEqualToString: @"identity"])
+            {
+                harmonyHubToken = attributeAndValue[1];
+                
+                break;
+            }
         }
     }
     
@@ -335,7 +328,7 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     {
         @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                        reason: [NSString stringWithFormat:
-                                                @"Unexpected pairing response from HUB: %@",
+                                                @"Unexpected pair response from HUB: %@",
                                                 OAAttributesAndValuesString]
                                      userInfo: nil];
     }
@@ -367,7 +360,7 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
 
 #pragma mark - Operations
 
-- (id) configuration
+- (FSCHarmonyConfiguration *) configuration
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
@@ -379,17 +372,45 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
     XMPPIQ * iqCmd = [XMPPIQ iqWithType: @"get"
                                   child: actionCmd];
     
-    __block id configuration = nil;
+    __block NSString * OAString = nil;
     
     [self sendIQCmd: iqCmd
 andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     {
-        configuration = OAResponse;
+        OAString = [OAResponse stringValue];
         
         return YES;
     }];
+
+    NSDictionary * configuration = nil;
     
-    return configuration;
+    if (OAString)
+    {
+        NSData * OAStringData = [OAString dataUsingEncoding: NSUTF8StringEncoding];
+        NSError * error = nil;
+        
+        id JSONObject =  [NSJSONSerialization JSONObjectWithData: OAStringData
+                                                         options: kNilOptions
+                                                           error: &error];
+        
+        if ([JSONObject isKindOfClass: [NSDictionary class]])
+        {
+            configuration = JSONObject;
+        }
+    }
+    
+    if (!configuration)
+    {
+        @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConfiguration
+                                       reason: [NSString stringWithFormat:
+                                                @"Unexpected config response from HUB: %@",
+                                                OAString]
+                                     userInfo: nil];
+    }
+    
+    FSCHarmonyConfiguration * harmonyConfig = [FSCHarmonyConfiguration modelObjectWithDictionary: configuration];
+    
+    return harmonyConfig;
 }
 
 - (NSString *) currentActivity
@@ -404,21 +425,37 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
                                   child: actionCmd];
 
-    __block NSString * currentActivity = nil;
+    __block NSString * OAString = nil;
     
     [self sendIQCmd: IQCmd
 andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     {
-        NSString * stringValue = [OAResponse stringValue];
-        NSArray * attributeAndvalue = [stringValue componentsSeparatedByString: @"="];
+        OAString = [OAResponse stringValue];
+        
+        return YES;
+        
+    }];
+    
+    NSString * currentActivity = nil;
+    
+    if (OAString)
+    {
+        NSArray * attributeAndvalue = [OAString componentsSeparatedByString: @"="];
         
         if ([attributeAndvalue count] == 2)
         {
             currentActivity = attributeAndvalue[1];
         }
-        
-        return YES;
-    }];
+    }
+    
+    if (!currentActivity)
+    {
+        @throw [NSException exceptionWithName: FSCExceptionHarmonyHubCurrentActivity
+                                       reason: [NSString stringWithFormat:
+                                                @"Unexpected getCurrentActivity response from HUB: %@",
+                                                OAString]
+                                     userInfo: nil];
+    }
     
     return currentActivity;
 }
@@ -467,8 +504,6 @@ andWaitForValidResponse: nil];
             [NSThread sleepForTimeInterval: 0.25];
         }
     });
-    
-    [self setXmppStream: nil];
 }
 
 #pragma mark XMPPStream Delegate

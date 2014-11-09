@@ -151,6 +151,10 @@
                 userMessage = @"Sucessfully connected to Harmony Hub.";
                 
                 NSLog(@"Current activity: %@", [client currentActivity]);
+                
+                FSCHarmonyConfiguration * config = [client configuration];
+                
+                NSLog(@"%@", config);
             }
             @catch (NSException * exception)
             {
@@ -168,6 +172,10 @@
                 if (!userMessage)
                 {
                     @throw exception;
+                }
+                else
+                {
+                    NSLog(@"%@", exception);
                 }
             }
             @finally
