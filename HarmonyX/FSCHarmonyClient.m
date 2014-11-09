@@ -360,7 +360,7 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
 
 #pragma mark - Operations
 
-- (NSDictionary *) configuration
+- (FSCHarmonyConfiguration *) configuration
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
@@ -408,7 +408,9 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
                                      userInfo: nil];
     }
     
-    return configuration;
+    FSCHarmonyConfiguration * harmonyConfig = [FSCHarmonyConfiguration modelObjectWithDictionary: configuration];
+    
+    return harmonyConfig;
 }
 
 - (NSString *) currentActivity

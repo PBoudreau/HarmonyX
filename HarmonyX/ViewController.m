@@ -152,14 +152,9 @@
                 
                 NSLog(@"Current activity: %@", [client currentActivity]);
                 
-                NSDictionary * config = [client configuration];
+                FSCHarmonyConfiguration * config = [client configuration];
                 
-                NSError * error;
-                NSData * data = [NSJSONSerialization dataWithJSONObject: config
-                                                                options: NSJSONWritingPrettyPrinted
-                                                                  error: &error];
-                [data writeToFile: @"/Volumes/pboudreau/Work/HarmonyX/harmony_config-ios-v2.txt"
-                       atomically: YES];
+                NSLog(@"%@", config);
             }
             @catch (NSException * exception)
             {
@@ -177,6 +172,10 @@
                 if (!userMessage)
                 {
                     @throw exception;
+                }
+                else
+                {
+                    NSLog(@"%@", exception);
                 }
             }
             @finally

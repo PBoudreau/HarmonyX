@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "FSCHarmonyConfiguration.h"
+
 @interface FSCHarmonyClient : NSObject
 
 + (id) clientWithMyHarmonyUsername: (NSString *) username
@@ -15,7 +17,7 @@
                harmonyHubIPAddress: (NSString *) IPAddress
                     harmonyHubPort: (NSUInteger) port;
 
-- (NSDictionary *) configuration;
+- (FSCHarmonyConfiguration *) configuration;
 
 - (NSString *) currentActivity;
 
