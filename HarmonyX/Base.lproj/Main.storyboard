@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -10,89 +11,107 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="Rzt-q9-Eoa"/>
+                        <viewControllerLayoutGuide type="bottom" id="1Hy-rD-pri"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="zUP-As-b8V">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xic-36-Lth">
-                                <rect key="frame" x="281" y="20" width="38" height="30"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright (c) 2014 Fasterre. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="YH1-NL-TI5">
+                                <rect key="frame" x="20" y="559" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HarmonyX" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="l7F-wq-6tB">
+                                <rect key="frame" x="20" y="180" width="560" height="43"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gwo-Nq-ECJ">
+                                <rect key="frame" x="16" y="231" width="564" height="320"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MyHarmony Username" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hLA-P5-EF7">
+                                        <rect key="frame" x="8" y="8" width="548" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="7Jd-zv-MFg"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MyHarmony Password" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="zpY-49-nh8">
+                                        <rect key="frame" x="8" y="46" width="548" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Harmony Hub IP Address" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ado-UL-SOr">
+                                        <rect key="frame" x="8" y="84" width="548" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="5222" placeholder="Harmony Hub Port" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ki2-oP-2tW">
+                                        <rect key="frame" x="8" y="122" width="548" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B2y-TP-xdN">
+                                        <rect key="frame" x="253" y="160" width="59" height="30"/>
+                                        <state key="normal" title="Connect">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="connectButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7IR-Kx-gyg"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="GLe-Bb-iba"/>
-                                    <constraint firstAttribute="width" constant="38" id="IkR-xX-36D"/>
+                                    <constraint firstItem="Ki2-oP-2tW" firstAttribute="trailing" secondItem="zpY-49-nh8" secondAttribute="trailing" id="1Ju-SR-F5m"/>
+                                    <constraint firstItem="B2y-TP-xdN" firstAttribute="top" secondItem="Ki2-oP-2tW" secondAttribute="bottom" constant="8" id="4Fv-jx-8QW"/>
+                                    <constraint firstItem="hLA-P5-EF7" firstAttribute="top" secondItem="gwo-Nq-ECJ" secondAttribute="top" constant="8" id="4Wx-o5-gYz"/>
+                                    <constraint firstItem="hLA-P5-EF7" firstAttribute="leading" secondItem="gwo-Nq-ECJ" secondAttribute="leading" constant="8" id="6O6-f2-Pdw"/>
+                                    <constraint firstItem="Ado-UL-SOr" firstAttribute="top" secondItem="zpY-49-nh8" secondAttribute="bottom" constant="8" id="A8V-DM-DXn"/>
+                                    <constraint firstItem="Ki2-oP-2tW" firstAttribute="height" secondItem="Ado-UL-SOr" secondAttribute="height" id="Egc-Cx-BqJ"/>
+                                    <constraint firstItem="Ki2-oP-2tW" firstAttribute="height" secondItem="zpY-49-nh8" secondAttribute="height" id="F05-al-tef"/>
+                                    <constraint firstItem="Ki2-oP-2tW" firstAttribute="trailing" secondItem="hLA-P5-EF7" secondAttribute="trailing" id="M96-yi-k3a"/>
+                                    <constraint firstItem="Ki2-oP-2tW" firstAttribute="trailing" secondItem="Ado-UL-SOr" secondAttribute="trailing" id="Mek-fM-CVq"/>
+                                    <constraint firstItem="Ki2-oP-2tW" firstAttribute="top" secondItem="Ado-UL-SOr" secondAttribute="bottom" constant="8" id="QbA-5g-r6d"/>
+                                    <constraint firstItem="Ki2-oP-2tW" firstAttribute="leading" secondItem="Ado-UL-SOr" secondAttribute="leading" id="Spb-Y3-3HR"/>
+                                    <constraint firstItem="Ki2-oP-2tW" firstAttribute="leading" secondItem="zpY-49-nh8" secondAttribute="leading" id="bBg-0f-ttC"/>
+                                    <constraint firstItem="Ki2-oP-2tW" firstAttribute="height" secondItem="hLA-P5-EF7" secondAttribute="height" id="fnn-oi-uq8"/>
+                                    <constraint firstItem="zpY-49-nh8" firstAttribute="top" secondItem="hLA-P5-EF7" secondAttribute="bottom" constant="8" id="hcC-JT-0jG"/>
+                                    <constraint firstAttribute="trailing" secondItem="hLA-P5-EF7" secondAttribute="trailing" constant="8" id="iOn-kC-LOg"/>
+                                    <constraint firstItem="Ki2-oP-2tW" firstAttribute="leading" secondItem="hLA-P5-EF7" secondAttribute="leading" id="pdX-KS-Moj"/>
+                                    <constraint firstAttribute="centerX" secondItem="B2y-TP-xdN" secondAttribute="centerX" id="uzA-6g-cvX"/>
                                 </constraints>
-                                <state key="normal" title="Login">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="loginButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uFY-ip-UsU"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kky-lp-lte">
-                                <rect key="frame" x="278" y="58" width="45" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="EeP-lc-EQr"/>
-                                </constraints>
-                                <state key="normal" title="Config">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="configButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="20s-ym-ro4"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E6R-Zt-SsZ">
-                                <rect key="frame" x="250" y="96" width="101" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="S8Z-bD-zZX"/>
-                                </constraints>
-                                <state key="normal" title="Curent Activity">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="currentActivityButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1lW-CJ-min"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2st-Ex-653">
-                                <rect key="frame" x="225" y="134" width="151" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="1CH-61-A9N"/>
-                                </constraints>
-                                <state key="normal" title="Regarder Chromecast">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="regarderChromecastButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qqy-r9-KiU"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5D8-Dd-FrG">
-                                <rect key="frame" x="285" y="285" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="CDd-zD-xK9"/>
-                                </constraints>
-                                <state key="normal" title="OFF">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="offButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FM4-7k-PPw"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="kky-lp-lte" firstAttribute="top" secondItem="Xic-36-Lth" secondAttribute="bottom" constant="8" id="A4Z-dv-zUv"/>
-                            <constraint firstAttribute="centerX" secondItem="E6R-Zt-SsZ" secondAttribute="centerX" id="Abt-G8-FJB"/>
-                            <constraint firstItem="5D8-Dd-FrG" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="285" id="AgM-dY-h8z"/>
-                            <constraint firstAttribute="centerX" secondItem="Xic-36-Lth" secondAttribute="centerX" id="YV0-0I-3oa"/>
-                            <constraint firstAttribute="centerX" secondItem="kky-lp-lte" secondAttribute="centerX" id="fGt-da-ZPf"/>
-                            <constraint firstAttribute="centerX" secondItem="2st-Ex-653" secondAttribute="centerX" id="hV3-v2-5ib"/>
-                            <constraint firstItem="2st-Ex-653" firstAttribute="top" secondItem="E6R-Zt-SsZ" secondAttribute="bottom" constant="8" id="jnX-c3-ieq"/>
-                            <constraint firstAttribute="centerX" secondItem="5D8-Dd-FrG" secondAttribute="centerX" id="lDX-Ht-2Zf"/>
-                            <constraint firstItem="Xic-36-Lth" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="xTJ-Os-p9x"/>
-                            <constraint firstItem="E6R-Zt-SsZ" firstAttribute="top" secondItem="kky-lp-lte" secondAttribute="bottom" constant="8" id="xWy-ay-fh1"/>
+                            <constraint firstItem="l7F-wq-6tB" firstAttribute="centerY" secondItem="zUP-As-b8V" secondAttribute="bottom" multiplier="1/3" constant="1" id="5hq-h5-64P"/>
+                            <constraint firstAttribute="bottom" secondItem="YH1-NL-TI5" secondAttribute="bottom" constant="20" id="7lR-0t-Mqh"/>
+                            <constraint firstItem="gwo-Nq-ECJ" firstAttribute="top" secondItem="l7F-wq-6tB" secondAttribute="bottom" constant="8" id="7tM-Q7-0eg"/>
+                            <constraint firstItem="gwo-Nq-ECJ" firstAttribute="leading" secondItem="zUP-As-b8V" secondAttribute="leadingMargin" id="A7H-8U-fd0"/>
+                            <constraint firstAttribute="centerX" secondItem="YH1-NL-TI5" secondAttribute="centerX" id="NWF-6a-iKe"/>
+                            <constraint firstItem="YH1-NL-TI5" firstAttribute="leading" secondItem="zUP-As-b8V" secondAttribute="leading" constant="20" symbolic="YES" id="OWo-e2-JA1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gwo-Nq-ECJ" secondAttribute="trailing" constant="4" id="Oup-dv-VbH"/>
+                            <constraint firstAttribute="centerX" secondItem="l7F-wq-6tB" secondAttribute="centerX" id="V9r-5C-nTh"/>
+                            <constraint firstItem="l7F-wq-6tB" firstAttribute="top" secondItem="Rzt-q9-Eoa" secondAttribute="bottom" priority="750" constant="160" id="e4V-os-G3F"/>
+                            <constraint firstItem="l7F-wq-6tB" firstAttribute="leading" secondItem="zUP-As-b8V" secondAttribute="leading" constant="20" symbolic="YES" id="vhe-A9-QeK"/>
+                            <constraint firstItem="YH1-NL-TI5" firstAttribute="top" secondItem="gwo-Nq-ECJ" secondAttribute="bottom" constant="8" id="xfp-jN-Bdu"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="IPAddressTextField" destination="Ado-UL-SOr" id="r7d-Nh-anC"/>
+                        <outlet property="contentView" destination="gwo-Nq-ECJ" id="XOU-A1-byh"/>
+                        <outlet property="harmonyLabel" destination="l7F-wq-6tB" id="WzX-Jp-teN"/>
+                        <outlet property="harmonyLabelCenterYConstraint" destination="5hq-h5-64P" id="aSv-py-fON"/>
+                        <outlet property="harmonyLabelTopSpaceConstraint" destination="e4V-os-G3F" id="UEa-FR-n0o"/>
+                        <outlet property="passwordTextField" destination="zpY-49-nh8" id="V6j-vw-h1k"/>
+                        <outlet property="portTextField" destination="Ki2-oP-2tW" id="acU-6N-yxB"/>
+                        <outlet property="usernameTextField" destination="hLA-P5-EF7" id="W4Q-BP-scp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

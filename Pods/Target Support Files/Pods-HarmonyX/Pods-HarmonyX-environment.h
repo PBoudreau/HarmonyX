@@ -75,6 +75,24 @@
 // Please contact the author.
 // Version: 1.6.5.1.
 
+// MBProgressHUD
+#define COCOAPODS_POD_AVAILABLE_MBProgressHUD
+#define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
+#define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
+#define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
+
+// MBProgressHUDExtensions
+#define COCOAPODS_POD_AVAILABLE_MBProgressHUDExtensions
+#define COCOAPODS_VERSION_MAJOR_MBProgressHUDExtensions 0
+#define COCOAPODS_VERSION_MINOR_MBProgressHUDExtensions 0
+#define COCOAPODS_VERSION_PATCH_MBProgressHUDExtensions 1
+
+// SimpleKeychain
+#define COCOAPODS_POD_AVAILABLE_SimpleKeychain
+#define COCOAPODS_VERSION_MAJOR_SimpleKeychain 0
+#define COCOAPODS_VERSION_MINOR_SimpleKeychain 2
+#define COCOAPODS_VERSION_PATCH_SimpleKeychain 0
+
 // XMPPFramework
 #define COCOAPODS_POD_AVAILABLE_XMPPFramework
 #define COCOAPODS_VERSION_MAJOR_XMPPFramework 3

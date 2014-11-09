@@ -11,7 +11,11 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString * const FSCNetworkingFailureException = @"FSCNetworkingFailureException";
-static NSString * const FSCMalformedJSONException = @"FSCMalformedJSONException";
+static NSString * const FSCExceptionMyHarmonyConnection = @"FSCExceptionMyHarmonyConnection";
+static NSString * const FSCExceptionHarmonyHubConnection = @"FSCExceptionHarmonyHubConnection";
+
+static NSString * const FSCErrorDomain = @"com.trov.trov";
+
+static int const FSCErrorCodeUnexpectedMyHarmonyResponse = 1;
 
 #endif
