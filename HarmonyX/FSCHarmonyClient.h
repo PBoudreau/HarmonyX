@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "FSCHarmonyConfiguration.h"
+#import "FSCActivity.h"
 
 @interface FSCHarmonyClient : NSObject
 
@@ -21,7 +22,8 @@
 
 - (NSString *) currentActivity;
 
-- (void) startActivity: (NSString *) activityId;
+- (void) startActivityWithId: (NSString *) activityId;
+- (void) startActivity: (FSCActivity *) activity;
 
 - (void) turnOff;
 

@@ -8,6 +8,7 @@
 #import "FSCActivity.h"
 #import "FSCControlGroup.h"
 
+#import "UIImage+Mask.h"
 
 NSString *const kFSCActivityId = @"id";
 NSString *const kFSCActivityBaseImageUri = @"baseImageUri";
@@ -22,9 +23,12 @@ NSString *const kFSCActivityActivityOrder = @"activityOrder";
 NSString *const kFSCActivityIcon = @"icon";
 NSString *const kFSCActivityIsTuningDefault = @"isTuningDefault";
 NSString *const kFSCActivitySuggestedDisplay = @"suggestedDisplay";
+NSString *const kFSCActivityImageName = @"imageName";
 
 
 @interface FSCActivity ()
+
+@property (nonatomic, copy) NSString * imageName;
 
 - (id)objectOrNilForKey:(id)aKey fromDictionary:(NSDictionary *)dict;
 
@@ -85,8 +89,56 @@ NSString *const kFSCActivitySuggestedDisplay = @"suggestedDisplay";
 
     }
     
+    [self deriveImageName];
+    
     return self;
     
+}
+
+- (void) deriveImageName
+{
+    NSString * imageSuffix = @"custom";
+    
+    if ([self suggestedDisplay] &&
+        ![[self suggestedDisplay] isEqualToString: @"Default"])
+    {
+        if ([[self suggestedDisplay] isEqualToString: @"WatchAppleTV"])
+        {
+            imageSuffix = @"appletv";
+        }
+    }
+    else
+    {
+        if ([[self type] isEqualToString: @"PowerOff"])
+        {
+            imageSuffix = @"powering_off";
+        }
+        else if ([[self type] isEqualToString: @"VirtualCdMulti"])
+        {
+            imageSuffix = @"playmusic";
+        }
+        else if ([[self type] isEqualToString: @"VirtualTelevisionN"])
+        {
+            imageSuffix = @"watchtv";
+        }
+        else if ([[self type] isEqualToString: @"VirtualDvd"])
+        {
+            imageSuffix = @"watchmovie";
+        }
+    }
+    
+    [self setImageName: [NSString stringWithFormat:
+                         @"activity_%@",
+                         imageSuffix]];
+}
+
+- (UIImage *) maskedImageWithColor: (UIColor *) color
+{
+    UIImage * mask = [UIImage imageNamed: [self imageName]];
+    
+    UIImage * maskedImage = [mask maskedImageWithColor: color];
+    
+    return maskedImage;
 }
 
 - (NSDictionary *)dictionaryRepresentation
@@ -159,6 +211,7 @@ NSString *const kFSCActivitySuggestedDisplay = @"suggestedDisplay";
     self.icon = [aDecoder decodeObjectForKey:kFSCActivityIcon];
     self.isTuningDefault = [aDecoder decodeBoolForKey:kFSCActivityIsTuningDefault];
     self.suggestedDisplay = [aDecoder decodeObjectForKey:kFSCActivitySuggestedDisplay];
+    self.imageName = [aDecoder decodeObjectForKey:kFSCActivityImageName];
     return self;
 }
 
@@ -177,6 +230,7 @@ NSString *const kFSCActivitySuggestedDisplay = @"suggestedDisplay";
     [aCoder encodeObject:_icon forKey:kFSCActivityIcon];
     [aCoder encodeBool:_isTuningDefault forKey:kFSCActivityIsTuningDefault];
     [aCoder encodeObject:_suggestedDisplay forKey:kFSCActivitySuggestedDisplay];
+    [aCoder encodeObject:_imageName forKey:kFSCActivityImageName];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -197,6 +251,7 @@ NSString *const kFSCActivitySuggestedDisplay = @"suggestedDisplay";
         copy.icon = [self.icon copyWithZone:zone];
         copy.isTuningDefault = self.isTuningDefault;
         copy.suggestedDisplay = [self.suggestedDisplay copyWithZone:zone];
+        copy.imageName = [self.imageName copyWithZone:zone];
     }
     
     return copy;

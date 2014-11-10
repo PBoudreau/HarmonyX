@@ -114,7 +114,7 @@ static const CGFloat extensionHeight = 37.0;
 {
     [self executeBlockWithConnectedClient:^(FSCHarmonyClient * client) {
         
-        [client startActivity: @"9204546"];
+        [client startActivityWithId: @"9204546"];
     }];
 }
 
@@ -122,7 +122,7 @@ static const CGFloat extensionHeight = 37.0;
 {
     [self executeBlockWithConnectedClient:^(FSCHarmonyClient * client) {
         
-        [client startActivity: @"5881221"];
+        [client startActivityWithId: @"5881221"];
     }];
 }
 

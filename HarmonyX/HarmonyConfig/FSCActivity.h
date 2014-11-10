@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface FSCActivity : NSObject <NSCoding, NSCopying>
 
@@ -25,5 +26,7 @@
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 - (NSDictionary *)dictionaryRepresentation;
+
+- (UIImage *) maskedImageWithColor: (UIColor *) color;
 
 @end

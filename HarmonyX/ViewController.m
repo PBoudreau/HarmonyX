@@ -44,6 +44,8 @@
     
     [self loadValues];
     
+    [self loadConfiguration];
+    
     [[self view] layoutIfNeeded];
     
     [[self view] removeConstraint: [self harmonyLabelCenterYConstraint]];
@@ -76,9 +78,9 @@
     NSUInteger port;
     
     [FSCDataSharingController loadUsername: &username
-                                      password: &password
-                                     IPAddress: &IPAddress
-                                          port: &port];
+                                  password: &password
+                                 IPAddress: &IPAddress
+                                      port: &port];
     
     [[self usernameTextField] setText: username];
     [[self passwordTextField] setText: password];
@@ -86,10 +88,15 @@
     [[self portTextField] setText: [NSString stringWithFormat: @"%lu", (unsigned long)port]];
 }
 
+- (void) loadConfiguration
+{
+    [self setHarmonyConfiguration: [FSCDataSharingController loadHarmonyConfiguration]];
+}
+
 - (IBAction) connectButtonTapped: (id) sender
 {
     NSString * username = [[self usernameTextField] text];
-    NSString * passsord = [[self passwordTextField] text];
+    NSString * passsword = [[self passwordTextField] text];
     NSString * IPAddress = [[self IPAddressTextField] text];
     NSUInteger port = [[[self portTextField] text] integerValue];
     
@@ -100,8 +107,8 @@
     {
         errorMessage = @"Username is required.";
     }
-    else if (!passsord ||
-             [passsord isEqualToString: @""])
+    else if (!passsword ||
+             [passsword isEqualToString: @""])
     {
         errorMessage = @"Password is required.";
     }
@@ -135,90 +142,106 @@
     else
     {
         [FSCDataSharingController saveUsername: username
-                                      password: passsord
+                                      password: passsword
                                      IPAddress: IPAddress
                                           port: port];
         
-        [self showHUD];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self performBlockingClientActionsWithBlock: ^(FSCHarmonyClient *client) {
             
-            FSCHarmonyClient * client = nil;
-            NSString * userTitle = @"";
-            NSString * userMessage = nil;
-            FSCHarmonyConfiguration * configuration = nil;
+            NSLog(@"Current activity: %@", [client currentActivity]);
             
-            @try
-            {
-                client = [FSCHarmonyClient clientWithMyHarmonyUsername: username
-                                                     myHarmonyPassword: passsord
-                                                   harmonyHubIPAddress: IPAddress
-                                                        harmonyHubPort: port];
-                
-                userMessage = @"Sucessfully connected to Harmony Hub.";
-                
-                NSLog(@"Current activity: %@", [client currentActivity]);
-                
-                configuration = [client configuration];
-                
-                [FSCDataSharingController saveHarmonyConfiguration: configuration];
-            }
-            @catch (NSException * exception)
-            {
-                userTitle = @"Error";
-                
-                if ([[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
-                {
-                    userMessage = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
-                }
-                else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
-                {
-                    userMessage = @"Could not connect to Harmony Hub with the provided IP address and port.";
-                }
-                
-                if (!userMessage)
-                {
-                    @throw exception;
-                }
-                else
-                {
-                    NSLog(@"%@", exception);
-                }
-            }
-            @finally
-            {
-                if (client)
-                {
-                    [client disconnect];
-                }
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [self setHarmonyConfiguration: configuration];
-                
-                [self hideHUD];
-                
-                if (userMessage)
-                {
-                    UIAlertController * controller = [UIAlertController alertControllerWithTitle: userTitle
-                                                                                         message: userMessage
-                                                                                  preferredStyle: UIAlertControllerStyleAlert];
-                    [controller addAction: [UIAlertAction actionWithTitle: @"OK"
-                                                                    style: UIAlertActionStyleDefault
-                                                                  handler: ^(UIAlertAction *action) {
-                                                                      
-                                                                      [self dismissViewControllerAnimated: controller
-                                                                                               completion: nil];
-                                                                  }]];
-                    
-                    [self presentViewController: controller
-                                       animated: YES
-                                     completion: nil];
-                }
-            });
-        });
+            [FSCDataSharingController saveHarmonyConfiguration: [client configuration]];
+        }];
     }
+}
+
+- (void) performBlockingClientActionsWithBlock: (void (^)(FSCHarmonyClient * client))actionsBlock
+{
+    [self showHUD];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        FSCHarmonyClient * client = nil;
+        NSString * userTitle = @"";
+        NSString * userMessage = nil;
+        FSCHarmonyConfiguration * configuration = nil;
+        
+        @try
+        {
+            NSString * username;
+            NSString * password;
+            NSString * IPAddress;
+            NSUInteger port;
+            
+            [FSCDataSharingController loadUsername: &username
+                                          password: &password
+                                         IPAddress: &IPAddress
+                                              port: &port];
+            
+            client = [FSCHarmonyClient clientWithMyHarmonyUsername: username
+                                                 myHarmonyPassword: password
+                                               harmonyHubIPAddress: IPAddress
+                                                    harmonyHubPort: port];
+            
+            userMessage = @"Sucessfully connected to Harmony Hub.";
+            
+            actionsBlock(client);
+        }
+        @catch (NSException * exception)
+        {
+            userTitle = @"Error";
+            
+            if ([[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
+            {
+                userMessage = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
+            }
+            else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
+            {
+                userMessage = @"Could not connect to Harmony Hub with the provided IP address and port.";
+            }
+            
+            if (!userMessage)
+            {
+                @throw exception;
+            }
+            else
+            {
+                NSLog(@"%@", exception);
+            }
+        }
+        @finally
+        {
+            if (client)
+            {
+                [client disconnect];
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self setHarmonyConfiguration: configuration];
+            
+            [self hideHUD];
+            
+            if (userMessage)
+            {
+                UIAlertController * controller = [UIAlertController alertControllerWithTitle: userTitle
+                                                                                     message: userMessage
+                                                                              preferredStyle: UIAlertControllerStyleAlert];
+                [controller addAction: [UIAlertAction actionWithTitle: @"OK"
+                                                                style: UIAlertActionStyleDefault
+                                                              handler: ^(UIAlertAction *action) {
+                                                                  
+                                                                  [self dismissViewControllerAnimated: controller
+                                                                                           completion: nil];
+                                                              }]];
+                
+                [self presentViewController: controller
+                                   animated: YES
+                                 completion: nil];
+            }
+        });
+    });
 }
 
 - (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
@@ -251,11 +274,23 @@
     
     FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
     
-    [cell setActivity: activity];
+    [cell setActivity: activity
+        withMaskColor: [UIColor whiteColor]];
     
     return cell;
 }
 
 #pragma mark - UICollectionViewDelegate
+
+- (void) collectionView:(UICollectionView *) collectionView
+didSelectItemAtIndexPath: (NSIndexPath *) indexPath
+{
+    FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
+    
+    [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
+        
+        [client startActivity: activity];
+    }];
+}
 
 @end
