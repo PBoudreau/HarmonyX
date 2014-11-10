@@ -14,6 +14,7 @@ static NSString * const FSCDataSharingGroupName = @"group.fasterre.HarmonyXToday
 static NSString * const FSCDataSharingDefaultsKeyUsername = @"username";
 static NSString * const FSCDataSharingDefaultsKeyIPAddress = @"ipaddress";
 static NSString * const FSCDataSharingDefaultsKeyPort = @"port";
+static NSString * const FSCDataSharingDefaultsKeyHarmonyConfiguration = @"harmonyConfiguration";
 
 static NSString * const FSCTeamID = @"239SMQFQ7S";
 static NSString * const FSCDataSharingKeychainGroupName = @"com.fasterre.HarmonyX";
@@ -79,6 +80,34 @@ static NSString * const FSCDataSharingKeychainKeyPassword = @"password";
     }
     
     *port = [portString integerValue];
+}
+
++ (void) saveHarmonyConfiguration: (FSCHarmonyConfiguration *) configuration
+{
+    NSDictionary * configurationDictionary = [configuration dictionaryRepresentation];
+    
+    NSUserDefaults * sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: FSCDataSharingGroupName];
+    
+    [sharedDefaults setObject: configurationDictionary
+                       forKey: FSCDataSharingDefaultsKeyHarmonyConfiguration];
+    [sharedDefaults synchronize];
+}
+
++ (FSCHarmonyConfiguration *) loadHarmonyConfiguration
+{
+    NSUserDefaults * sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: FSCDataSharingGroupName];
+    [sharedDefaults synchronize];
+    
+    NSDictionary * configurationDictionary = [sharedDefaults objectForKey: FSCDataSharingDefaultsKeyHarmonyConfiguration];
+    
+    FSCHarmonyConfiguration * configuration = nil;
+    
+    if (configurationDictionary)
+    {
+        configuration = [FSCHarmonyConfiguration modelObjectWithDictionary: configurationDictionary];
+    }
+    
+    return configuration;
 }
 
 @end

@@ -160,6 +160,8 @@
                 NSLog(@"Current activity: %@", [client currentActivity]);
                 
                 configuration = [client configuration];
+                
+                [FSCDataSharingController saveHarmonyConfiguration: configuration];
             }
             @catch (NSException * exception)
             {

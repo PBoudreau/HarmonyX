@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "FSCHarmonyConfiguration.h"
+
 @interface FSCDataSharingController : NSObject
 
 + (void) saveUsername: (NSString *) username
@@ -19,5 +21,9 @@
              password: (NSString **) password
             IPAddress: (NSString **) IPAddress
                  port: (NSUInteger*) port;
+
++ (void) saveHarmonyConfiguration: (FSCHarmonyConfiguration *) configuration;
+
++ (FSCHarmonyConfiguration *) loadHarmonyConfiguration;
 
 @end
