@@ -39,6 +39,15 @@ static CGFloat const activityCellDim = 75.0;
 - (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
 {
     [super setHarmonyConfiguration: harmonyConfiguration];
+
+    NSString * statusLabelText = @"";
+    
+    if (![self harmonyConfiguration])
+    {
+        statusLabelText = @"Please use the app to load activities.";
+    }
+    
+    [[self statusLabel] setText: statusLabelText];
     
     [self updatePreferredContentSize];
 }
