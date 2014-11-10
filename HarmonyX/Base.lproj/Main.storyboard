@@ -163,7 +163,7 @@
                     </view>
                     <connections>
                         <outlet property="IPAddressTextField" destination="Ado-UL-SOr" id="r7d-Nh-anC"/>
-                        <outlet property="activityCollectionView" destination="bum-mP-20H" id="Wjf-oU-SXO"/>
+                        <outlet property="activityCollectionView" destination="bum-mP-20H" id="w14-y9-0TN"/>
                         <outlet property="contentView" destination="gwo-Nq-ECJ" id="XOU-A1-byh"/>
                         <outlet property="harmonyLabel" destination="l7F-wq-6tB" id="WzX-Jp-teN"/>
                         <outlet property="harmonyLabelCenterYConstraint" destination="5hq-h5-64P" id="aSv-py-fON"/>

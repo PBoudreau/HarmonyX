@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TodayViewController : UIViewController
+#import "FSCHarmonyViewController.h"
+
+@interface TodayViewController : FSCHarmonyViewController
 
 @end

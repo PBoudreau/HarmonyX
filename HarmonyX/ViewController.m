@@ -10,13 +10,9 @@
 
 #import <MBProgressHUDExtensions/UIViewController+MBProgressHUD.h>
 
-#import "FSCActivityCollectionViewCell.h"
-
-#import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
-#import "FSCHarmonyClient.h"
 
-@interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *harmonyLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *harmonyLabelCenterYConstraint;
@@ -27,10 +23,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *IPAddressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *portTextField;
-
-@property (weak, nonatomic) IBOutlet UICollectionView *activityCollectionView;
-
-@property (strong, nonatomic) FSCHarmonyConfiguration * harmonyConfiguration;
 
 @end
 
@@ -86,11 +78,6 @@
     [[self passwordTextField] setText: password];
     [[self IPAddressTextField] setText: IPAddress];
     [[self portTextField] setText: [NSString stringWithFormat: @"%lu", (unsigned long)port]];
-}
-
-- (void) loadConfiguration
-{
-    [self setHarmonyConfiguration: [FSCDataSharingController loadHarmonyConfiguration]];
 }
 
 - (IBAction) connectButtonTapped: (id) sender
@@ -168,144 +155,36 @@
     }
 }
 
-- (void) performBlockingClientActionsWithBlock: (void (^)(FSCHarmonyClient * client))actionsBlock
-                     mainThreadCompletionBlock: (void (^)(void))completionBlock
+- (void) prepareForBlockingClientAction
 {
+    [super prepareForBlockingClientAction];
+    
     [self showHUD];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        FSCHarmonyClient * client = nil;
-        NSString * userTitle = @"";
-        NSString * userMessage = nil;
-        
-        @try
-        {
-            NSString * username;
-            NSString * password;
-            NSString * IPAddress;
-            NSUInteger port;
-            
-            [FSCDataSharingController loadUsername: &username
-                                          password: &password
-                                         IPAddress: &IPAddress
-                                              port: &port];
-            
-            client = [FSCHarmonyClient clientWithMyHarmonyUsername: username
-                                                 myHarmonyPassword: password
-                                               harmonyHubIPAddress: IPAddress
-                                                    harmonyHubPort: port];
-            
-            actionsBlock(client);
-        }
-        @catch (NSException * exception)
-        {
-            userTitle = @"Error";
-            
-            if ([[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
-            {
-                userMessage = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
-            }
-            else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
-            {
-                userMessage = @"Could not connect to Harmony Hub with the provided IP address and port.";
-            }
-            
-            if (!userMessage)
-            {
-                @throw exception;
-            }
-            else
-            {
-                NSLog(@"%@", exception);
-            }
-        }
-        @finally
-        {
-            if (client)
-            {
-                [client disconnect];
-            }
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if (completionBlock)
-            {
-                completionBlock();
-            }
-            
-            [self hideHUD];
-            
-            if (userMessage)
-            {
-                UIAlertController * controller = [UIAlertController alertControllerWithTitle: userTitle
-                                                                                     message: userMessage
-                                                                              preferredStyle: UIAlertControllerStyleAlert];
-                [controller addAction: [UIAlertAction actionWithTitle: @"OK"
-                                                                style: UIAlertActionStyleDefault
-                                                              handler: ^(UIAlertAction *action) {
-                                                                  
-                                                                  [self dismissViewControllerAnimated: controller
-                                                                                           completion: nil];
-                                                              }]];
-                
-                [self presentViewController: controller
-                                   animated: YES
-                                 completion: nil];
-            }
-        });
-    });
 }
 
-- (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
+- (void) cleanupAfterBlockingClientActionWithError: (NSError *) error
 {
-    _harmonyConfiguration = harmonyConfiguration;
+    [super cleanupAfterBlockingClientActionWithError: error];
     
-    [[self activityCollectionView] reloadData];
-}
-
-#pragma mark - UICollectionViewDatasource
-
-- (NSInteger) collectionView: (UICollectionView *) collectionView
-      numberOfItemsInSection: (NSInteger) section
-{
-    NSInteger count = 0;
+    [self hideHUD];
     
-    if ([self harmonyConfiguration])
+    if (error)
     {
-        count = [[[self harmonyConfiguration] activity] count];
-    }
-    
-    return count;
-}
-
-- (UICollectionViewCell *) collectionView: (UICollectionView *) collectionView
-                   cellForItemAtIndexPath: (NSIndexPath *) indexPath
-{
-    FSCActivityCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier: FSCActtivityCellIdentifier
-                                                                                     forIndexPath: indexPath];
-    
-    FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
-    
-    [cell setActivity: activity
-        withMaskColor: [UIColor whiteColor]];
-    
-    return cell;
-}
-
-#pragma mark - UICollectionViewDelegate
-
-- (void) collectionView:(UICollectionView *) collectionView
-didSelectItemAtIndexPath: (NSIndexPath *) indexPath
-{
-    FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
-    
-    [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
+        UIAlertController * controller = [UIAlertController alertControllerWithTitle: @""
+                                                                             message: [error localizedDescription]
+                                                                      preferredStyle: UIAlertControllerStyleAlert];
+        [controller addAction: [UIAlertAction actionWithTitle: @"OK"
+                                                        style: UIAlertActionStyleDefault
+                                                      handler: ^(UIAlertAction *action) {
+                                                          
+                                                          [self dismissViewControllerAnimated: controller
+                                                                                   completion: nil];
+                                                      }]];
         
-        [client startActivity: activity];
+        [self presentViewController: controller
+                           animated: YES
+                         completion: nil];
     }
-     mainThreadCompletionBlock: nil];
 }
 
 @end

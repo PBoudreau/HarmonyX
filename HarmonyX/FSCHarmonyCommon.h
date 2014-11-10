@@ -19,5 +19,6 @@ static NSString * const FSCExceptionHarmonyHubCurrentActivity = @"FSCExceptionHa
 static NSString * const FSCErrorDomain = @"com.trov.trov";
 
 static int const FSCErrorCodeUnexpectedMyHarmonyResponse = 1;
+static int const FSCErrorCodeErrorPerformingClientAction = 2;
 
 #endif
