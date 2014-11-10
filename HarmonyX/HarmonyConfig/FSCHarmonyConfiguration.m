@@ -58,7 +58,7 @@ NSString *const kFSCHarmonyConfigGlobal = @"global";
        [parsedFSCActivity addObject:[FSCActivity modelObjectWithDictionary:(NSDictionary *)receivedFSCActivity]];
     }
 
-    self.activity = [NSArray arrayWithArray: [parsedFSCActivity sortedArrayUsingComparator: ^NSComparisonResult(FSCActivity * activity1, FSCActivity * activity2) {
+    self.activity = [parsedFSCActivity sortedArrayUsingComparator: ^NSComparisonResult(FSCActivity * activity1, FSCActivity * activity2) {
         
         NSComparisonResult result = NSOrderedSame;
         
@@ -79,7 +79,7 @@ NSString *const kFSCHarmonyConfigGlobal = @"global";
         }
         
         return result;
-    }]];
+    }];
             self.sequence = [self objectOrNilForKey:kFSCHarmonyConfigSequence fromDictionary:dict];
     NSObject *receivedFSCDevice = [dict objectForKey:kFSCHarmonyConfigDevice];
     NSMutableArray *parsedFSCDevice = [NSMutableArray array];

@@ -84,11 +84,11 @@ static NSString * const FSCDataSharingKeychainKeyPassword = @"password";
 
 + (void) saveHarmonyConfiguration: (FSCHarmonyConfiguration *) configuration
 {
-    NSDictionary * configurationDictionary = [configuration dictionaryRepresentation];
-    
     NSUserDefaults * sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: FSCDataSharingGroupName];
     
-    [sharedDefaults setObject: configurationDictionary
+    NSData * encodedConfiguration = [NSKeyedArchiver archivedDataWithRootObject: configuration];
+    
+    [sharedDefaults setObject: encodedConfiguration
                        forKey: FSCDataSharingDefaultsKeyHarmonyConfiguration];
     [sharedDefaults synchronize];
 }
@@ -98,14 +98,9 @@ static NSString * const FSCDataSharingKeychainKeyPassword = @"password";
     NSUserDefaults * sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: FSCDataSharingGroupName];
     [sharedDefaults synchronize];
     
-    NSDictionary * configurationDictionary = [sharedDefaults objectForKey: FSCDataSharingDefaultsKeyHarmonyConfiguration];
+    NSData * encodedConfiguration = [sharedDefaults objectForKey: FSCDataSharingDefaultsKeyHarmonyConfiguration];
     
-    FSCHarmonyConfiguration * configuration = nil;
-    
-    if (configurationDictionary)
-    {
-        configuration = [FSCHarmonyConfiguration modelObjectWithDictionary: configurationDictionary];
-    }
+    FSCHarmonyConfiguration * configuration = [NSKeyedUnarchiver unarchiveObjectWithData: encodedConfiguration];
     
     return configuration;
 }

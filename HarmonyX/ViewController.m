@@ -95,6 +95,11 @@
 
 - (IBAction) connectButtonTapped: (id) sender
 {
+    [[self usernameTextField] resignFirstResponder];
+    [[self passwordTextField] resignFirstResponder];
+    [[self IPAddressTextField] resignFirstResponder];
+    [[self portTextField] resignFirstResponder];
+    
     NSString * username = [[self usernameTextField] text];
     NSString * passsword = [[self passwordTextField] text];
     NSString * IPAddress = [[self IPAddressTextField] text];
@@ -146,16 +151,25 @@
                                      IPAddress: IPAddress
                                           port: port];
         
+        __block FSCHarmonyConfiguration * configuration = nil;
+        
         [self performBlockingClientActionsWithBlock: ^(FSCHarmonyClient *client) {
             
             NSLog(@"Current activity: %@", [client currentActivity]);
             
-            [FSCDataSharingController saveHarmonyConfiguration: [client configuration]];
-        }];
+            configuration = [client configuration];
+            
+            [FSCDataSharingController saveHarmonyConfiguration: configuration];
+        }
+         mainThreadCompletionBlock: ^{
+             
+             [self setHarmonyConfiguration: configuration];
+         }];
     }
 }
 
 - (void) performBlockingClientActionsWithBlock: (void (^)(FSCHarmonyClient * client))actionsBlock
+                     mainThreadCompletionBlock: (void (^)(void))completionBlock
 {
     [self showHUD];
     
@@ -164,7 +178,6 @@
         FSCHarmonyClient * client = nil;
         NSString * userTitle = @"";
         NSString * userMessage = nil;
-        FSCHarmonyConfiguration * configuration = nil;
         
         @try
         {
@@ -182,8 +195,6 @@
                                                  myHarmonyPassword: password
                                                harmonyHubIPAddress: IPAddress
                                                     harmonyHubPort: port];
-            
-            userMessage = @"Sucessfully connected to Harmony Hub.";
             
             actionsBlock(client);
         }
@@ -219,7 +230,10 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            [self setHarmonyConfiguration: configuration];
+            if (completionBlock)
+            {
+                completionBlock();
+            }
             
             [self hideHUD];
             
@@ -290,7 +304,8 @@ didSelectItemAtIndexPath: (NSIndexPath *) indexPath
     [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
         
         [client startActivity: activity];
-    }];
+    }
+     mainThreadCompletionBlock: nil];
 }
 
 @end
