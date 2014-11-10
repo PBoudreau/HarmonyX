@@ -10,11 +10,13 @@
 
 #import <MBProgressHUDExtensions/UIViewController+MBProgressHUD.h>
 
+#import "FSCActivityCollectionViewCell.h"
+
 #import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
 #import "FSCHarmonyClient.h"
 
-@interface ViewController ()
+@interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *harmonyLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *harmonyLabelCenterYConstraint;
@@ -25,6 +27,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *IPAddressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *portTextField;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *activityCollectionView;
+
+@property (strong, nonatomic) FSCHarmonyConfiguration * harmonyConfiguration;
 
 @end
 
@@ -140,6 +146,7 @@
             FSCHarmonyClient * client = nil;
             NSString * userTitle = @"";
             NSString * userMessage = nil;
+            FSCHarmonyConfiguration * configuration = nil;
             
             @try
             {
@@ -152,9 +159,7 @@
                 
                 NSLog(@"Current activity: %@", [client currentActivity]);
                 
-                FSCHarmonyConfiguration * config = [client configuration];
-                
-                NSLog(@"%@", config);
+                configuration = [client configuration];
             }
             @catch (NSException * exception)
             {
@@ -188,6 +193,8 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
+                [self setHarmonyConfiguration: configuration];
+                
                 [self hideHUD];
                 
                 if (userMessage)
@@ -211,5 +218,42 @@
         });
     }
 }
+
+- (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
+{
+    _harmonyConfiguration = harmonyConfiguration;
+    
+    [[self activityCollectionView] reloadData];
+}
+
+#pragma mark - UICollectionViewDatasource
+
+- (NSInteger) collectionView: (UICollectionView *) collectionView
+      numberOfItemsInSection: (NSInteger) section
+{
+    NSInteger count = 0;
+    
+    if ([self harmonyConfiguration])
+    {
+        count = [[[self harmonyConfiguration] activity] count];
+    }
+    
+    return count;
+}
+
+- (UICollectionViewCell *) collectionView: (UICollectionView *) collectionView
+                   cellForItemAtIndexPath: (NSIndexPath *) indexPath
+{
+    FSCActivityCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier: FSCActtivityCellIdentifier
+                                                                                     forIndexPath: indexPath];
+    
+    FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
+    
+    [cell setActivity: activity];
+    
+    return cell;
+}
+
+#pragma mark - UICollectionViewDelegate
 
 @end
