@@ -10,18 +10,21 @@
 
 @implementation UIImage (Mask)
 
-- (UIImage *) maskedImageWithColor: (UIColor *) color
+- (UIImage *) convertToInverseMaskWithColor: (UIColor *) color
 {
     CGRect rect = CGRectMake(0, 0, [self size].width, [self size].height);
     
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, self.scale);
     CGContextRef c = UIGraphicsGetCurrentContext();
     
-    [self drawInRect: rect];
-    
+    // Draw a background in the appropriate color (for mask)
     CGContextSetFillColorWithColor(c, [color CGColor]);
-    CGContextSetBlendMode(c, kCGBlendModeSourceAtop);
     CGContextFillRect(c, rect);
+    
+    // Apply the source image's alpha
+    [self drawInRect: rect
+           blendMode: kCGBlendModeDestinationOut
+               alpha: 1.0f];
     
     UIImage * result = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

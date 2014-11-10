@@ -109,7 +109,7 @@ static CGFloat const activityCellDim = 75.0;
 
 - (UIColor *) colorForActivityMask
 {
-    return [UIColor clearColor];
+    return [UIColor whiteColor];
 }
 
 #pragma mark - UICollectionViewDelegate

@@ -136,7 +136,7 @@ NSString *const kFSCActivityImageName = @"imageName";
 {
     UIImage * mask = [UIImage imageNamed: [self imageName]];
     
-    UIImage * maskedImage = [mask maskedImageWithColor: color];
+    UIImage * maskedImage = [mask convertToInverseMaskWithColor: color];
     
     return maskedImage;
 }

@@ -10,6 +10,6 @@
 
 @interface UIImage (Mask)
 
-- (UIImage *) maskedImageWithColor: (UIColor *) color;
+- (UIImage *) convertToInverseMaskWithColor: (UIColor *) color;
 
 @end

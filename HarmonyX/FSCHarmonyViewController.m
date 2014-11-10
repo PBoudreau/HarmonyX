@@ -137,7 +137,7 @@
 
 - (UIColor *) colorForActivityMask
 {
-    return [UIColor whiteColor];
+    return [UIColor blackColor];
 }
 
 #pragma mark - UICollectionViewDelegate
