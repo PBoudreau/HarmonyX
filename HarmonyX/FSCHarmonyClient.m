@@ -460,7 +460,7 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     return currentActivity;
 }
 
-- (void) startActivity: (NSString *) activityId
+- (void) startActivityWithId: (NSString *) activityId
 {
     NSLog(@"%@ %@", NSStringFromSelector(_cmd), activityId);
     
@@ -479,6 +479,11 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
 andWaitForValidResponse: nil];
 }
 
+- (void) startActivity: (FSCActivity *) activity
+{
+    [self startActivityWithId: [activity activityIdentifier]];
+}
+
 - (void) turnOff
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
@@ -487,7 +492,7 @@ andWaitForValidResponse: nil];
     
     if (![currentActivity isEqualToString: @"-1"])
     {
-        [self startActivity: @"-1"];
+        [self startActivityWithId: @"-1"];
     }
 }
 

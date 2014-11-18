@@ -9,13 +9,14 @@
 #import "TodayViewController.h"
 #import <NotificationCenter/NotificationCenter.h>
 
-#import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
-#import "FSCHarmonyClient.h"
 
-static const CGFloat extensionHeight = 37.0;
+static CGFloat const activityCellDim = 75.0;
 
 @interface TodayViewController () <NCWidgetProviding>
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityCollectionViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end
 
@@ -23,11 +24,11 @@ static const CGFloat extensionHeight = 37.0;
 
 #pragma mark - Superclass Methods
 
-- (void) awakeFromNib
+- (void) viewDidLoad
 {
-    [super awakeFromNib];
+    [super viewDidLoad];
     
-    [self setPreferredContentSize: CGSizeMake(0.0, extensionHeight)];
+    [self loadConfiguration];
 }
 
 - (UIEdgeInsets) widgetMarginInsetsForProposedMarginInsets: (UIEdgeInsets) defaultMarginInsets
@@ -35,7 +36,63 @@ static const CGFloat extensionHeight = 37.0;
     return UIEdgeInsetsZero;
 }
 
+- (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
+{
+    [super setHarmonyConfiguration: harmonyConfiguration];
+
+    NSString * statusLabelText = @"";
+    
+    if (![self harmonyConfiguration])
+    {
+        statusLabelText = @"Please use the app to load activities.";
+    }
+    
+    [[self statusLabel] setText: statusLabelText];
+    
+    [self updatePreferredContentSize];
+}
+
+- (void) prepareForBlockingClientAction
+{
+    [super prepareForBlockingClientAction];
+    
+    [[self view] setUserInteractionEnabled: NO];
+}
+
+- (void) cleanupAfterBlockingClientActionWithError: (NSError *) error
+{
+    [super cleanupAfterBlockingClientActionWithError: error];
+    
+    NSString * statusLabelText = nil;
+    
+    if (error)
+    {
+        statusLabelText = [error localizedDescription];
+    }
+    
+    [[self statusLabel] setText: statusLabelText];
+    
+    [[self view] setUserInteractionEnabled: YES];
+}
+
 #pragma mark - Class Methods
+
+- (void) updatePreferredContentSize
+{
+    CGRect viewBounds = [[self view] bounds];
+    
+    CGFloat numCellsPerRow = viewBounds.size.width / activityCellDim;
+    
+    CGFloat numRows = ceilf([[[self harmonyConfiguration] activity] count] / numCellsPerRow);
+
+    CGFloat collectionViewHeight = numRows * [[self activityCollectionView] bounds].size.height;
+    
+    CGFloat extensionHeight = collectionViewHeight + [[self statusLabel] bounds].size.height;
+    
+    [self setPreferredContentSize: CGSizeMake(0.0, extensionHeight)];
+    
+    [[self activityCollectionViewHeightConstraint] setConstant: collectionViewHeight];
+}
 
 - (FSCHarmonyClient *) connectedClient
 {
@@ -57,91 +114,37 @@ static const CGFloat extensionHeight = 37.0;
     return client;
 }
 
-- (void) executeBlockWithConnectedClient: (void (^)(FSCHarmonyClient *))block
+#pragma mark - UICollectionViewDatasource
+
+- (UIColor *) colorForActivityMask
 {
-    [[self view] setUserInteractionEnabled: NO];
+    return [UIColor whiteColor];
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (void) collectionView:(UICollectionView *) collectionView
+didSelectItemAtIndexPath: (NSIndexPath *) indexPath
+{
+    FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        FSCHarmonyClient * client = nil;
-        NSString * userMessage = nil;
-        
-        @try
-        {
-            client = [self connectedClient];
-            
-            userMessage = @"Sucessfully connected to Harmony Hub.";
-            
-            block(client);
-        }
-        @catch (NSException * exception)
-        {
-            if ([[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
-            {
-                userMessage = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
-            }
-            else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
-            {
-                userMessage = @"Could not connect to Harmony Hub with the provided IP address and port.";
-            }
-            
-            if (!userMessage)
-            {
-                @throw exception;
-            }
-        }
-        @finally
-        {
-            if (client)
-            {
-                [client disconnect];
-            }
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [[self view] setUserInteractionEnabled: YES];
-            
-            if (userMessage)
-            {
-                NSLog(@"%@", userMessage);
-            }
-        });
-    });
-}
-
-- (IBAction) chromecastButtonTapped: (id) sender
-{
-    [self executeBlockWithConnectedClient:^(FSCHarmonyClient * client) {
-        
-        [client startActivity: @"9204546"];
-    }];
-}
-
-- (IBAction) teleButtonPressed: (id) sender
-{
-    [self executeBlockWithConnectedClient:^(FSCHarmonyClient * client) {
-        
-        [client startActivity: @"5881221"];
-    }];
-}
-
-- (IBAction) upButtonTapped: (id) sender
-{
+    NSString * statusLabelText;
     
-}
-
-- (IBAction) downButtonTapped: (id) sender
-{
+    if ([[[activity label] lowercaseString] isEqualToString: @"poweroff"])
+    {
+        statusLabelText = @"Powering off...";
+    }
+    else
+    {
+        statusLabelText = [NSString stringWithFormat:
+                           @"Starting %@...",
+                           [activity label]];
+    }
     
-}
-
-- (IBAction) offButtonTapped: (id) sender
-{
-    [self executeBlockWithConnectedClient:^(FSCHarmonyClient * client) {
-        
-        [client turnOff];
-    }];
+    [[self statusLabel] setText: statusLabelText];
+    
+    [super collectionView: collectionView
+ didSelectItemAtIndexPath: indexPath];
 }
 
 @end

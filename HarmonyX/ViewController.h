@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+#import "FSCHarmonyViewController.h"
+
+@interface ViewController : FSCHarmonyViewController
 
 
 @end

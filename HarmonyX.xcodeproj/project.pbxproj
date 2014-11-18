@@ -24,6 +24,11 @@
 		1A8AE5E61A0C1AE40047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
 		1AA9E71B1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71A1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m */; };
 		1AA9E71C1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71A1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m */; };
+		1AA9E71F1A110595000CE1DD /* UIImage+Mask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71E1A110595000CE1DD /* UIImage+Mask.m */; };
+		1AA9E7201A110595000CE1DD /* UIImage+Mask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71E1A110595000CE1DD /* UIImage+Mask.m */; };
+		1AA9E7231A113239000CE1DD /* FSCHarmonyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E7221A113239000CE1DD /* FSCHarmonyViewController.m */; };
+		1AA9E7241A113239000CE1DD /* FSCHarmonyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E7221A113239000CE1DD /* FSCHarmonyViewController.m */; };
+		1AA9E7251A113CE4000CE1DD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A69F4221A00497000860482 /* Images.xcassets */; };
 		1AC092321A10074400602E69 /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; };
 		1AC092331A10074400602E69 /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; };
 		1AC092341A10074400602E69 /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; };
@@ -92,6 +97,10 @@
 		1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyClient.m; sourceTree = "<group>"; };
 		1AA9E7191A103A6D000CE1DD /* FSCActivityCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCActivityCollectionViewCell.h; sourceTree = "<group>"; };
 		1AA9E71A1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCActivityCollectionViewCell.m; sourceTree = "<group>"; };
+		1AA9E71D1A110595000CE1DD /* UIImage+Mask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Mask.h"; sourceTree = "<group>"; };
+		1AA9E71E1A110595000CE1DD /* UIImage+Mask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Mask.m"; sourceTree = "<group>"; };
+		1AA9E7211A113239000CE1DD /* FSCHarmonyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyViewController.h; sourceTree = "<group>"; };
+		1AA9E7221A113239000CE1DD /* FSCHarmonyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyViewController.m; sourceTree = "<group>"; };
 		1AC092161A10074400602E69 /* FSCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCActivity.h; sourceTree = "<group>"; };
 		1AC092171A10074400602E69 /* FSCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCActivity.m; sourceTree = "<group>"; };
 		1AC092181A10074400602E69 /* FSCContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCContent.h; sourceTree = "<group>"; };
@@ -178,6 +187,8 @@
 				1AC092081A1006FD00602E69 /* Harmony Config */,
 				1A69F4191A00497000860482 /* AppDelegate.h */,
 				1A69F41A1A00497000860482 /* AppDelegate.m */,
+				1AA9E7211A113239000CE1DD /* FSCHarmonyViewController.h */,
+				1AA9E7221A113239000CE1DD /* FSCHarmonyViewController.m */,
 				1A69F41C1A00497000860482 /* ViewController.h */,
 				1A69F41D1A00497000860482 /* ViewController.m */,
 				1AA9E7191A103A6D000CE1DD /* FSCActivityCollectionViewCell.h */,
@@ -187,6 +198,8 @@
 				1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */,
 				1A8AE5DF1A0BA3630047436B /* FSCDataSharingController.h */,
 				1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */,
+				1AA9E71D1A110595000CE1DD /* UIImage+Mask.h */,
+				1AA9E71E1A110595000CE1DD /* UIImage+Mask.m */,
 				1A69F41F1A00497000860482 /* Main.storyboard */,
 				1A69F4221A00497000860482 /* Images.xcassets */,
 				1A69F4241A00497000860482 /* LaunchScreen.xib */,
@@ -347,6 +360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A6043141A0A887B0074D6A5 /* MainInterface.storyboard in Resources */,
+				1AA9E7251A113CE4000CE1DD /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +423,8 @@
 				1AC092371A10074400602E69 /* FSCControlGroup.m in Sources */,
 				1AC092391A10074400602E69 /* FSCDevice.m in Sources */,
 				1A8AE5E21A0BA6900047436B /* FSCDataSharingController.m in Sources */,
+				1AA9E7241A113239000CE1DD /* FSCHarmonyViewController.m in Sources */,
+				1AA9E7201A110595000CE1DD /* UIImage+Mask.m in Sources */,
 				1AC092351A10074400602E69 /* FSCContent.m in Sources */,
 				1AC0923D1A10074400602E69 /* FSCFunction.m in Sources */,
 			);
@@ -421,6 +437,7 @@
 				1A8AE5E11A0BA3630047436B /* FSCDataSharingController.m in Sources */,
 				1AC092381A10074400602E69 /* FSCDevice.m in Sources */,
 				1AC092321A10074400602E69 /* FSCActivity.m in Sources */,
+				1AA9E71F1A110595000CE1DD /* UIImage+Mask.m in Sources */,
 				1AC0923E1A10074400602E69 /* FSCGlobal.m in Sources */,
 				1AC092361A10074400602E69 /* FSCControlGroup.m in Sources */,
 				1A69F41E1A00497000860482 /* ViewController.m in Sources */,
@@ -430,6 +447,7 @@
 				1AC092341A10074400602E69 /* FSCContent.m in Sources */,
 				1A69F4181A00497000860482 /* main.m in Sources */,
 				1AC092401A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */,
+				1AA9E7231A113239000CE1DD /* FSCHarmonyViewController.m in Sources */,
 				1A8AE5E51A0BC10F0047436B /* FSCHarmonyClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
