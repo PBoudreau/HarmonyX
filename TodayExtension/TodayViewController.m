@@ -10,12 +10,22 @@
 #import <NotificationCenter/NotificationCenter.h>
 
 #import "FSCDataSharingController.h"
+#import "FSCControlGroup.h"
 
 static CGFloat const activityCellDim = 75.0;
 
 @interface TodayViewController () <NCWidgetProviding>
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityCollectionViewHeightConstraint;
+
+@property (weak, nonatomic) IBOutlet UIView *staticActivitiesView;
+
+@property (weak, nonatomic) IBOutlet UIView *volumeView;
+
+@property (weak, nonatomic) IBOutlet UIView *powerOffView;
+@property (weak, nonatomic) IBOutlet UIImageView *powerOffIconImageView;
+@property (weak, nonatomic) IBOutlet UILabel *powerOffLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end
@@ -50,6 +60,19 @@ static CGFloat const activityCellDim = 75.0;
     [[self statusLabel] setText: statusLabelText];
     
     [self updatePreferredContentSize];
+    
+    FSCActivity * powerOffActivity = [[[self harmonyConfiguration] activity] lastObject];
+    
+    if ([[[powerOffActivity label] lowercaseString] isEqualToString: @"poweroff"])
+    {
+        [[self powerOffView] setHidden: NO];
+        [[self powerOffIconImageView] setImage: [powerOffActivity maskedImageWithColor: [self colorForActivityMask]]];
+        [[self powerOffLabel] setText: [powerOffActivity label]];
+    }
+    else
+    {
+        [[self powerOffView] setHidden: YES];
+    }
 }
 
 - (void) prepareForBlockingClientAction
@@ -75,6 +98,11 @@ static CGFloat const activityCellDim = 75.0;
     [[self view] setUserInteractionEnabled: YES];
 }
 
+- (UIColor *) colorForActivityMask
+{
+    return [UIColor whiteColor];
+}
+
 #pragma mark - Class Methods
 
 - (void) updatePreferredContentSize
@@ -83,42 +111,111 @@ static CGFloat const activityCellDim = 75.0;
     
     CGFloat numCellsPerRow = viewBounds.size.width / activityCellDim;
     
-    CGFloat numRows = ceilf([[[self harmonyConfiguration] activity] count] / numCellsPerRow);
+    CGFloat numRows = 0;
+    
+    if ([self harmonyConfiguration])
+    {
+        numRows = ceilf(([[[self harmonyConfiguration] activity] count] - 1) / numCellsPerRow);
+    }
 
     CGFloat collectionViewHeight = numRows * [[self activityCollectionView] bounds].size.height;
     
     CGFloat extensionHeight = collectionViewHeight + [[self statusLabel] bounds].size.height;
     
+    if (collectionViewHeight > 0.0)
+    {
+        extensionHeight += [[self staticActivitiesView] bounds].size.height;
+    }
+    
     [self setPreferredContentSize: CGSizeMake(0.0, extensionHeight)];
     
     [[self activityCollectionViewHeightConstraint] setConstant: collectionViewHeight];
+    
+    [[self staticActivitiesView] setHidden: (collectionViewHeight == 0.0)];
 }
 
-- (FSCHarmonyClient *) connectedClient
+- (IBAction) powerOffTapped: (id) sender
 {
-    NSString * username;
-    NSString * password;
-    NSString * IPAddress;
-    NSUInteger port;
+    [[self statusLabel] setText: @"Powering off..."];
     
-    [FSCDataSharingController loadUsername: &username
-                                  password: &password
-                                 IPAddress: &IPAddress
-                                      port: &port];
-    
-    FSCHarmonyClient * client = [FSCHarmonyClient clientWithMyHarmonyUsername: username
-                                                            myHarmonyPassword: password
-                                                          harmonyHubIPAddress: IPAddress
-                                                               harmonyHubPort: port];
+    [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
+        
+        [client turnOff];
+    }
+                      mainThreadCompletionBlock: ^{
+                          
+                          [[self statusLabel] setText: @""];
+                      }];
+}
 
-    return client;
+- (void) executeFunction: (FSCFunction * (^)(FSCActivity * currentActivity))functionBlock
+{
+    [self performBlockingClientActionsWithBlock: ^(FSCHarmonyClient *client) {
+        
+        FSCActivity * currentActivity = [self lastActivity];
+        
+        if (!currentActivity)
+        {
+            NSString * activityId = [client currentActivityId];
+            currentActivity = [[self harmonyConfiguration] activityWithId: activityId];
+        }
+        
+        FSCFunction * function = functionBlock(currentActivity);
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            [[self statusLabel] setText: [NSString stringWithFormat:
+                                          @"%@...",
+                                          [function label]]];
+        });
+        
+        if (function)
+        {
+            [client executeFunction: function
+                           withType: FSCHarmonyClientFunctionTypePress];
+        }
+        else
+        {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                
+                [[self statusLabel] setText: @"FUNCTION NOT FOUND"];
+            });
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [[self statusLabel] setText: @""];
+            });
+        }
+    }
+     mainThreadCompletionBlock: ^{
+         
+         [[self statusLabel] setText: @""];
+     }];
+}
+
+- (IBAction) volumeDownTapped: (id) sender
+{
+    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+        
+        return [[currentActivity volumeControlGroup] volumeDownFunction];
+    }];
+}
+
+- (IBAction) volumeUpTapped: (id) sender
+{
+    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+        
+        return [[currentActivity volumeControlGroup] volumeUpFunction];
+    }];
 }
 
 #pragma mark - UICollectionViewDatasource
 
-- (UIColor *) colorForActivityMask
+- (NSInteger) collectionView: (UICollectionView *) collectionView
+      numberOfItemsInSection: (NSInteger) section
 {
-    return [UIColor whiteColor];
+    return [super collectionView: collectionView
+          numberOfItemsInSection: section] - 1;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -128,20 +225,9 @@ didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 {
     FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
     
-    NSString * statusLabelText;
-    
-    if ([[[activity label] lowercaseString] isEqualToString: @"poweroff"])
-    {
-        statusLabelText = @"Powering off...";
-    }
-    else
-    {
-        statusLabelText = [NSString stringWithFormat:
-                           @"Starting %@...",
-                           [activity label]];
-    }
-    
-    [[self statusLabel] setText: statusLabelText];
+    [[self statusLabel] setText: [NSString stringWithFormat:
+                                  @"Starting %@...",
+                                  [activity label]]];
     
     [super collectionView: collectionView
  didSelectItemAtIndexPath: indexPath];

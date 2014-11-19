@@ -10,6 +10,12 @@
 
 #import "FSCHarmonyConfiguration.h"
 #import "FSCActivity.h"
+#import "FSCFunction.h"
+
+typedef NS_ENUM(NSUInteger, FSCHarmonyClientFunctionType) {
+    FSCHarmonyClientFunctionTypePress,
+    FSCHarmonyClientFunctionTypeRelease
+};
 
 @interface FSCHarmonyClient : NSObject
 
@@ -20,10 +26,13 @@
 
 - (FSCHarmonyConfiguration *) configuration;
 
-- (NSString *) currentActivity;
+- (NSString *) currentActivityId;
 
 - (void) startActivityWithId: (NSString *) activityId;
 - (void) startActivity: (FSCActivity *) activity;
+
+- (void) executeFunction: (FSCFunction *) function
+                withType: (FSCHarmonyClientFunctionType) type;
 
 - (void) turnOff;
 

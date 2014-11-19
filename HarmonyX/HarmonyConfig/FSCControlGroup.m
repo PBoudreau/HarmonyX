@@ -58,6 +58,33 @@ NSString *const kFSCControlGroupFunction = @"function";
     
 }
 
+- (FSCFunction *) functionNamed: (NSString *) functionName
+{
+    FSCFunction * function = nil;
+    
+    for (FSCFunction * aFunction in [self function])
+    {
+        if ([[aFunction name] isEqualToString: functionName])
+        {
+            function = aFunction;
+            
+            break;
+        }
+    }
+    
+    return function;
+}
+
+- (FSCFunction *) volumeDownFunction
+{
+    return [self functionNamed: @"VolumeDown"];
+}
+
+- (FSCFunction *) volumeUpFunction
+{
+    return [self functionNamed: @"VolumeUp"];
+}
+
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];

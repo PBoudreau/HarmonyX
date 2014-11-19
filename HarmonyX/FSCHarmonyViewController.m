@@ -147,6 +147,8 @@ didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 {
     FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
     
+    [self setLastActivity: activity];
+    
     [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
         
         [client startActivity: activity];

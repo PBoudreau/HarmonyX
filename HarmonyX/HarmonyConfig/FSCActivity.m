@@ -141,6 +141,28 @@ NSString *const kFSCActivityImageName = @"imageName";
     return maskedImage;
 }
 
+- (FSCControlGroup *) controlGroupNamed: (NSString *) controlGroupName
+{
+    FSCControlGroup * controlGroup = nil;
+    
+    for (FSCControlGroup * aControlGroup in [self controlGroup])
+    {
+        if ([[aControlGroup name] isEqualToString: controlGroupName])
+        {
+            controlGroup = aControlGroup;
+            
+            break;
+        }
+    }
+    
+    return controlGroup;
+}
+
+- (FSCControlGroup *) volumeControlGroup
+{
+    return [self controlGroupNamed: @"Volume"];
+}
+
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];

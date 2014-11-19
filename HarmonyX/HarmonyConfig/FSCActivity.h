@@ -8,6 +8,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class FSCControlGroup;
+
 @interface FSCActivity : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *activityIdentifier;
@@ -28,5 +30,8 @@
 - (NSDictionary *)dictionaryRepresentation;
 
 - (UIImage *) maskedImageWithColor: (UIColor *) color;
+
+- (FSCControlGroup *) controlGroupNamed: (NSString *) controlGroupName;
+- (FSCControlGroup *) volumeControlGroup;
 
 @end

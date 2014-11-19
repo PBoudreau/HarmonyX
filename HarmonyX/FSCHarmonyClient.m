@@ -27,6 +27,8 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     BOOL validOAResponseReceived;
 }
 
+@property (nonatomic, strong) NSDate * creationTime;
+
 @property (nonatomic, copy) NSString * myHarmonyUsername;
 @property (nonatomic, copy) NSString * myHarmonyPassword;
 @property (nonatomic, copy) NSString * harmonyHubIPAddress;
@@ -50,8 +52,12 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
              harmonyHubIPAddress: (NSString *) IPAddress
                   harmonyHubPort: (NSUInteger) port
 {
+    NSLog(@"Creating client");
+    
     if (self = [super init])
     {
+        [self setCreationTime: [NSDate date]];
+        
         [self setMyHarmonyUsername: username];
         [self setMyHarmonyPassword: password];
         [self setHarmonyHubIPAddress: IPAddress];
@@ -82,6 +88,11 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     [client connectToHarmonyHub];
     
     return  client;
+}
+
+- (long) timestamp
+{
+    return [[NSDate date] timeIntervalSinceDate: [self creationTime]];
 }
 
 #pragma mark - Initialization & Connection
@@ -339,7 +350,7 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
 - (void) sendIQCmd: (XMPPIQ *) IQCmd
 andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidationBlock;
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), IQCmd);
     
     validOAResponseReceived = NO;
     
@@ -359,6 +370,14 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
 }
 
 #pragma mark - Operations
+
+- (NSString *) appendTimestampToCommand: (NSString *) command
+{
+    return [NSString stringWithFormat:
+            @"%@:timestamp=%ld",
+            command,
+            [self timestamp]];
+}
 
 - (FSCHarmonyConfiguration *) configuration
 {
@@ -413,7 +432,7 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     return harmonyConfig;
 }
 
-- (NSString *) currentActivity
+- (NSString *) currentActivityId
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
@@ -436,7 +455,7 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
         
     }];
     
-    NSString * currentActivity = nil;
+    NSString * currentActivityId = nil;
     
     if (OAString)
     {
@@ -444,11 +463,11 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
         
         if ([attributeAndvalue count] == 2)
         {
-            currentActivity = attributeAndvalue[1];
+            currentActivityId = attributeAndvalue[1];
         }
     }
     
-    if (!currentActivity)
+    if (!currentActivityId)
     {
         @throw [NSException exceptionWithName: FSCExceptionHarmonyHubCurrentActivity
                                        reason: [NSString stringWithFormat:
@@ -457,7 +476,7 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
                                      userInfo: nil];
     }
     
-    return currentActivity;
+    return currentActivityId;
 }
 
 - (void) startActivityWithId: (NSString *) activityId
@@ -468,9 +487,13 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
                                                             xmlns: @"connect.logitech.com"];
     [actionCmd addAttributeWithName: @"mime"
                         stringValue: @"harmony.engine?startactivity"];
-    [actionCmd setStringValue: [NSString stringWithFormat:
-                                @"activityId=%@:timestamp=0",
-                                activityId]];
+    
+    NSString * command = [NSString stringWithFormat:
+                          @"activityId=%@",
+                          activityId];
+    command = [self appendTimestampToCommand: command];
+    
+    [actionCmd setStringValue: command];
     
     XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
                                   child: actionCmd];
@@ -484,16 +507,38 @@ andWaitForValidResponse: nil];
     [self startActivityWithId: [activity activityIdentifier]];
 }
 
+- (void) executeFunction: (FSCFunction *) function
+                withType: (FSCHarmonyClientFunctionType) type
+{
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    
+    NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
+                                                            xmlns: @"connect.logitech.com"];
+    [actionCmd addAttributeWithName: @"mime"
+                        stringValue: @"vnd.logitech.harmony/vnd.logitech.harmony.engine?holdAction"];
+    
+    NSString * typeStr = (type == FSCHarmonyClientFunctionTypePress) ? @"press" : @"release";
+    
+    NSString * reformattedAction = [[function action] stringByReplacingOccurrencesOfString: @":"
+                                                                                withString: @"::"];
+    
+    [actionCmd setStringValue: [NSString stringWithFormat:
+                                @"action=%@:status=%@",
+                                reformattedAction,
+                                typeStr]];
+    
+    XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
+                                  child: actionCmd];
+    
+    [self sendIQCmd: IQCmd
+andWaitForValidResponse: nil];
+}
+
 - (void) turnOff
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    NSString * currentActivity = [self currentActivity];
-    
-    if (![currentActivity isEqualToString: @"-1"])
-    {
-        [self startActivityWithId: @"-1"];
-    }
+    [self startActivityWithId: @"-1"];
 }
 
 - (void) disconnect
@@ -544,8 +589,8 @@ andWaitForValidResponse: nil];
     
     NSXMLElement * oaResponse = [iq elementForName: @"oa"];
     
-    if (oaResponse &&
-        (![self OAResponseValidationBlock] ||
+    if (![self OAResponseValidationBlock] ||
+        (oaResponse &&
          [self OAResponseValidationBlock](oaResponse)))
     {
         validOAResponseReceived = YES;
