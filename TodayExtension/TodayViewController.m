@@ -10,6 +10,7 @@
 #import <NotificationCenter/NotificationCenter.h>
 
 #import "FSCDataSharingController.h"
+#import "FSCControlGroup.h"
 
 static CGFloat const activityCellDim = 75.0;
 
@@ -18,6 +19,8 @@ static CGFloat const activityCellDim = 75.0;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityCollectionViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *staticActivitiesView;
+
+@property (weak, nonatomic) IBOutlet UIView *volumeView;
 
 @property (weak, nonatomic) IBOutlet UIView *powerOffView;
 @property (weak, nonatomic) IBOutlet UIImageView *powerOffIconImageView;
@@ -156,6 +159,46 @@ static CGFloat const activityCellDim = 75.0;
     [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
         
         [client turnOff];
+    }
+                      mainThreadCompletionBlock: nil];
+}
+
+- (IBAction) volumeDownTapped: (id) sender
+{
+    [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
+        
+        NSString * activityId = [client currentActivityId];
+        FSCActivity * activity = [[self harmonyConfiguration] activityWithId: activityId];
+        FSCFunction * function = [[activity volumeControlGroup] volumeDownFunction];
+        
+        if (function)
+        {
+            [client executeFunction: function
+                           withType: FSCHarmonyClientFunctionTypePress];
+            
+            [client executeFunction: function
+                           withType: FSCHarmonyClientFunctionTypeRelease];
+        }
+    }
+                      mainThreadCompletionBlock: nil];
+}
+
+- (IBAction) volumeUpTapped: (id) sender
+{
+    [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
+        
+        NSString * activityId = [client currentActivityId];
+        FSCActivity * activity = [[self harmonyConfiguration] activityWithId: activityId];
+        FSCFunction * function = [[activity volumeControlGroup] volumeUpFunction];
+        
+        if (function)
+        {
+            [client executeFunction: function
+                           withType: FSCHarmonyClientFunctionTypePress];
+            
+            [client executeFunction: function
+                           withType: FSCHarmonyClientFunctionTypeRelease];
+        }
     }
                       mainThreadCompletionBlock: nil];
 }

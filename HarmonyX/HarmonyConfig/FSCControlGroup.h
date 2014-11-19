@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-
+@class  FSCFunction;
 
 @interface FSCControlGroup : NSObject <NSCoding, NSCopying>
 
@@ -17,5 +17,9 @@
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 - (NSDictionary *)dictionaryRepresentation;
+
+- (FSCFunction *) functionNamed: (NSString *) functionName;
+- (FSCFunction *) volumeDownFunction;
+- (FSCFunction *) volumeUpFunction;
 
 @end

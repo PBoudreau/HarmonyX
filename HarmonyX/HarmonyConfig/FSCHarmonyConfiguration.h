@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class FSCContent, FSCGlobal;
+@class FSCContent, FSCGlobal, FSCActivity;
 
 @interface FSCHarmonyConfiguration : NSObject <NSCoding, NSCopying>
 
@@ -20,5 +20,7 @@
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 - (NSDictionary *)dictionaryRepresentation;
+
+- (FSCActivity *) activityWithId: (NSString *) activityId;
 
 @end

@@ -413,7 +413,7 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     return harmonyConfig;
 }
 
-- (NSString *) currentActivity
+- (NSString *) currentActivityId
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
@@ -436,7 +436,7 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
         
     }];
     
-    NSString * currentActivity = nil;
+    NSString * currentActivityId = nil;
     
     if (OAString)
     {
@@ -444,11 +444,11 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
         
         if ([attributeAndvalue count] == 2)
         {
-            currentActivity = attributeAndvalue[1];
+            currentActivityId = attributeAndvalue[1];
         }
     }
     
-    if (!currentActivity)
+    if (!currentActivityId)
     {
         @throw [NSException exceptionWithName: FSCExceptionHarmonyHubCurrentActivity
                                        reason: [NSString stringWithFormat:
@@ -457,7 +457,7 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
                                      userInfo: nil];
     }
     
-    return currentActivity;
+    return currentActivityId;
 }
 
 - (void) startActivityWithId: (NSString *) activityId
@@ -484,11 +484,35 @@ andWaitForValidResponse: nil];
     [self startActivityWithId: [activity activityIdentifier]];
 }
 
+- (void) executeFunction: (FSCFunction *) function
+                withType: (FSCHarmonyClientFunctionType) type
+{
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    
+    NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
+                                                            xmlns: @"connect.logitech.com"];
+    [actionCmd addAttributeWithName: @"mime"
+                        stringValue: @"vnd.logitech.harmony/vnd.logitech.harmony.engine?holdAction"];
+    
+    NSString * typeStr = (type == FSCHarmonyClientFunctionTypePress) ? @"press" : @"release";
+    
+    [actionCmd setStringValue: [NSString stringWithFormat:
+                                @"action=%@:status=%@",
+                                [function action],
+                                typeStr]];
+    
+    XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
+                                  child: actionCmd];
+    
+    [self sendIQCmd: IQCmd
+andWaitForValidResponse: nil];
+}
+
 - (void) turnOff
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    NSString * currentActivity = [self currentActivity];
+    NSString * currentActivity = [self currentActivityId];
     
     if (![currentActivity isEqualToString: @"-1"])
     {

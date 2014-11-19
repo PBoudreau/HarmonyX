@@ -103,6 +103,23 @@ NSString *const kFSCHarmonyConfigGlobal = @"global";
     
 }
 
+- (FSCActivity *) activityWithId: (NSString *) activityId
+{
+    FSCActivity * activity = nil;
+    
+    for (FSCActivity * anActivity in [self activity])
+    {
+        if ([[anActivity activityIdentifier] isEqualToString: activityId])
+        {
+            activity = anActivity;
+            
+            break;
+        }
+    }
+    
+    return activity;
+}
+
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
