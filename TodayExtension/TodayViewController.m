@@ -16,6 +16,13 @@ static CGFloat const activityCellDim = 75.0;
 @interface TodayViewController () <NCWidgetProviding>
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityCollectionViewHeightConstraint;
+
+@property (weak, nonatomic) IBOutlet UIView *staticActivitiesView;
+
+@property (weak, nonatomic) IBOutlet UIView *powerOffView;
+@property (weak, nonatomic) IBOutlet UIImageView *powerOffIconImageView;
+@property (weak, nonatomic) IBOutlet UILabel *powerOffLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end
@@ -50,6 +57,19 @@ static CGFloat const activityCellDim = 75.0;
     [[self statusLabel] setText: statusLabelText];
     
     [self updatePreferredContentSize];
+    
+    FSCActivity * powerOffActivity = [[[self harmonyConfiguration] activity] lastObject];
+    
+    if ([[[powerOffActivity label] lowercaseString] isEqualToString: @"poweroff"])
+    {
+        [[self powerOffView] setHidden: NO];
+        [[self powerOffIconImageView] setImage: [powerOffActivity maskedImageWithColor: [self colorForActivityMask]]];
+        [[self powerOffLabel] setText: [powerOffActivity label]];
+    }
+    else
+    {
+        [[self powerOffView] setHidden: YES];
+    }
 }
 
 - (void) prepareForBlockingClientAction
@@ -75,6 +95,11 @@ static CGFloat const activityCellDim = 75.0;
     [[self view] setUserInteractionEnabled: YES];
 }
 
+- (UIColor *) colorForActivityMask
+{
+    return [UIColor whiteColor];
+}
+
 #pragma mark - Class Methods
 
 - (void) updatePreferredContentSize
@@ -83,15 +108,27 @@ static CGFloat const activityCellDim = 75.0;
     
     CGFloat numCellsPerRow = viewBounds.size.width / activityCellDim;
     
-    CGFloat numRows = ceilf([[[self harmonyConfiguration] activity] count] / numCellsPerRow);
+    CGFloat numRows = 0;
+    
+    if ([self harmonyConfiguration])
+    {
+        numRows = ceilf(([[[self harmonyConfiguration] activity] count] - 1) / numCellsPerRow);
+    }
 
     CGFloat collectionViewHeight = numRows * [[self activityCollectionView] bounds].size.height;
     
     CGFloat extensionHeight = collectionViewHeight + [[self statusLabel] bounds].size.height;
     
+    if (collectionViewHeight > 0.0)
+    {
+        extensionHeight += [[self staticActivitiesView] bounds].size.height;
+    }
+    
     [self setPreferredContentSize: CGSizeMake(0.0, extensionHeight)];
     
     [[self activityCollectionViewHeightConstraint] setConstant: collectionViewHeight];
+    
+    [[self staticActivitiesView] setHidden: (collectionViewHeight == 0.0)];
 }
 
 - (FSCHarmonyClient *) connectedClient
@@ -114,11 +151,22 @@ static CGFloat const activityCellDim = 75.0;
     return client;
 }
 
+- (IBAction) powerOffTapped: (id) sender
+{
+    [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
+        
+        [client turnOff];
+    }
+                      mainThreadCompletionBlock: nil];
+}
+
 #pragma mark - UICollectionViewDatasource
 
-- (UIColor *) colorForActivityMask
+- (NSInteger) collectionView: (UICollectionView *) collectionView
+      numberOfItemsInSection: (NSInteger) section
 {
-    return [UIColor whiteColor];
+    return [super collectionView: collectionView
+          numberOfItemsInSection: section] - 1;
 }
 
 #pragma mark - UICollectionViewDelegate
