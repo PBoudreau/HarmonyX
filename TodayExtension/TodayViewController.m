@@ -134,73 +134,79 @@ static CGFloat const activityCellDim = 75.0;
     [[self staticActivitiesView] setHidden: (collectionViewHeight == 0.0)];
 }
 
-- (FSCHarmonyClient *) connectedClient
-{
-    NSString * username;
-    NSString * password;
-    NSString * IPAddress;
-    NSUInteger port;
-    
-    [FSCDataSharingController loadUsername: &username
-                                  password: &password
-                                 IPAddress: &IPAddress
-                                      port: &port];
-    
-    FSCHarmonyClient * client = [FSCHarmonyClient clientWithMyHarmonyUsername: username
-                                                            myHarmonyPassword: password
-                                                          harmonyHubIPAddress: IPAddress
-                                                               harmonyHubPort: port];
-
-    return client;
-}
-
 - (IBAction) powerOffTapped: (id) sender
 {
+    [[self statusLabel] setText: @"Powering off..."];
+    
     [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
         
         [client turnOff];
     }
-                      mainThreadCompletionBlock: nil];
+                      mainThreadCompletionBlock: ^{
+                          
+                          [[self statusLabel] setText: @""];
+                      }];
+}
+
+- (void) executeFunction: (FSCFunction * (^)(FSCActivity * currentActivity))functionBlock
+{
+    [self performBlockingClientActionsWithBlock: ^(FSCHarmonyClient *client) {
+        
+        FSCActivity * currentActivity = [self lastActivity];
+        
+        if (!currentActivity)
+        {
+            NSString * activityId = [client currentActivityId];
+            currentActivity = [[self harmonyConfiguration] activityWithId: activityId];
+        }
+        
+        FSCFunction * function = functionBlock(currentActivity);
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            [[self statusLabel] setText: [NSString stringWithFormat:
+                                          @"%@...",
+                                          [function label]]];
+        });
+        
+        if (function)
+        {
+            [client executeFunction: function
+                           withType: FSCHarmonyClientFunctionTypePress];
+        }
+        else
+        {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                
+                [[self statusLabel] setText: @"FUNCTION NOT FOUND"];
+            });
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [[self statusLabel] setText: @""];
+            });
+        }
+    }
+     mainThreadCompletionBlock: ^{
+         
+         [[self statusLabel] setText: @""];
+     }];
 }
 
 - (IBAction) volumeDownTapped: (id) sender
 {
-    [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
+    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
         
-        NSString * activityId = [client currentActivityId];
-        FSCActivity * activity = [[self harmonyConfiguration] activityWithId: activityId];
-        FSCFunction * function = [[activity volumeControlGroup] volumeDownFunction];
-        
-        if (function)
-        {
-            [client executeFunction: function
-                           withType: FSCHarmonyClientFunctionTypePress];
-            
-            [client executeFunction: function
-                           withType: FSCHarmonyClientFunctionTypeRelease];
-        }
-    }
-                      mainThreadCompletionBlock: nil];
+        return [[currentActivity volumeControlGroup] volumeDownFunction];
+    }];
 }
 
 - (IBAction) volumeUpTapped: (id) sender
 {
-    [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
+    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
         
-        NSString * activityId = [client currentActivityId];
-        FSCActivity * activity = [[self harmonyConfiguration] activityWithId: activityId];
-        FSCFunction * function = [[activity volumeControlGroup] volumeUpFunction];
-        
-        if (function)
-        {
-            [client executeFunction: function
-                           withType: FSCHarmonyClientFunctionTypePress];
-            
-            [client executeFunction: function
-                           withType: FSCHarmonyClientFunctionTypeRelease];
-        }
-    }
-                      mainThreadCompletionBlock: nil];
+        return [[currentActivity volumeControlGroup] volumeUpFunction];
+    }];
 }
 
 #pragma mark - UICollectionViewDatasource
@@ -219,20 +225,9 @@ didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 {
     FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
     
-    NSString * statusLabelText;
-    
-    if ([[[activity label] lowercaseString] isEqualToString: @"poweroff"])
-    {
-        statusLabelText = @"Powering off...";
-    }
-    else
-    {
-        statusLabelText = [NSString stringWithFormat:
-                           @"Starting %@...",
-                           [activity label]];
-    }
-    
-    [[self statusLabel] setText: statusLabelText];
+    [[self statusLabel] setText: [NSString stringWithFormat:
+                                  @"Starting %@...",
+                                  [activity label]]];
     
     [super collectionView: collectionView
  didSelectItemAtIndexPath: indexPath];
