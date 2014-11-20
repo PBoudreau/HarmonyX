@@ -19,8 +19,8 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *activityCollectionView;
 
+@property (strong, nonatomic) FSCHarmonyClient * client;
 @property (strong, nonatomic) FSCHarmonyConfiguration * harmonyConfiguration;
-@property (strong, nonatomic) FSCActivity * lastActivity;
 
 - (void) loadConfiguration;
 

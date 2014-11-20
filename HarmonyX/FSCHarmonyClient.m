@@ -27,7 +27,11 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     BOOL validOAResponseReceived;
 }
 
+@property (nonatomic, strong) FSCHarmonyConfiguration * configuration;
+@property (nonatomic, strong) FSCActivity * currentActivity;
+
 @property (nonatomic, strong) NSDate * creationTime;
+@property (nonatomic, strong) NSTimer * heartbeatTimer;
 
 @property (nonatomic, copy) NSString * myHarmonyUsername;
 @property (nonatomic, copy) NSString * myHarmonyPassword;
@@ -87,7 +91,30 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     
     [client connectToHarmonyHub];
     
-    return  client;
+    [client startHeartbeat];
+    
+    return client;
+}
+
+- (void) startHeartbeat
+{
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        
+        [self setHeartbeatTimer: [NSTimer scheduledTimerWithTimeInterval: 30
+                                                                  target: self
+                                                                selector: @selector(sendHeartbeat:)
+                                                                userInfo: nil
+                                                                 repeats: YES]];
+    });
+}
+
+- (void) stopHeartbeatTimer
+{
+    dispatch_sync(dispatch_get_main_queue(), ^{
+
+        [[self heartbeatTimer] invalidate];
+        [self setHeartbeatTimer: nil];
+    });
 }
 
 - (long) timestamp
@@ -371,6 +398,30 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
 
 #pragma mark - Operations
 
+- (void) sendHeartbeat: (NSTimer *) timer
+{
+    if (![[self xmppStream] isConnected])
+    {
+        [timer invalidate];
+        [self setHeartbeatTimer: nil];
+    }
+    else
+    {
+        NSLog(@"Sending heartbeat");
+        
+        NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
+                                                                xmlns: @"connect.logitech.com"];
+        [actionCmd addAttributeWithName: @"mime"
+                            stringValue: @"vnd.logitech.connect/vnd.logitech.ping"];
+        
+        XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
+                                      child: actionCmd];
+        
+        [self sendIQCmd: IQCmd
+andWaitForValidResponse: nil];
+    }
+}
+
 - (NSString *) appendTimestampToCommand: (NSString *) command
 {
     return [NSString stringWithFormat:
@@ -379,104 +430,124 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
             [self timestamp]];
 }
 
-- (FSCHarmonyConfiguration *) configuration
+- (FSCHarmonyConfiguration *) configurationWithRefresh: (BOOL) refresh
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
-                                                            xmlns: @"connect.logitech.com"];
-    [actionCmd addAttributeWithName: @"mime"
-                        stringValue: @"vnd.logitech.harmony/vnd.logitech.harmony.engine?config"];
-    
-    XMPPIQ * iqCmd = [XMPPIQ iqWithType: @"get"
-                                  child: actionCmd];
-    
-    __block NSString * OAString = nil;
-    
-    [self sendIQCmd: iqCmd
+    if (!_configuration ||
+        refresh)
+    {
+        NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
+                                                                xmlns: @"connect.logitech.com"];
+        [actionCmd addAttributeWithName: @"mime"
+                            stringValue: @"vnd.logitech.harmony/vnd.logitech.harmony.engine?config"];
+        
+        XMPPIQ * iqCmd = [XMPPIQ iqWithType: @"get"
+                                      child: actionCmd];
+        
+        __block NSString * OAString = nil;
+        
+        [self sendIQCmd: iqCmd
 andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
-    {
-        OAString = [OAResponse stringValue];
+         {
+             OAString = [OAResponse stringValue];
+             
+             return YES;
+         }];
         
-        return YES;
-    }];
-
-    NSDictionary * configuration = nil;
-    
-    if (OAString)
-    {
-        NSData * OAStringData = [OAString dataUsingEncoding: NSUTF8StringEncoding];
-        NSError * error = nil;
+        NSDictionary * configuration = nil;
         
-        id JSONObject =  [NSJSONSerialization JSONObjectWithData: OAStringData
-                                                         options: kNilOptions
-                                                           error: &error];
-        
-        if ([JSONObject isKindOfClass: [NSDictionary class]])
+        if (OAString)
         {
-            configuration = JSONObject;
+            NSData * OAStringData = [OAString dataUsingEncoding: NSUTF8StringEncoding];
+            NSError * error = nil;
+            
+            id JSONObject =  [NSJSONSerialization JSONObjectWithData: OAStringData
+                                                             options: kNilOptions
+                                                               error: &error];
+            
+            if ([JSONObject isKindOfClass: [NSDictionary class]])
+            {
+                configuration = JSONObject;
+            }
         }
+        
+        if (!configuration)
+        {
+            @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConfiguration
+                                           reason: [NSString stringWithFormat:
+                                                    @"Unexpected config response from HUB: %@",
+                                                    OAString]
+                                         userInfo: nil];
+        }
+        
+        FSCHarmonyConfiguration * harmonyConfig = [FSCHarmonyConfiguration modelObjectWithDictionary: configuration];
+        
+        _configuration = harmonyConfig;
     }
     
-    if (!configuration)
-    {
-        @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConfiguration
-                                       reason: [NSString stringWithFormat:
-                                                @"Unexpected config response from HUB: %@",
-                                                OAString]
-                                     userInfo: nil];
-    }
-    
-    FSCHarmonyConfiguration * harmonyConfig = [FSCHarmonyConfiguration modelObjectWithDictionary: configuration];
-    
-    return harmonyConfig;
+    return _configuration;
 }
 
-- (NSString *) currentActivityId
+- (FSCActivity *) currentActivityFromConfiguration: (FSCHarmonyConfiguration *) configuration
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
-                                                            xmlns: @"connect.logitech.com"];
-    [actionCmd addAttributeWithName: @"mime"
-                        stringValue: @"vnd.logitech.harmony/vnd.logitech.harmony.engine?getCurrentActivity"];
-    
-    XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
-                                  child: actionCmd];
-
-    __block NSString * OAString = nil;
-    
-    [self sendIQCmd: IQCmd
-andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
+    if (!_currentActivity)
     {
-        OAString = [OAResponse stringValue];
-        
-        return YES;
-        
-    }];
-    
-    NSString * currentActivityId = nil;
-    
-    if (OAString)
-    {
-        NSArray * attributeAndvalue = [OAString componentsSeparatedByString: @"="];
-        
-        if ([attributeAndvalue count] == 2)
+        if (!configuration)
         {
-            currentActivityId = attributeAndvalue[1];
+            configuration = [self configurationWithRefresh: NO];
         }
+        else
+        {
+            [self setConfiguration: configuration];
+        }
+        
+        NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
+                                                                xmlns: @"connect.logitech.com"];
+        [actionCmd addAttributeWithName: @"mime"
+                            stringValue: @"vnd.logitech.harmony/vnd.logitech.harmony.engine?getCurrentActivity"];
+        
+        XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
+                                      child: actionCmd];
+        
+        __block NSString * OAString = nil;
+        
+        [self sendIQCmd: IQCmd
+andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
+         {
+             OAString = [OAResponse stringValue];
+             
+             return YES;
+             
+         }];
+        
+        NSString * currentActivityId = nil;
+        
+        if (OAString)
+        {
+            NSArray * attributeAndvalue = [OAString componentsSeparatedByString: @"="];
+            
+            if ([attributeAndvalue count] == 2)
+            {
+                currentActivityId = attributeAndvalue[1];
+            }
+        }
+        
+        if (!currentActivityId)
+        {
+            @throw [NSException exceptionWithName: FSCExceptionHarmonyHubCurrentActivity
+                                           reason: [NSString stringWithFormat:
+                                                    @"Unexpected getCurrentActivity response from HUB: %@",
+                                                    OAString]
+                                         userInfo: nil];
+        }
+        
+        _currentActivity = [configuration activityWithId: currentActivityId];
     }
     
-    if (!currentActivityId)
-    {
-        @throw [NSException exceptionWithName: FSCExceptionHarmonyHubCurrentActivity
-                                       reason: [NSString stringWithFormat:
-                                                @"Unexpected getCurrentActivity response from HUB: %@",
-                                                OAString]
-                                     userInfo: nil];
-    }
-    
-    return currentActivityId;
+    return _currentActivity;
 }
 
 - (void) startActivityWithId: (NSString *) activityId
@@ -505,6 +576,8 @@ andWaitForValidResponse: nil];
 - (void) startActivity: (FSCActivity *) activity
 {
     [self startActivityWithId: [activity activityIdentifier]];
+    
+    [self setCurrentActivity: activity];
 }
 
 - (void) executeFunction: (FSCFunction *) function
@@ -538,12 +611,14 @@ andWaitForValidResponse: nil];
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    [self startActivityWithId: @"-1"];
+    [self startActivity: [[self configurationWithRefresh: NO] activityWithId: @"-1"]];
 }
 
 - (void) disconnect
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
+    
+    [self stopHeartbeatTimer];
     
     [[self xmppStream] disconnect];
     

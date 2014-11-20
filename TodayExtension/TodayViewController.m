@@ -142,55 +142,31 @@ static CGFloat const activityCellDim = 75.0;
         
         [client turnOff];
     }
-                      mainThreadCompletionBlock: ^{
-                          
-                          [[self statusLabel] setText: @""];
-                      }];
+                      mainThreadCompletionBlock: nil];
 }
 
 - (void) executeFunction: (FSCFunction * (^)(FSCActivity * currentActivity))functionBlock
 {
     [self performBlockingClientActionsWithBlock: ^(FSCHarmonyClient *client) {
         
-        FSCActivity * currentActivity = [self lastActivity];
-        
-        if (!currentActivity)
-        {
-            NSString * activityId = [client currentActivityId];
-            currentActivity = [[self harmonyConfiguration] activityWithId: activityId];
-        }
+        FSCActivity * currentActivity = [client currentActivityFromConfiguration: [self harmonyConfiguration]];
         
         FSCFunction * function = functionBlock(currentActivity);
         
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            
-            [[self statusLabel] setText: [NSString stringWithFormat:
-                                          @"%@...",
-                                          [function label]]];
-        });
-        
         if (function)
-        {
-            [client executeFunction: function
-                           withType: FSCHarmonyClientFunctionTypePress];
-        }
-        else
         {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
-                [[self statusLabel] setText: @"FUNCTION NOT FOUND"];
+                [[self statusLabel] setText: [NSString stringWithFormat:
+                                              @"%@...",
+                                              [function label]]];
             });
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
-                [[self statusLabel] setText: @""];
-            });
+            [client executeFunction: function
+                           withType: FSCHarmonyClientFunctionTypePress];
         }
     }
-     mainThreadCompletionBlock: ^{
-         
-         [[self statusLabel] setText: @""];
-     }];
+     mainThreadCompletionBlock: nil];
 }
 
 - (IBAction) volumeDownTapped: (id) sender
