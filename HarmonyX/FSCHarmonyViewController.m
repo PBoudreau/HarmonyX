@@ -37,27 +37,31 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        FSCHarmonyClient * client = nil;
         NSError * error = nil;
         
         @try
         {
-            NSString * username;
-            NSString * password;
-            NSString * IPAddress;
-            NSUInteger port;
+            if (![self client])
+            {
+                NSString * username;
+                NSString * password;
+                NSString * IPAddress;
+                NSUInteger port;
+                
+                [FSCDataSharingController loadUsername: &username
+                                              password: &password
+                                             IPAddress: &IPAddress
+                                                  port: &port];
+                
+                [self setClient: [FSCHarmonyClient clientWithMyHarmonyUsername: username
+                                                             myHarmonyPassword: password
+                                                           harmonyHubIPAddress: IPAddress
+                                                                harmonyHubPort: port]];
+                
+                [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
+            }
             
-            [FSCDataSharingController loadUsername: &username
-                                          password: &password
-                                         IPAddress: &IPAddress
-                                              port: &port];
-            
-            client = [FSCHarmonyClient clientWithMyHarmonyUsername: username
-                                                 myHarmonyPassword: password
-                                               harmonyHubIPAddress: IPAddress
-                                                    harmonyHubPort: port];
-            
-            actionsBlock(client);
+            actionsBlock([self client]);
         }
         @catch (NSException * exception)
         {
@@ -75,13 +79,6 @@
             error = [NSError errorWithDomain: FSCErrorDomain
                                         code: FSCErrorCodeErrorPerformingClientAction
                                     userInfo: @{NSLocalizedDescriptionKey: errorDescription}];
-        }
-        @finally
-        {
-            if (client)
-            {
-                [client disconnect];
-            }
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -146,8 +143,6 @@
 didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 {
     FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
-    
-    [self setLastActivity: activity];
     
     [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
         

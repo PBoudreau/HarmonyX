@@ -142,9 +142,9 @@
         
         [self performBlockingClientActionsWithBlock: ^(FSCHarmonyClient *client) {
             
-            NSLog(@"Current activity: %@", [client currentActivityId]);
+            configuration = [client configurationWithRefresh: YES];
             
-            configuration = [client configuration];
+            NSLog(@"Current activity: %@", [[client currentActivityFromConfiguration: configuration] label]);
             
             [FSCDataSharingController saveHarmonyConfiguration: configuration];
         }

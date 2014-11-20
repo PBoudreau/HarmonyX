@@ -24,11 +24,9 @@ typedef NS_ENUM(NSUInteger, FSCHarmonyClientFunctionType) {
                harmonyHubIPAddress: (NSString *) IPAddress
                     harmonyHubPort: (NSUInteger) port;
 
-- (FSCHarmonyConfiguration *) configuration;
+- (FSCHarmonyConfiguration *) configurationWithRefresh: (BOOL) refresh;
+- (FSCActivity *) currentActivityFromConfiguration: (FSCHarmonyConfiguration *) configuration;
 
-- (NSString *) currentActivityId;
-
-- (void) startActivityWithId: (NSString *) activityId;
 - (void) startActivity: (FSCActivity *) activity;
 
 - (void) executeFunction: (FSCFunction *) function
