@@ -16,6 +16,16 @@
 
 @implementation FSCHarmonyViewController
 
+#pragma mark - Superclass Methods
+
+- (void) dealloc
+{
+    if ([self client])
+    {
+        [[self client] disconnect];
+    }
+}
+
 #pragma mark - Class Methods
 
 - (void) loadConfiguration
@@ -43,6 +53,8 @@
         {
             if (![self client])
             {
+                [self clientSetupBegan];
+                
                 NSString * username;
                 NSString * password;
                 NSString * IPAddress;
@@ -58,7 +70,11 @@
                                                            harmonyHubIPAddress: IPAddress
                                                                 harmonyHubPort: port]];
                 
+                [[self client] setConfiguration: [self harmonyConfiguration]];
+                
                 [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
+                
+                [self clientSetupEnded];
             }
             
             actionsBlock([self client]);
@@ -93,6 +109,16 @@
     });
 }
 
+- (void) clientSetupBegan
+{
+    
+}
+
+- (void) clientSetupEnded
+{
+    
+}
+
 - (void) prepareForBlockingClientAction
 {
     
@@ -100,7 +126,7 @@
 
 - (void) cleanupAfterBlockingClientActionWithError: (NSError *) error
 {
-    NSLog(@"%@: %@", NSStringFromSelector(_cmd), error);
+    
 }
 
 #pragma mark - UICollectionViewDatasource
