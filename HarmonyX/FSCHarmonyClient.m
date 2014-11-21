@@ -27,7 +27,6 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     BOOL validOAResponseReceived;
 }
 
-@property (nonatomic, strong) FSCHarmonyConfiguration * configuration;
 @property (nonatomic, strong) FSCActivity * currentActivity;
 
 @property (nonatomic, strong) NSDate * creationTime;
@@ -110,11 +109,8 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (void) stopHeartbeatTimer
 {
-    dispatch_sync(dispatch_get_main_queue(), ^{
-
-        [[self heartbeatTimer] invalidate];
-        [self setHeartbeatTimer: nil];
-    });
+    [[self heartbeatTimer] invalidate];
+    [self setHeartbeatTimer: nil];
 }
 
 - (long) timestamp
@@ -375,15 +371,20 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
 }
 
 - (void) sendIQCmd: (XMPPIQ *) IQCmd
-andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidationBlock;
 {
     NSLog(@"%@: %@", NSStringFromSelector(_cmd), IQCmd);
     
+    [[self xmppStream] sendElement: IQCmd];
+}
+
+- (void) sendIQCmd: (XMPPIQ *) IQCmd
+andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidationBlock;
+{
     validOAResponseReceived = NO;
     
     [self setOAResponseValidationBlock: responseValidationBlock];
     
-    [[self xmppStream] sendElement: IQCmd];
+    [self sendIQCmd: IQCmd];
     
     dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
@@ -417,8 +418,7 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
         XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
                                       child: actionCmd];
         
-        [self sendIQCmd: IQCmd
-andWaitForValidResponse: nil];
+        [self sendIQCmd: IQCmd];
     }
 }
 
@@ -620,15 +620,18 @@ andWaitForValidResponse: nil];
     
     [self stopHeartbeatTimer];
     
-    [[self xmppStream] disconnect];
-    
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+    if (![[self xmppStream] isDisconnected])
+    {
+        [[self xmppStream] disconnect];
         
-        while (isXMPPConnected)
-        {
-            [NSThread sleepForTimeInterval: 0.25];
-        }
-    });
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            
+            while (isXMPPConnected)
+            {
+                [NSThread sleepForTimeInterval: 0.25];
+            }
+        });
+    }
 }
 
 #pragma mark XMPPStream Delegate
@@ -684,6 +687,8 @@ andWaitForValidResponse: nil];
                        withError: (NSError *) error
 {
     NSLog(@"%@ %@", NSStringFromSelector(_cmd), [error localizedDescription]);
+    
+    [self stopHeartbeatTimer];
     
     if (!isXMPPConnected)
     {

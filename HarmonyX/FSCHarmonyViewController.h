@@ -27,6 +27,8 @@
 - (void) performBlockingClientActionsWithBlock: (void (^)(FSCHarmonyClient * client))actionsBlock
                      mainThreadCompletionBlock: (void (^)(void))completionBlock;
 - (void) prepareForBlockingClientAction;
+- (void) clientSetupBegan;
+- (void) clientSetupEnded;
 - (void) cleanupAfterBlockingClientActionWithError: (NSError *) error;
 
 - (UIColor *) colorForActivityMask;
