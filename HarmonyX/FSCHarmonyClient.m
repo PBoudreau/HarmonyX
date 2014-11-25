@@ -118,6 +118,15 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     return [[NSDate date] timeIntervalSinceDate: [self creationTime]];
 }
 
+- (void) setCurrentActivity: (FSCActivity *) currentActivity
+{
+    _currentActivity = currentActivity;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName: FSCHarmonyClientCurrentActivityChangedNotification
+                                                        object: self
+                                                      userInfo: @{FSCHarmonyClientCurrentActivityChangedNotificationActivityKey: currentActivity}];
+}
+
 #pragma mark - Initialization & Connection
 
 - (void) connectToHarmonyHub

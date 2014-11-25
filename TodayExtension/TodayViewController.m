@@ -107,6 +107,12 @@ static CGFloat const activityCellDim = 75.0;
     });
 }
 
+- (void) handleClient: (FSCHarmonyClient *) client
+currentActivityChanged: (FSCActivity *) newActivity
+{
+    [self updateUIForCurrentActivity];
+}
+
 - (void) prepareForBlockingClientAction
 {
     [super prepareForBlockingClientAction];
@@ -164,6 +170,15 @@ static CGFloat const activityCellDim = 75.0;
     [[self activityCollectionViewHeightConstraint] setConstant: collectionViewHeight];
     
     [[self staticActivitiesView] setHidden: (collectionViewHeight == 0.0)];
+}
+
+- (void) updateUIForCurrentActivity
+{
+    FSCActivity * currentActivity = [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
+    
+    FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
+    
+    [[self volumeView] setHidden: (volumeControlGroup == nil)];
 }
 
 - (IBAction) powerOffTapped: (id) sender
