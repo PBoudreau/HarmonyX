@@ -42,6 +42,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 @property (nonatomic, strong) NSXMLElement * authenticationFailureError;
 
 @property (nonatomic, copy) BOOL(^OAResponseValidationBlock)(NSXMLElement * OAResponse);
+@property (nonatomic, copy) NSString * expectedOAResponseMime;
 @property (nonatomic, strong) id validOAResponse;
 
 @end
@@ -389,21 +390,37 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
 - (void) sendIQCmd: (XMPPIQ *) IQCmd
 andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidationBlock;
 {
-    validOAResponseReceived = NO;
-    
-    [self setOAResponseValidationBlock: responseValidationBlock];
-    
-    [self sendIQCmd: IQCmd];
-    
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+    @synchronized(self)
+    {
+        validOAResponseReceived = NO;
         
-        while (!validOAResponseReceived)
+        [self setOAResponseValidationBlock: responseValidationBlock];
+        
+        NSXMLElement * oaElement = [IQCmd elementForName: @"oa"];
+        
+        if (oaElement)
         {
-            [NSThread sleepForTimeInterval: 0.25];
+            DDXMLNode * mimeNode = [oaElement attributeForName: @"mime"];
+            
+            if (mimeNode)
+            {
+                [self setExpectedOAResponseMime: [mimeNode stringValue]];
+            }
         }
-    });
-    
-    [self setOAResponseValidationBlock: nil];
+        
+        [self sendIQCmd: IQCmd];
+        
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            
+            while (!validOAResponseReceived)
+            {
+                [NSThread sleepForTimeInterval: 0.25];
+            }
+        });
+        
+        [self setOAResponseValidationBlock: nil];
+        [self setExpectedOAResponseMime: nil];
+    }
 }
 
 #pragma mark - Operations
@@ -427,7 +444,8 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
         XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
                                       child: actionCmd];
         
-        [self sendIQCmd: IQCmd];
+        [self sendIQCmd: IQCmd
+andWaitForValidResponse: nil];
     }
 }
 
@@ -676,12 +694,36 @@ andWaitForValidResponse: nil];
     
     NSXMLElement * oaResponse = [iq elementForName: @"oa"];
     
-    if (![self OAResponseValidationBlock] ||
-        (oaResponse &&
-         [self OAResponseValidationBlock](oaResponse)))
+    BOOL validOAResponse = NO;
+    
+    if ([self OAResponseValidationBlock])
     {
-        validOAResponseReceived = YES;
+        if (oaResponse &&
+            [self OAResponseValidationBlock](oaResponse))
+        {
+            if ([self expectedOAResponseMime])
+            {
+                DDXMLNode * mimeNode = [oaResponse attributeForName: @"mime"];
+                
+                if (mimeNode)
+                {
+                    NSString * mimeResponse = [mimeNode stringValue];
+                    
+                    validOAResponse = [mimeResponse isEqualToString: [self expectedOAResponseMime]];
+                }
+            }
+            else
+            {
+                validOAResponse = YES;
+            }
+        }
     }
+    else
+    {
+        validOAResponse = YES;
+    }
+    
+    validOAResponseReceived = validOAResponse;
     
     return NO;
 }
