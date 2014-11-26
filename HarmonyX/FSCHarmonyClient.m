@@ -443,7 +443,7 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    if (!_configuration ||
+    if (![self configuration] ||
         refresh)
     {
         NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
@@ -492,17 +492,17 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
         
         FSCHarmonyConfiguration * harmonyConfig = [FSCHarmonyConfiguration modelObjectWithDictionary: configuration];
         
-        _configuration = harmonyConfig;
+        [self setConfiguration: harmonyConfig];
     }
     
-    return _configuration;
+    return [self configuration];
 }
 
 - (FSCActivity *) currentActivityFromConfiguration: (FSCHarmonyConfiguration *) configuration
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    if (!_currentActivity)
+    if (![self currentActivity])
     {
         if (!configuration)
         {
@@ -553,10 +553,10 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
                                          userInfo: nil];
         }
         
-        _currentActivity = [configuration activityWithId: currentActivityId];
+        [self setCurrentActivity: [configuration activityWithId: currentActivityId]];
     }
     
-    return _currentActivity;
+    return [self currentActivity];
 }
 
 - (void) startActivityWithId: (NSString *) activityId

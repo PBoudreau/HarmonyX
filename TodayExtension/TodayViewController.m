@@ -174,11 +174,14 @@ currentActivityChanged: (FSCActivity *) newActivity
 
 - (void) updateUIForCurrentActivity
 {
-    FSCActivity * currentActivity = [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
-    
-    FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
-    
-    [[self volumeView] setHidden: (volumeControlGroup == nil)];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        FSCActivity * currentActivity = [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
+        
+        FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
+        
+        [[self volumeView] setHidden: (volumeControlGroup == nil)];
+    });
 }
 
 - (IBAction) powerOffTapped: (id) sender
