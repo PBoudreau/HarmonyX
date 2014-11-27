@@ -91,7 +91,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     
     [client connectToHarmonyHub];
     
-//    [client startHeartbeat];
+    [client startHeartbeat];
     
     return client;
 }
@@ -579,7 +579,10 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     NSString * command = [NSString stringWithFormat:
                           @"activityId=%@",
                           activityId];
-    command = [self appendTimestampToCommand: command];
+    
+    // Adding timestamp seems to cause issues where a first activity will be able to start, but
+    // subsequent activity starting will fail.
+//    command = [self appendTimestampToCommand: command];
     
     [actionCmd setStringValue: command];
     
@@ -709,7 +712,9 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     
     validOAResponseReceived = validOAResponse;
     
-    return NO;
+    // Returning NO would cause some errors to be received from Hub as well as duplicate
+    // responses.
+    return YES;
 }
 
 - (void) xmppStream: (XMPPStream *) sender
