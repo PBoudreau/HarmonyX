@@ -51,11 +51,6 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 #pragma mark - Class Methods
 
-- (void) dealloc
-{
-    NSLog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-}
-
 - (id) initWithMyHarmonyUsername: (NSString *) username
                myHarmonyPassword: (NSString *) password
              harmonyHubIPAddress: (NSString *) IPAddress
