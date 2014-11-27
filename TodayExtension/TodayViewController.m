@@ -44,6 +44,11 @@ static CGFloat const activityCellDim = 75.0;
 
 #pragma mark - Superclass Methods
 
+- (void) dealloc
+{
+    NSLog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+}
+
 - (void) viewDidLoad
 {
     [super viewDidLoad];
