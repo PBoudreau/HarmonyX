@@ -15,12 +15,20 @@
 static CGFloat const activityCellDim = 75.0;
 
 @interface TodayViewController () <NCWidgetProviding>
+{
+    BOOL playToggle;
+}
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityCollectionViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *staticActivitiesView;
 
 @property (weak, nonatomic) IBOutlet UIView *volumeView;
+
+@property (weak, nonatomic) IBOutlet UIView *transportView;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *playPauseTapGesture;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *forwardDoubleTapGesture;
+@property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *backLongPressGesture;
 
 @property (weak, nonatomic) IBOutlet UIView *powerOffView;
 @property (weak, nonatomic) IBOutlet UIImageView *powerOffIconImageView;
@@ -39,6 +47,11 @@ static CGFloat const activityCellDim = 75.0;
 - (void) viewDidLoad
 {
     [super viewDidLoad];
+    
+    playToggle = NO;
+    
+    [[self playPauseTapGesture] requireGestureRecognizerToFail: [self forwardDoubleTapGesture]];
+    [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backLongPressGesture]];
     
     [self loadConfiguration];
 }
@@ -165,11 +178,14 @@ currentActivityChanged: (FSCActivity *) newActivity
         FSCActivity * currentActivity = [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
         
         FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
+        FSCControlGroup * transportBasicControlGroup = [currentActivity transportBasicControlGroup];
+        FSCControlGroup * transportExtendedControlGroup = [currentActivity transportExtendedControlGroup];
         
         [UIView animateWithDuration: 0.5
                          animations: ^{
                              
                              [[self volumeView] setAlpha: volumeControlGroup ? 1.0 : 0.0];
+                             [[self transportView] setAlpha: (transportBasicControlGroup || transportExtendedControlGroup) ? 1.0 : 0.0];
                          }];
     });
 }
@@ -222,6 +238,34 @@ currentActivityChanged: (FSCActivity *) newActivity
     [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
         
         return [[currentActivity volumeControlGroup] volumeUpFunction];
+    }];
+}
+
+- (IBAction) playPauseTapped: (id) sender
+{
+    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+        
+        FSCControlGroup * controlGroup = [currentActivity transportBasicControlGroup];
+        
+        FSCFunction * function = playToggle ? [controlGroup playFunction] : [controlGroup pauseFunction];
+        
+        return function;
+    }];
+}
+
+- (IBAction) forwardTapped: (id) sender
+{
+    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+        
+        return [[currentActivity transportExtendedControlGroup] skipForwardFunction];
+    }];
+}
+
+- (IBAction) backwardTapped: (id) sender
+{
+    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+        
+        return [[currentActivity transportExtendedControlGroup] skipBackwardFunction];
     }];
 }
 
