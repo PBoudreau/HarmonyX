@@ -166,7 +166,11 @@ currentActivityChanged: (FSCActivity *) newActivity
         
         FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
         
-        [[self volumeView] setHidden: (volumeControlGroup == nil)];
+        [UIView animateWithDuration: 0.5
+                         animations: ^{
+                             
+                             [[self volumeView] setAlpha: volumeControlGroup ? 1.0 : 0.0];
+                         }];
     });
 }
 
