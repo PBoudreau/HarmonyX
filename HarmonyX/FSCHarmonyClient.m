@@ -703,6 +703,15 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
                 
                 validOAResponse = [mimeResponse isEqualToString: [self expectedOAResponseMime]];
             }
+            
+            DDXMLNode * errorCodeNode = [oaResponse attributeForName: @"errorcode"];
+            
+            if (errorCodeNode)
+            {
+                NSString * errorCode = [errorCodeNode stringValue];
+                
+                validOAResponse = validOAResponse && [errorCode isEqualToString: @"200"];
+            }
         }
     }
     else

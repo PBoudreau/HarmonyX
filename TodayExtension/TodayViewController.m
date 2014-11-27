@@ -28,7 +28,7 @@ static CGFloat const activityCellDim = 75.0;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
-@property (weak, nonatomic) UIActivityIndicatorView * activityIndicatorView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 
 @end
 
@@ -81,20 +81,7 @@ static CGFloat const activityCellDim = 75.0;
 {
     dispatch_sync(dispatch_get_main_queue(), ^{
         
-        CGRect statusLabelFrame = [[self statusLabel] frame];
-        CGFloat dim = statusLabelFrame.size.height / 2.0;
-        CGRect activityIndicatorViewFrame = CGRectMake(CGRectGetMidX(statusLabelFrame) - (dim / 2.0),
-                                                       statusLabelFrame.origin.y,
-                                                       dim,
-                                                       dim);
-        
-        UIActivityIndicatorView * activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame: activityIndicatorViewFrame];
-        
-        [activityIndicatorView startAnimating];
-        
-        [[[self statusLabel] superview] addSubview: activityIndicatorView];
-        
-        [self setActivityIndicatorView: activityIndicatorView];
+        [[self activityIndicatorView] startAnimating];
     });
 }
 
@@ -102,8 +89,7 @@ static CGFloat const activityCellDim = 75.0;
 {
     dispatch_sync(dispatch_get_main_queue(), ^{
         
-        [[self activityIndicatorView] removeFromSuperview];
-        [self setActivityIndicatorView: nil];
+        [[self activityIndicatorView] stopAnimating];
     });
 }
 
