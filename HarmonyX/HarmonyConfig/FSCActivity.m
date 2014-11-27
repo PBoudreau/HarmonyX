@@ -163,6 +163,16 @@ NSString *const kFSCActivityImageName = @"imageName";
     return [self controlGroupNamed: @"Volume"];
 }
 
+- (FSCControlGroup *) transportBasicControlGroup
+{
+    return [self controlGroupNamed: @"TransportBasic"];
+}
+
+- (FSCControlGroup *) transportExtendedControlGroup
+{
+    return [self controlGroupNamed: @"TransportExtended"];
+}
+
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];

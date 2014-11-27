@@ -20,6 +20,8 @@
 
 - (void) dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+    
     if ([self client])
     {
         [[self client] disconnect];
@@ -72,6 +74,11 @@
                 
                 [[self client] setConfiguration: [self harmonyConfiguration]];
                 
+                [[NSNotificationCenter defaultCenter] addObserver: self
+                                                         selector: @selector(handleFSCHarmonyClientCurrentActivityChangedNotification:)
+                                                             name: FSCHarmonyClientCurrentActivityChangedNotification
+                                                           object: [self client]];
+                
                 [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
                 
                 [self clientSetupEnded];
@@ -115,6 +122,12 @@
 }
 
 - (void) clientSetupEnded
+{
+    
+}
+
+- (void) handleClient: (FSCHarmonyClient *) client
+currentActivityChanged: (FSCActivity *) newActivity
 {
     
 }
@@ -175,6 +188,14 @@ didSelectItemAtIndexPath: (NSIndexPath *) indexPath
         [client startActivity: activity];
     }
                       mainThreadCompletionBlock: nil];
+}
+
+#pragma mark - Notification Handling
+
+- (void) handleFSCHarmonyClientCurrentActivityChangedNotification: (NSNotification *) note
+{
+    [self handleClient: [note object]
+currentActivityChanged: [[note userInfo] objectForKey: FSCHarmonyClientCurrentActivityChangedNotificationActivityKey]];
 }
 
 @end

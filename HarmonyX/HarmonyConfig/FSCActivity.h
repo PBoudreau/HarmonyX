@@ -33,5 +33,7 @@
 
 - (FSCControlGroup *) controlGroupNamed: (NSString *) controlGroupName;
 - (FSCControlGroup *) volumeControlGroup;
+- (FSCControlGroup *) transportBasicControlGroup;
+- (FSCControlGroup *) transportExtendedControlGroup;
 
 @end

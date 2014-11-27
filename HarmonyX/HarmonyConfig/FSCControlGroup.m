@@ -85,6 +85,26 @@ NSString *const kFSCControlGroupFunction = @"function";
     return [self functionNamed: @"VolumeUp"];
 }
 
+- (FSCFunction *) playFunction
+{
+    return [self functionNamed: @"Play"];
+}
+
+- (FSCFunction *) pauseFunction
+{
+    return [self functionNamed: @"Pause"];
+}
+
+- (FSCFunction *) skipBackwardFunction
+{
+    return [self functionNamed: @"SkipBackward"];
+}
+
+- (FSCFunction *) skipForwardFunction
+{
+    return [self functionNamed: @"SkipForward"];
+}
+
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];

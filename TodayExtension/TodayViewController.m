@@ -15,6 +15,9 @@
 static CGFloat const activityCellDim = 75.0;
 
 @interface TodayViewController () <NCWidgetProviding>
+{
+    BOOL playToggle;
+}
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityCollectionViewHeightConstraint;
 
@@ -22,13 +25,18 @@ static CGFloat const activityCellDim = 75.0;
 
 @property (weak, nonatomic) IBOutlet UIView *volumeView;
 
+@property (weak, nonatomic) IBOutlet UIView *transportView;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *playPauseTapGesture;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *forwardDoubleTapGesture;
+@property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *backLongPressGesture;
+
 @property (weak, nonatomic) IBOutlet UIView *powerOffView;
 @property (weak, nonatomic) IBOutlet UIImageView *powerOffIconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *powerOffLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
-@property (weak, nonatomic) UIActivityIndicatorView * activityIndicatorView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 
 @end
 
@@ -39,6 +47,11 @@ static CGFloat const activityCellDim = 75.0;
 - (void) viewDidLoad
 {
     [super viewDidLoad];
+    
+    playToggle = NO;
+    
+    [[self playPauseTapGesture] requireGestureRecognizerToFail: [self forwardDoubleTapGesture]];
+    [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backLongPressGesture]];
     
     [self loadConfiguration];
 }
@@ -81,20 +94,7 @@ static CGFloat const activityCellDim = 75.0;
 {
     dispatch_sync(dispatch_get_main_queue(), ^{
         
-        CGRect statusLabelFrame = [[self statusLabel] frame];
-        CGFloat dim = statusLabelFrame.size.height / 2.0;
-        CGRect activityIndicatorViewFrame = CGRectMake(CGRectGetMidX(statusLabelFrame) - (dim / 2.0),
-                                                       statusLabelFrame.origin.y,
-                                                       dim,
-                                                       dim);
-        
-        UIActivityIndicatorView * activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame: activityIndicatorViewFrame];
-        
-        [activityIndicatorView startAnimating];
-        
-        [[[self statusLabel] superview] addSubview: activityIndicatorView];
-        
-        [self setActivityIndicatorView: activityIndicatorView];
+        [[self activityIndicatorView] startAnimating];
     });
 }
 
@@ -102,9 +102,14 @@ static CGFloat const activityCellDim = 75.0;
 {
     dispatch_sync(dispatch_get_main_queue(), ^{
         
-        [[self activityIndicatorView] removeFromSuperview];
-        [self setActivityIndicatorView: nil];
+        [[self activityIndicatorView] stopAnimating];
     });
+}
+
+- (void) handleClient: (FSCHarmonyClient *) client
+currentActivityChanged: (FSCActivity *) newActivity
+{
+    [self updateUIForCurrentActivity];
 }
 
 - (void) prepareForBlockingClientAction
@@ -166,6 +171,25 @@ static CGFloat const activityCellDim = 75.0;
     [[self staticActivitiesView] setHidden: (collectionViewHeight == 0.0)];
 }
 
+- (void) updateUIForCurrentActivity
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        FSCActivity * currentActivity = [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
+        
+        FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
+        FSCControlGroup * transportBasicControlGroup = [currentActivity transportBasicControlGroup];
+        FSCControlGroup * transportExtendedControlGroup = [currentActivity transportExtendedControlGroup];
+        
+        [UIView animateWithDuration: 0.5
+                         animations: ^{
+                             
+                             [[self volumeView] setAlpha: volumeControlGroup ? 1.0 : 0.0];
+                             [[self transportView] setAlpha: (transportBasicControlGroup || transportExtendedControlGroup) ? 1.0 : 0.0];
+                         }];
+    });
+}
+
 - (IBAction) powerOffTapped: (id) sender
 {
     [[self statusLabel] setText: @"Powering off..."];
@@ -215,6 +239,37 @@ static CGFloat const activityCellDim = 75.0;
         
         return [[currentActivity volumeControlGroup] volumeUpFunction];
     }];
+}
+
+- (IBAction) playPauseTapped: (id) sender
+{
+    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+        
+        FSCControlGroup * controlGroup = [currentActivity transportBasicControlGroup];
+        
+        FSCFunction * function = playToggle ? [controlGroup playFunction] : [controlGroup pauseFunction];
+        
+        return function;
+    }];
+}
+
+- (IBAction) forwardTapped: (id) sender
+{
+    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+        
+        return [[currentActivity transportExtendedControlGroup] skipForwardFunction];
+    }];
+}
+
+- (IBAction) backwardTapped: (UILongPressGestureRecognizer *) sender
+{
+    if ([sender state] == UIGestureRecognizerStateEnded)
+    {
+        [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+            
+            return [[currentActivity transportExtendedControlGroup] skipBackwardFunction];
+        }];
+    }
 }
 
 #pragma mark - UICollectionViewDatasource

@@ -12,6 +12,9 @@
 #import "FSCActivity.h"
 #import "FSCFunction.h"
 
+static NSString * const FSCHarmonyClientCurrentActivityChangedNotification = @"FSCHarmonyClientCurrentActivityChangedNotification";
+static NSString * const FSCHarmonyClientCurrentActivityChangedNotificationActivityKey = @"FSCHarmonyClientCurrentActivityChangedNotificationActivityKey";
+
 typedef NS_ENUM(NSUInteger, FSCHarmonyClientFunctionType) {
     FSCHarmonyClientFunctionTypePress,
     FSCHarmonyClientFunctionTypeRelease

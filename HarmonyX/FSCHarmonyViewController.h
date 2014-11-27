@@ -33,4 +33,7 @@
 
 - (UIColor *) colorForActivityMask;
 
+- (void) handleClient: (FSCHarmonyClient *) client
+currentActivityChanged: (FSCActivity *) newActivity;
+
 @end

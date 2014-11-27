@@ -41,7 +41,8 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 @property (nonatomic, strong) NSXMLElement * authenticationFailureError;
 
-@property (nonatomic, copy) BOOL(^OAResponseValidationBlock)(NSXMLElement * OAResponse);
+@property (nonatomic, copy) NSXMLElement * OAResponse;
+@property (nonatomic, copy) NSString * expectedOAResponseMime;
 @property (nonatomic, strong) id validOAResponse;
 
 @end
@@ -116,6 +117,15 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 - (long) timestamp
 {
     return [[NSDate date] timeIntervalSinceDate: [self creationTime]];
+}
+
+- (void) setCurrentActivity: (FSCActivity *) currentActivity
+{
+    _currentActivity = currentActivity;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName: FSCHarmonyClientCurrentActivityChangedNotification
+                                                        object: self
+                                                      userInfo: @{FSCHarmonyClientCurrentActivityChangedNotificationActivityKey: currentActivity}];
 }
 
 #pragma mark - Initialization & Connection
@@ -328,15 +338,9 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
                                   child: actionCmd];
     
-    __block NSString * OAAttributesAndValuesString = nil;
-    
-    [self sendIQCmd: IQCmd
-andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
-    {
-        OAAttributesAndValuesString = [OAResponse stringValue];
-        
-        return YES;
-    }];
+    DDXMLElement *OAResponse = [self sendIQCmdAndWaitForResponse: IQCmd
+                                              withMimeValidation: YES];
+    NSString * OAAttributesAndValuesString = [OAResponse stringValue];
     
     NSString * harmonyHubToken = nil;
     
@@ -377,24 +381,49 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     [[self xmppStream] sendElement: IQCmd];
 }
 
-- (void) sendIQCmd: (XMPPIQ *) IQCmd
-andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidationBlock;
+- (NSXMLElement *) sendIQCmdAndWaitForResponse: (XMPPIQ *) IQCmd
+                            withMimeValidation: (BOOL) performMimeValidation
 {
-    validOAResponseReceived = NO;
+    NSXMLElement * OAResponse = nil;
     
-    [self setOAResponseValidationBlock: responseValidationBlock];
-    
-    [self sendIQCmd: IQCmd];
-    
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+    @synchronized(self)
+    {
+        validOAResponseReceived = NO;
+        [self setOAResponse: nil];
+        [self setExpectedOAResponseMime: nil];
         
-        while (!validOAResponseReceived)
+        if (performMimeValidation)
         {
-            [NSThread sleepForTimeInterval: 0.25];
+            NSXMLElement * oaElement = [IQCmd elementForName: @"oa"];
+            
+            if (oaElement)
+            {
+                DDXMLNode * mimeNode = [oaElement attributeForName: @"mime"];
+                
+                if (mimeNode)
+                {
+                    [self setExpectedOAResponseMime: [mimeNode stringValue]];
+                }
+            }
         }
-    });
+        
+        [self sendIQCmd: IQCmd];
+        
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            
+            while (!validOAResponseReceived)
+            {
+                [NSThread sleepForTimeInterval: 0.25];
+            }
+        });
+        
+        OAResponse = [self OAResponse];
+        
+        [self setExpectedOAResponseMime: nil];
+        [self setOAResponse: nil];
+    }
     
-    [self setOAResponseValidationBlock: nil];
+    return OAResponse;
 }
 
 #pragma mark - Operations
@@ -418,7 +447,8 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
         XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
                                       child: actionCmd];
         
-        [self sendIQCmd: IQCmd];
+        [self sendIQCmdAndWaitForResponse: IQCmd
+                       withMimeValidation: YES];
     }
 }
 
@@ -434,7 +464,7 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    if (!_configuration ||
+    if (![self configuration] ||
         refresh)
     {
         NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
@@ -445,15 +475,9 @@ andWaitForValidResponse: (BOOL (^)(NSXMLElement * OAResponse))responseValidation
         XMPPIQ * iqCmd = [XMPPIQ iqWithType: @"get"
                                       child: actionCmd];
         
-        __block NSString * OAString = nil;
-        
-        [self sendIQCmd: iqCmd
-andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
-         {
-             OAString = [OAResponse stringValue];
-             
-             return YES;
-         }];
+        DDXMLElement *OAResponse = [self sendIQCmdAndWaitForResponse: iqCmd
+                                                  withMimeValidation: YES];
+        NSString * OAString = [OAResponse stringValue];
         
         NSDictionary * configuration = nil;
         
@@ -483,17 +507,17 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
         
         FSCHarmonyConfiguration * harmonyConfig = [FSCHarmonyConfiguration modelObjectWithDictionary: configuration];
         
-        _configuration = harmonyConfig;
+        [self setConfiguration: harmonyConfig];
     }
     
-    return _configuration;
+    return [self configuration];
 }
 
 - (FSCActivity *) currentActivityFromConfiguration: (FSCHarmonyConfiguration *) configuration
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    if (!_currentActivity)
+    if (![self currentActivity])
     {
         if (!configuration)
         {
@@ -512,16 +536,9 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
         XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
                                       child: actionCmd];
         
-        __block NSString * OAString = nil;
-        
-        [self sendIQCmd: IQCmd
-andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
-         {
-             OAString = [OAResponse stringValue];
-             
-             return YES;
-             
-         }];
+        DDXMLElement * OAResponse =[self sendIQCmdAndWaitForResponse: IQCmd
+                                                  withMimeValidation: YES];
+        NSString * OAString = [OAResponse stringValue];
         
         NSString * currentActivityId = nil;
         
@@ -544,10 +561,10 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
                                          userInfo: nil];
         }
         
-        _currentActivity = [configuration activityWithId: currentActivityId];
+        [self setCurrentActivity: [configuration activityWithId: currentActivityId]];
     }
     
-    return _currentActivity;
+    return [self currentActivity];
 }
 
 - (void) startActivityWithId: (NSString *) activityId
@@ -562,15 +579,18 @@ andWaitForValidResponse: ^BOOL(DDXMLElement *OAResponse)
     NSString * command = [NSString stringWithFormat:
                           @"activityId=%@",
                           activityId];
-    command = [self appendTimestampToCommand: command];
+    
+    // Adding timestamp seems to cause issues where a first activity will be able to start, but
+    // subsequent activity starting will fail.
+//    command = [self appendTimestampToCommand: command];
     
     [actionCmd setStringValue: command];
     
     XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
                                   child: actionCmd];
     
-    [self sendIQCmd: IQCmd
-andWaitForValidResponse: nil];
+    [self sendIQCmdAndWaitForResponse: IQCmd
+                   withMimeValidation: YES];
 }
 
 - (void) startActivity: (FSCActivity *) activity
@@ -603,8 +623,8 @@ andWaitForValidResponse: nil];
     XMPPIQ * IQCmd = [XMPPIQ iqWithType: @"get"
                                   child: actionCmd];
     
-    [self sendIQCmd: IQCmd
-andWaitForValidResponse: nil];
+    [self sendIQCmdAndWaitForResponse: IQCmd
+                   withMimeValidation: NO];
 }
 
 - (void) turnOff
@@ -665,16 +685,45 @@ andWaitForValidResponse: nil];
 {
     NSLog(@"%@: %@", NSStringFromSelector(_cmd), iq);
     
-    NSXMLElement * oaResponse = [iq elementForName: @"oa"];
+    BOOL validOAResponse = NO;
     
-    if (![self OAResponseValidationBlock] ||
-        (oaResponse &&
-         [self OAResponseValidationBlock](oaResponse)))
+    if ([self expectedOAResponseMime])
     {
-        validOAResponseReceived = YES;
+        NSXMLElement * oaResponse = [iq elementForName: @"oa"];
+    
+        if (oaResponse)
+        {
+            [self setOAResponse: oaResponse];
+            
+            DDXMLNode * mimeNode = [oaResponse attributeForName: @"mime"];
+            
+            if (mimeNode)
+            {
+                NSString * mimeResponse = [mimeNode stringValue];
+                
+                validOAResponse = [mimeResponse isEqualToString: [self expectedOAResponseMime]];
+            }
+            
+            DDXMLNode * errorCodeNode = [oaResponse attributeForName: @"errorcode"];
+            
+            if (errorCodeNode)
+            {
+                NSString * errorCode = [errorCodeNode stringValue];
+                
+                validOAResponse = validOAResponse && [errorCode isEqualToString: @"200"];
+            }
+        }
+    }
+    else
+    {
+        validOAResponse = YES;
     }
     
-    return NO;
+    validOAResponseReceived = validOAResponse;
+    
+    // Returning NO would cause some errors to be received from Hub as well as duplicate
+    // responses.
+    return YES;
 }
 
 - (void) xmppStream: (XMPPStream *) sender

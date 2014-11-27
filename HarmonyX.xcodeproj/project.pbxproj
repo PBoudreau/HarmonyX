@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A2742611A275E7700F5C933 /* FSCTransparentTouchableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2742601A275E7700F5C933 /* FSCTransparentTouchableView.m */; };
+		1A2742621A275E7E00F5C933 /* FSCTransparentTouchableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2742601A275E7700F5C933 /* FSCTransparentTouchableView.m */; };
 		1A60430C1A0A887B0074D6A5 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A60430B1A0A887B0074D6A5 /* NotificationCenter.framework */; };
 		1A6043121A0A887B0074D6A5 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A6043111A0A887B0074D6A5 /* TodayViewController.m */; };
 		1A6043141A0A887B0074D6A5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6043131A0A887B0074D6A5 /* MainInterface.storyboard */; };
@@ -71,6 +73,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1A27425F1A275E7700F5C933 /* FSCTransparentTouchableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCTransparentTouchableView.h; sourceTree = "<group>"; };
+		1A2742601A275E7700F5C933 /* FSCTransparentTouchableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCTransparentTouchableView.m; sourceTree = "<group>"; };
 		1A60430A1A0A887B0074D6A5 /* TodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A60430B1A0A887B0074D6A5 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		1A60430F1A0A887B0074D6A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -200,6 +204,8 @@
 				1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */,
 				1AA9E71D1A110595000CE1DD /* UIImage+Mask.h */,
 				1AA9E71E1A110595000CE1DD /* UIImage+Mask.m */,
+				1A27425F1A275E7700F5C933 /* FSCTransparentTouchableView.h */,
+				1A2742601A275E7700F5C933 /* FSCTransparentTouchableView.m */,
 				1A69F41F1A00497000860482 /* Main.storyboard */,
 				1A69F4221A00497000860482 /* Images.xcassets */,
 				1A69F4241A00497000860482 /* LaunchScreen.xib */,
@@ -424,6 +430,7 @@
 				1AC092391A10074400602E69 /* FSCDevice.m in Sources */,
 				1A8AE5E21A0BA6900047436B /* FSCDataSharingController.m in Sources */,
 				1AA9E7241A113239000CE1DD /* FSCHarmonyViewController.m in Sources */,
+				1A2742621A275E7E00F5C933 /* FSCTransparentTouchableView.m in Sources */,
 				1AA9E7201A110595000CE1DD /* UIImage+Mask.m in Sources */,
 				1AC092351A10074400602E69 /* FSCContent.m in Sources */,
 				1AC0923D1A10074400602E69 /* FSCFunction.m in Sources */,
@@ -442,6 +449,7 @@
 				1AC092361A10074400602E69 /* FSCControlGroup.m in Sources */,
 				1A69F41E1A00497000860482 /* ViewController.m in Sources */,
 				1AC0923C1A10074400602E69 /* FSCFunction.m in Sources */,
+				1A2742611A275E7700F5C933 /* FSCTransparentTouchableView.m in Sources */,
 				1A69F41B1A00497000860482 /* AppDelegate.m in Sources */,
 				1AA9E71B1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */,
 				1AC092341A10074400602E69 /* FSCContent.m in Sources */,

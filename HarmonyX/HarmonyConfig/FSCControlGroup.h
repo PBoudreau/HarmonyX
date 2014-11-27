@@ -21,5 +21,9 @@
 - (FSCFunction *) functionNamed: (NSString *) functionName;
 - (FSCFunction *) volumeDownFunction;
 - (FSCFunction *) volumeUpFunction;
+- (FSCFunction *) playFunction;
+- (FSCFunction *) pauseFunction;
+- (FSCFunction *) skipBackwardFunction;
+- (FSCFunction *) skipForwardFunction;
 
 @end

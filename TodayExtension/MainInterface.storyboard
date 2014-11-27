@@ -73,8 +73,8 @@
                                     <outlet property="delegate" destination="M4Y-Lb-cyx" id="4Sf-ef-ctP"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="eDy-ut-zxO">
-                                <rect key="frame" x="0.0" y="150" width="320" height="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="eDy-ut-zxO" userLabel="Status Label">
+                                <rect key="frame" x="20" y="150" width="300" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="3cr-ve-bxG"/>
                                 </constraints>
@@ -82,10 +82,10 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dkf-7u-hdk">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dkf-7u-hdk" userLabel="Static Controls View">
                                 <rect key="frame" x="0.0" y="75" width="320" height="75"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u0b-ZA-Beo">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u0b-ZA-Beo" userLabel="Volume View">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="75"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3BR-Jg-x0X">
@@ -124,7 +124,7 @@
                                             <constraint firstItem="J5j-vk-GyB" firstAttribute="top" secondItem="u0b-ZA-Beo" secondAttribute="top" id="th2-8K-vma"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zua-2B-sVY">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zua-2B-sVY" userLabel="Power Off View">
                                         <rect key="frame" x="245" y="0.0" width="75" height="75"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jUc-H9-y2B">
@@ -160,28 +160,101 @@
                                             <outletCollection property="gestureRecognizers" destination="M1f-gr-rym" appends="YES" id="CJx-zK-yvf"/>
                                         </connections>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q89-l6-ILz" userLabel="Transport View">
+                                        <rect key="frame" x="150" y="0.0" width="95" height="75"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="TFz-l8-Cya">
+                                                <rect key="frame" x="0.0" y="0.0" width="48" height="38"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="2Ru-eM-tY8"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="skipBackward" translatesAutoresizingMaskIntoConstraints="NO" id="Ahc-ca-EVm">
+                                                <rect key="frame" x="0.0" y="38" width="48" height="38"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="Rm0-eW-Gju"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="skipForward" translatesAutoresizingMaskIntoConstraints="NO" id="cRf-jg-6FY">
+                                                <rect key="frame" x="48" y="38" width="48" height="38"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="xnr-4x-3tN"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pause" translatesAutoresizingMaskIntoConstraints="NO" id="tch-mS-Vao">
+                                                <rect key="frame" x="48" y="0.0" width="48" height="38"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="OfQ-cJ-Y41"/>
+                                                </constraints>
+                                            </imageView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eco-eS-ucb" userLabel="Touch View" customClass="FSCTransparentTouchableView">
+                                                <rect key="frame" x="0.0" y="0.0" width="95" height="75"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <gestureRecognizers/>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="uY1-eS-fCq" appends="YES" id="Ry0-Ft-g8g"/>
+                                                    <outletCollection property="gestureRecognizers" destination="8y5-JZ-YCS" appends="YES" id="dAC-M3-fSD"/>
+                                                    <outletCollection property="gestureRecognizers" destination="xDH-VC-Xhf" appends="YES" id="PDz-Ua-odk"/>
+                                                </connections>
+                                            </view>
+                                        </subviews>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstItem="cRf-jg-6FY" firstAttribute="leading" secondItem="Ahc-ca-EVm" secondAttribute="trailing" id="2eQ-3l-eFL"/>
+                                            <constraint firstItem="TFz-l8-Cya" firstAttribute="top" secondItem="q89-l6-ILz" secondAttribute="top" id="4WN-5d-hOG"/>
+                                            <constraint firstAttribute="trailing" secondItem="Eco-eS-ucb" secondAttribute="trailing" id="6Bm-Po-Kz6"/>
+                                            <constraint firstItem="tch-mS-Vao" firstAttribute="leading" secondItem="TFz-l8-Cya" secondAttribute="trailing" id="6z6-pb-xic"/>
+                                            <constraint firstItem="TFz-l8-Cya" firstAttribute="leading" secondItem="q89-l6-ILz" secondAttribute="leading" id="FSl-YL-RQ6"/>
+                                            <constraint firstItem="cRf-jg-6FY" firstAttribute="leading" secondItem="Ahc-ca-EVm" secondAttribute="trailing" id="J5B-cU-00e"/>
+                                            <constraint firstItem="cRf-jg-6FY" firstAttribute="width" secondItem="Ahc-ca-EVm" secondAttribute="width" id="KoN-t9-KDG"/>
+                                            <constraint firstItem="tch-mS-Vao" firstAttribute="leading" secondItem="TFz-l8-Cya" secondAttribute="trailing" id="LvU-70-qyn"/>
+                                            <constraint firstAttribute="bottom" secondItem="Eco-eS-ucb" secondAttribute="bottom" id="VOk-lb-bFh"/>
+                                            <constraint firstItem="Ahc-ca-EVm" firstAttribute="leading" secondItem="q89-l6-ILz" secondAttribute="leading" id="XRk-gf-J1m"/>
+                                            <constraint firstItem="Eco-eS-ucb" firstAttribute="top" secondItem="q89-l6-ILz" secondAttribute="top" id="Znq-AS-XYF"/>
+                                            <constraint firstItem="tch-mS-Vao" firstAttribute="top" secondItem="q89-l6-ILz" secondAttribute="top" id="e5a-zH-JJR"/>
+                                            <constraint firstItem="TFz-l8-Cya" firstAttribute="width" secondItem="tch-mS-Vao" secondAttribute="width" id="i18-Oc-27d"/>
+                                            <constraint firstAttribute="trailing" secondItem="tch-mS-Vao" secondAttribute="trailing" constant="-1" id="nzO-Fz-pzR"/>
+                                            <constraint firstItem="Eco-eS-ucb" firstAttribute="leading" secondItem="q89-l6-ILz" secondAttribute="leading" id="skC-Zv-1Ex"/>
+                                            <constraint firstAttribute="trailing" secondItem="cRf-jg-6FY" secondAttribute="trailing" constant="-1" id="u9E-5o-euc"/>
+                                            <constraint firstAttribute="bottom" secondItem="cRf-jg-6FY" secondAttribute="bottom" constant="-1" id="whM-Q0-N0y"/>
+                                            <constraint firstAttribute="bottom" secondItem="Ahc-ca-EVm" secondAttribute="bottom" constant="-1" id="z56-xv-2HS"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="u0b-ZA-Beo" firstAttribute="top" secondItem="dkf-7u-hdk" secondAttribute="top" id="1DE-JV-qxC"/>
+                                    <constraint firstItem="q89-l6-ILz" firstAttribute="leading" secondItem="u0b-ZA-Beo" secondAttribute="trailing" id="6H9-i6-d3l"/>
                                     <constraint firstAttribute="trailing" secondItem="Zua-2B-sVY" secondAttribute="trailing" id="7mB-96-qie"/>
+                                    <constraint firstItem="q89-l6-ILz" firstAttribute="top" secondItem="dkf-7u-hdk" secondAttribute="top" id="Pz7-mr-6ot"/>
                                     <constraint firstItem="Zua-2B-sVY" firstAttribute="top" secondItem="dkf-7u-hdk" secondAttribute="top" id="UtU-9P-LuL"/>
                                     <constraint firstAttribute="bottom" secondItem="Zua-2B-sVY" secondAttribute="bottom" id="btX-Ca-WMA"/>
                                     <constraint firstAttribute="height" constant="75" id="fER-pV-dlL"/>
                                     <constraint firstAttribute="bottom" secondItem="u0b-ZA-Beo" secondAttribute="bottom" id="gxU-az-SC3"/>
+                                    <constraint firstAttribute="bottom" secondItem="q89-l6-ILz" secondAttribute="bottom" id="l5c-ZT-K2v"/>
                                     <constraint firstItem="u0b-ZA-Beo" firstAttribute="leading" secondItem="dkf-7u-hdk" secondAttribute="leading" id="zjW-g7-r0q"/>
+                                    <constraint firstItem="Zua-2B-sVY" firstAttribute="leading" secondItem="q89-l6-ILz" secondAttribute="trailing" id="zyU-FU-MN2"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="iBM-Vv-0Rm">
+                                <rect key="frame" x="0.0" y="145" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="SDa-YI-8i2"/>
+                                    <constraint firstAttribute="height" constant="20" id="ghu-AN-CI3"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="dkf-7u-hdk" secondAttribute="trailing" id="6s7-ld-ydk"/>
+                            <constraint firstItem="eDy-ut-zxO" firstAttribute="leading" secondItem="iBM-Vv-0Rm" secondAttribute="trailing" id="HU7-u1-N2P"/>
                             <constraint firstAttribute="trailing" secondItem="eDy-ut-zxO" secondAttribute="trailing" id="HvQ-6u-JjV"/>
                             <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="eDy-ut-zxO" secondAttribute="bottom" id="RIs-bn-cQu"/>
                             <constraint firstAttribute="trailing" secondItem="cWU-aX-xuy" secondAttribute="trailing" id="THi-Ji-aJ2"/>
                             <constraint firstItem="dkf-7u-hdk" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="Tet-7C-t7p"/>
                             <constraint firstItem="dkf-7u-hdk" firstAttribute="top" secondItem="cWU-aX-xuy" secondAttribute="bottom" id="Xit-EL-riR"/>
+                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="iBM-Vv-0Rm" secondAttribute="bottom" id="gKb-wa-DI6"/>
                             <constraint firstItem="cWU-aX-xuy" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="p4n-VE-lgL"/>
                             <constraint firstItem="cWU-aX-xuy" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" id="q6S-94-KM7"/>
-                            <constraint firstItem="eDy-ut-zxO" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="rTy-Jr-6gz"/>
+                            <constraint firstItem="iBM-Vv-0Rm" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="sVB-GQ-mvs"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -193,18 +266,38 @@
                     <connections>
                         <outlet property="activityCollectionView" destination="cWU-aX-xuy" id="QR1-2N-1XB"/>
                         <outlet property="activityCollectionViewHeightConstraint" destination="63c-Y7-hbQ" id="ZKg-6o-gr7"/>
+                        <outlet property="activityIndicatorView" destination="iBM-Vv-0Rm" id="JLn-LL-e60"/>
+                        <outlet property="backLongPressGesture" destination="xDH-VC-Xhf" id="BOt-72-wlr"/>
+                        <outlet property="forwardDoubleTapGesture" destination="8y5-JZ-YCS" id="xu2-XB-CpI"/>
+                        <outlet property="playPauseTapGesture" destination="uY1-eS-fCq" id="fXt-lZ-Uof"/>
                         <outlet property="powerOffIconImageView" destination="jUc-H9-y2B" id="DbL-On-Ztx"/>
                         <outlet property="powerOffLabel" destination="9H9-lm-TaF" id="vwr-Zz-s6I"/>
                         <outlet property="powerOffView" destination="Zua-2B-sVY" id="82H-Rw-kmx"/>
                         <outlet property="staticActivitiesView" destination="dkf-7u-hdk" id="v3v-OQ-x60"/>
                         <outlet property="statusLabel" destination="eDy-ut-zxO" id="ktC-tJ-UXU"/>
+                        <outlet property="transportView" destination="q89-l6-ILz" id="oAi-Yn-goD"/>
                         <outlet property="volumeView" destination="u0b-ZA-Beo" id="sjW-Bh-nB0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="M1f-gr-rym">
+                <tapGestureRecognizer id="M1f-gr-rym" userLabel="Power Off Tap Gesture Recognizer">
                     <connections>
                         <action selector="powerOffTapped:" destination="M4Y-Lb-cyx" id="yKw-aY-J6s"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="xDH-VC-Xhf" userLabel="Back Long Press Gesture Recognizer">
+                    <connections>
+                        <action selector="backwardTapped:" destination="M4Y-Lb-cyx" id="DJB-CO-hIZ"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="8y5-JZ-YCS" userLabel="Forward Double Tap Gesture Recognizer">
+                    <connections>
+                        <action selector="forwardTapped:" destination="M4Y-Lb-cyx" id="Sqt-PX-YMg"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="uY1-eS-fCq" userLabel="Play/Pause Tap Gesture Recognizer">
+                    <connections>
+                        <action selector="playPauseTapped:" destination="M4Y-Lb-cyx" id="LET-Wa-q1x"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -212,6 +305,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="pause" width="30" height="30"/>
+        <image name="play" width="30" height="30"/>
+        <image name="skipBackward" width="30" height="30"/>
+        <image name="skipForward" width="30" height="30"/>
         <image name="volumeDown" width="30" height="30"/>
         <image name="volumeUp" width="30" height="30"/>
     </resources>
