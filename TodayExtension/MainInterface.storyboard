@@ -187,29 +187,38 @@
                                                     <constraint firstAttribute="height" constant="38" id="OfQ-cJ-Y41"/>
                                                 </constraints>
                                             </imageView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eco-eS-ucb" userLabel="Touch View" customClass="FSCTransparentTouchableView">
+                                                <rect key="frame" x="0.0" y="0.0" width="95" height="75"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <gestureRecognizers/>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="uY1-eS-fCq" appends="YES" id="Ry0-Ft-g8g"/>
+                                                    <outletCollection property="gestureRecognizers" destination="8y5-JZ-YCS" appends="YES" id="dAC-M3-fSD"/>
+                                                    <outletCollection property="gestureRecognizers" destination="xDH-VC-Xhf" appends="YES" id="PDz-Ua-odk"/>
+                                                </connections>
+                                            </view>
                                         </subviews>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="cRf-jg-6FY" firstAttribute="leading" secondItem="Ahc-ca-EVm" secondAttribute="trailing" id="2eQ-3l-eFL"/>
                                             <constraint firstItem="TFz-l8-Cya" firstAttribute="top" secondItem="q89-l6-ILz" secondAttribute="top" id="4WN-5d-hOG"/>
+                                            <constraint firstAttribute="trailing" secondItem="Eco-eS-ucb" secondAttribute="trailing" id="6Bm-Po-Kz6"/>
                                             <constraint firstItem="tch-mS-Vao" firstAttribute="leading" secondItem="TFz-l8-Cya" secondAttribute="trailing" id="6z6-pb-xic"/>
                                             <constraint firstItem="TFz-l8-Cya" firstAttribute="leading" secondItem="q89-l6-ILz" secondAttribute="leading" id="FSl-YL-RQ6"/>
                                             <constraint firstItem="cRf-jg-6FY" firstAttribute="leading" secondItem="Ahc-ca-EVm" secondAttribute="trailing" id="J5B-cU-00e"/>
                                             <constraint firstItem="cRf-jg-6FY" firstAttribute="width" secondItem="Ahc-ca-EVm" secondAttribute="width" id="KoN-t9-KDG"/>
                                             <constraint firstItem="tch-mS-Vao" firstAttribute="leading" secondItem="TFz-l8-Cya" secondAttribute="trailing" id="LvU-70-qyn"/>
+                                            <constraint firstAttribute="bottom" secondItem="Eco-eS-ucb" secondAttribute="bottom" id="VOk-lb-bFh"/>
                                             <constraint firstItem="Ahc-ca-EVm" firstAttribute="leading" secondItem="q89-l6-ILz" secondAttribute="leading" id="XRk-gf-J1m"/>
+                                            <constraint firstItem="Eco-eS-ucb" firstAttribute="top" secondItem="q89-l6-ILz" secondAttribute="top" id="Znq-AS-XYF"/>
                                             <constraint firstItem="tch-mS-Vao" firstAttribute="top" secondItem="q89-l6-ILz" secondAttribute="top" id="e5a-zH-JJR"/>
                                             <constraint firstItem="TFz-l8-Cya" firstAttribute="width" secondItem="tch-mS-Vao" secondAttribute="width" id="i18-Oc-27d"/>
                                             <constraint firstAttribute="trailing" secondItem="tch-mS-Vao" secondAttribute="trailing" constant="-1" id="nzO-Fz-pzR"/>
+                                            <constraint firstItem="Eco-eS-ucb" firstAttribute="leading" secondItem="q89-l6-ILz" secondAttribute="leading" id="skC-Zv-1Ex"/>
                                             <constraint firstAttribute="trailing" secondItem="cRf-jg-6FY" secondAttribute="trailing" constant="-1" id="u9E-5o-euc"/>
                                             <constraint firstAttribute="bottom" secondItem="cRf-jg-6FY" secondAttribute="bottom" constant="-1" id="whM-Q0-N0y"/>
                                             <constraint firstAttribute="bottom" secondItem="Ahc-ca-EVm" secondAttribute="bottom" constant="-1" id="z56-xv-2HS"/>
                                         </constraints>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="uY1-eS-fCq" appends="YES" id="Aes-VK-ADP"/>
-                                            <outletCollection property="gestureRecognizers" destination="8y5-JZ-YCS" appends="YES" id="oO9-0V-Rvh"/>
-                                            <outletCollection property="gestureRecognizers" destination="xDH-VC-Xhf" appends="YES" id="kCN-Re-WqX"/>
-                                        </connections>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -276,21 +285,21 @@
                         <action selector="powerOffTapped:" destination="M4Y-Lb-cyx" id="yKw-aY-J6s"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="uY1-eS-fCq" userLabel="Play/Pause Tap Gesture Recognizer">
-                    <connections>
-                        <action selector="playPauseTapped:" destination="M4Y-Lb-cyx" id="LET-Wa-q1x"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="8y5-JZ-YCS" userLabel="Forward Double Tap Gesture Recognizer">
-                    <connections>
-                        <action selector="forwardTapped:" destination="M4Y-Lb-cyx" id="Sqt-PX-YMg"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="xDH-VC-Xhf" userLabel="Back Long Press Gesture Recognizer">
                     <connections>
                         <action selector="backwardTapped:" destination="M4Y-Lb-cyx" id="DJB-CO-hIZ"/>
                     </connections>
                 </pongPressGestureRecognizer>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="8y5-JZ-YCS" userLabel="Forward Double Tap Gesture Recognizer">
+                    <connections>
+                        <action selector="forwardTapped:" destination="M4Y-Lb-cyx" id="Sqt-PX-YMg"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="uY1-eS-fCq" userLabel="Play/Pause Tap Gesture Recognizer">
+                    <connections>
+                        <action selector="playPauseTapped:" destination="M4Y-Lb-cyx" id="LET-Wa-q1x"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="516" y="284.5"/>
         </scene>

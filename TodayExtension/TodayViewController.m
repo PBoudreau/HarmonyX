@@ -261,12 +261,15 @@ currentActivityChanged: (FSCActivity *) newActivity
     }];
 }
 
-- (IBAction) backwardTapped: (id) sender
+- (IBAction) backwardTapped: (UILongPressGestureRecognizer *) sender
 {
-    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
-        
-        return [[currentActivity transportExtendedControlGroup] skipBackwardFunction];
-    }];
+    if ([sender state] == UIGestureRecognizerStateEnded)
+    {
+        [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+            
+            return [[currentActivity transportExtendedControlGroup] skipBackwardFunction];
+        }];
+    }
 }
 
 #pragma mark - UICollectionViewDatasource
