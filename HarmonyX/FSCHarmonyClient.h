@@ -43,4 +43,8 @@ typedef NS_ENUM(NSUInteger, FSCHarmonyClientFunctionType) {
 
 - (void) disconnect;
 
+#pragma mark - DEBUG
+
+- (void) renewTokens;
+
 @end

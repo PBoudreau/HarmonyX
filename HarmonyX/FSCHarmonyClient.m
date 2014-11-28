@@ -105,7 +105,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (void) startHeartbeat
 {
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         
         [self setHeartbeatTimer: [NSTimer scheduledTimerWithTimeInterval: 30
                                                                   target: self
@@ -779,6 +779,21 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     
     isXMPPConnected = NO;
     isXMPPAuthenticated = NO;
+}
+
+#pragma mark - DEBUG
+
+- (void) renewTokens
+{
+    [self disconnect];
+    
+    [self setMyHarmonyToken: nil];
+    [self setHarmonyHubToken: nil];
+    
+    [FSCDataSharingController saveMyHarmonyToken: nil];
+    [FSCDataSharingController saveHarmonyHubToken: nil];
+    
+    [self connect];
 }
 
 @end
