@@ -14,7 +14,10 @@ static NSString * const FSCActtivityCellIdentifier = @"ActivityCell";
 
 @interface FSCActivityCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, strong) FSCActivity * activity;
+
 - (void) setActivity: (FSCActivity *) activity
-       withMaskColor: (UIColor *) color;
+       withMaskColor: (UIColor *) maskColor
+     backgroundColor: (UIColor *) backgroundColor;
 
 @end

@@ -201,7 +201,26 @@
 - (void) handleClient: (FSCHarmonyClient *) client
 currentActivityChanged: (FSCActivity *) newActivity
 {
-    
+    [self highlightActivity: newActivity];
+}
+
+- (void) highlightActivity: (FSCActivity *) activity
+{
+    for (FSCActivityCollectionViewCell * cell in [[self activityCollectionView] visibleCells])
+    {
+        if ([[[cell activity] activityIdentifier] isEqualToString: [activity activityIdentifier]])
+        {
+            [cell setActivity: [cell activity]
+                withMaskColor: [self inverseColorForActivityMask]
+              backgroundColor: [self backgroundColorForInverseActivityMask]];
+        }
+        else
+        {
+            [cell setActivity: [cell activity]
+                withMaskColor: [self colorForActivityMask]
+              backgroundColor: [self backgroundColorForActivityMask]];
+        }
+    }
 }
 
 - (void) prepareForBlockingClientAction
@@ -238,12 +257,28 @@ currentActivityChanged: (FSCActivity *) newActivity
     FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
     
     [cell setActivity: activity
-        withMaskColor: [self colorForActivityMask]];
+        withMaskColor: [self colorForActivityMask]
+      backgroundColor: [UIColor clearColor]];
     
     return cell;
 }
 
 - (UIColor *) colorForActivityMask
+{
+    return [UIColor blackColor];
+}
+
+- (UIColor *) backgroundColorForActivityMask
+{
+    return [UIColor clearColor];
+}
+
+- (UIColor *) inverseColorForActivityMask
+{
+    return [UIColor whiteColor];
+}
+
+- (UIColor *) backgroundColorForInverseActivityMask
 {
     return [UIColor blackColor];
 }
@@ -266,8 +301,11 @@ didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 
 - (void) handleFSCHarmonyClientCurrentActivityChangedNotification: (NSNotification *) note
 {
-    [self handleClient: [note object]
-currentActivityChanged: [[note userInfo] objectForKey: FSCHarmonyClientCurrentActivityChangedNotificationActivityKey]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self handleClient: [note object]
+    currentActivityChanged: [[note userInfo] objectForKey: FSCHarmonyClientCurrentActivityChangedNotificationActivityKey]];
+    });
 }
 
 @end

@@ -23,12 +23,15 @@ static NSArray * viewsForStatePreservation = nil;
     BOOL playToggle;
 }
 
+@property (weak, nonatomic) IBOutlet UICollectionView *activityCollectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityCollectionViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *staticActivitiesView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *staticActivitiesViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *volumeView;
+@property (weak, nonatomic) IBOutlet UIButton *volumeDownButton;
+@property (weak, nonatomic) IBOutlet UIButton *volumeUpButton;
 
 @property (weak, nonatomic) IBOutlet UIView *transportView;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *playPauseTapGesture;
@@ -52,6 +55,15 @@ static NSArray * viewsForStatePreservation = nil;
 - (void) viewDidLoad
 {
     [super viewDidLoad];
+    
+    for (UIView * aView in @[[self volumeDownButton],
+                             [self volumeUpButton],
+                             [self transportView]])
+    {
+        [[aView layer] setCornerRadius: 5.0];
+        [[aView layer] setBorderWidth: 1.0];
+        [[aView layer] setBorderColor: [[UIColor whiteColor] CGColor]];
+    }
     
     playToggle = NO;
     
@@ -136,6 +148,9 @@ static NSArray * viewsForStatePreservation = nil;
 - (void) handleClient: (FSCHarmonyClient *) client
 currentActivityChanged: (FSCActivity *) newActivity
 {
+    [super handleClient: client
+ currentActivityChanged: newActivity];
+    
     [self updateUIForCurrentActivity: newActivity];
 }
 
@@ -193,6 +208,16 @@ currentActivityChanged: (FSCActivity *) newActivity
 }
 
 - (UIColor *) colorForActivityMask
+{
+    return [UIColor whiteColor];
+}
+
+- (UIColor *) inverseColorForActivityMask
+{
+    return [UIColor blackColor];
+}
+
+- (UIColor *) backgroundColorForInverseActivityMask
 {
     return [UIColor whiteColor];
 }
@@ -285,47 +310,44 @@ currentActivityChanged: (FSCActivity *) newActivity
 
 - (void) updateUIForCurrentActivity: (FSCActivity *) currentActivity
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
+    FSCControlGroup * transportBasicControlGroup = [currentActivity transportBasicControlGroup];
+    FSCControlGroup * transportExtendedControlGroup = [currentActivity transportExtendedControlGroup];
+    
+    BOOL powerOffActivityHidden = [[[currentActivity label] lowercaseString] isEqualToString: @"poweroff"];
+    
+    if (!powerOffActivityHidden)
+    {
+        FSCActivity * powerOffActivity = [[[self harmonyConfiguration] activity] lastObject];
         
-        FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
-        FSCControlGroup * transportBasicControlGroup = [currentActivity transportBasicControlGroup];
-        FSCControlGroup * transportExtendedControlGroup = [currentActivity transportExtendedControlGroup];
-        
-        BOOL powerOffActivityHidden = [[[currentActivity label] lowercaseString] isEqualToString: @"poweroff"];
-
-        if (!powerOffActivityHidden)
+        if ([[[powerOffActivity label] lowercaseString] isEqualToString: @"poweroff"])
         {
-            FSCActivity * powerOffActivity = [[[self harmonyConfiguration] activity] lastObject];
-            
-            if ([[[powerOffActivity label] lowercaseString] isEqualToString: @"poweroff"])
-            {
-                [[self powerOffIconImageView] setImage: [powerOffActivity maskedImageWithColor: [self colorForActivityMask]]];
-                [[self powerOffLabel] setText: [powerOffActivity label]];
-            }
-            else
-            {
-                powerOffActivityHidden = YES;
-            }
+            [[self powerOffIconImageView] setImage: [powerOffActivity maskedImageWithColor: [self colorForActivityMask]]];
+            [[self powerOffLabel] setText: [powerOffActivity label]];
         }
-        
-        [[self view] layoutIfNeeded];
-        
-        [UIView animateWithDuration: 0.5
-                         animations: ^{
-                             
-                             [[self staticActivitiesView] setAlpha: (volumeControlGroup ||
-                                                                     transportBasicControlGroup ||
-                                                                     transportExtendedControlGroup ||
-                                                                     !powerOffActivityHidden) ? 1.0 : 0.0];
-                             [[self volumeView] setAlpha: volumeControlGroup ? 1.0 : 0.0];
-                             [[self transportView] setAlpha: (transportBasicControlGroup || transportExtendedControlGroup) ? 1.0 : 0.0];
-                             [[self powerOffView] setAlpha: powerOffActivityHidden ? 0.0 : 1.0];
-                             
-                             [self updateContentSize];
-                             
-                             [[self view] layoutIfNeeded];
-                         }];
-    });
+        else
+        {
+            powerOffActivityHidden = YES;
+        }
+    }
+    
+    [[self view] layoutIfNeeded];
+    
+    [UIView animateWithDuration: 0.5
+                     animations: ^{
+                         
+                         [[self staticActivitiesView] setAlpha: (volumeControlGroup ||
+                                                                 transportBasicControlGroup ||
+                                                                 transportExtendedControlGroup ||
+                                                                 !powerOffActivityHidden) ? 1.0 : 0.0];
+                         [[self volumeView] setAlpha: volumeControlGroup ? 1.0 : 0.0];
+                         [[self transportView] setAlpha: (transportBasicControlGroup || transportExtendedControlGroup) ? 1.0 : 0.0];
+                         [[self powerOffView] setAlpha: powerOffActivityHidden ? 0.0 : 1.0];
+                         
+                         [self updateContentSize];
+                         
+                         [[self view] layoutIfNeeded];
+                     }];
 }
 
 - (IBAction) powerOffTapped: (id) sender
