@@ -127,7 +127,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zua-2B-sVY" userLabel="Power Off View">
                                         <rect key="frame" x="245" y="0.0" width="75" height="75"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jUc-H9-y2B">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="activity_powering_off" translatesAutoresizingMaskIntoConstraints="NO" id="jUc-H9-y2B">
                                                 <rect key="frame" x="13" y="5" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="8pC-xp-PeP"/>
@@ -136,7 +136,7 @@
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="l8F-fS-yqU"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHROMECAST" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H9-lm-TaF">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PowerOff" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H9-lm-TaF">
                                                 <rect key="frame" x="0.0" y="57" width="75" height="18"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="BgL-Ic-wfK"/>
@@ -307,6 +307,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="activity_powering_off" width="135" height="135"/>
         <image name="pause" width="30" height="30"/>
         <image name="play" width="30" height="30"/>
         <image name="skipBackward" width="30" height="30"/>

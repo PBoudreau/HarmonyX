@@ -12,8 +12,11 @@
 #import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
 #import "FSCControlGroup.h"
+#import "UIImage+Mask.h"
 
 static CGFloat const activityCellDim = 75.0;
+
+static NSArray * viewsForStatePreservation = nil;
 
 @interface TodayViewController () <NCWidgetProviding>
 {
@@ -55,14 +58,20 @@ static CGFloat const activityCellDim = 75.0;
     [[self playPauseTapGesture] requireGestureRecognizerToFail: [self forwardDoubleTapGesture]];
     [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backLongPressGesture]];
     
-    [[self staticActivitiesView] setAlpha: 0.0];
-    [[self volumeView] setAlpha: 0.0];
-    [[self transportView] setAlpha: 0.0];
-    [[self powerOffView] setAlpha: 0.0];
+    UIImage * powerOffImage = [UIImage imageNamed: @"activity_powering_off"];
+    UIImage * maskedPowerOffImage = [powerOffImage convertToInverseMaskWithColor: [self colorForActivityMask]];
+    [[self powerOffIconImageView] setImage: maskedPowerOffImage];
     
-    [self updateContentSize];
+    viewsForStatePreservation = @[@"staticActivitiesView",
+                                  @"volumeView",
+                                  @"transportView",
+                                  @"powerOffView"];
+    
+    [self loadUIState];
     
     [self loadConfiguration];
+    
+    [self updateContentSize];
 }
 
 - (void) viewDidAppear: (BOOL) animated
@@ -78,6 +87,8 @@ static CGFloat const activityCellDim = 75.0;
 - (void) viewDidDisappear: (BOOL) animated
 {
     [super viewDidDisappear: animated];
+    
+    [self saveUIState];
     
     if ([self client])
     {
@@ -187,6 +198,63 @@ currentActivityChanged: (FSCActivity *) newActivity
 }
 
 #pragma mark - Class Methods
+
+- (void) loadUIState
+{
+    NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
+    [standardDefaults synchronize];
+    
+    [viewsForStatePreservation enumerateObjectsUsingBlock: ^(NSString * viewPropertyName, NSUInteger idx, BOOL *stop) {
+        
+        SEL selector = NSSelectorFromString(viewPropertyName);
+        IMP imp = [self methodForSelector:selector];
+        UIView * (*func)(id, SEL) = (void *)imp;
+        UIView * view = func(self, selector);
+        
+        NSAssert(view,
+                 @"Could not find a property with name '%@' on '%@",
+                 view,
+                 NSStringFromClass([self class]));
+        
+        NSNumber * alphaNum = [standardDefaults objectForKey: [NSString stringWithFormat:
+                                                               @"viewStatePreservation-alpha-%@",
+                                                               viewPropertyName]];
+        
+        CGFloat newAlpha = 0.0;
+        
+        if (alphaNum)
+        {
+            newAlpha = [alphaNum floatValue];
+        }
+        
+        [view setAlpha: newAlpha];
+    }];
+}
+
+- (void) saveUIState
+{
+    NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [viewsForStatePreservation enumerateObjectsUsingBlock: ^(NSString * viewPropertyName, NSUInteger idx, BOOL *stop) {
+        
+        SEL selector = NSSelectorFromString(viewPropertyName);
+        IMP imp = [self methodForSelector:selector];
+        UIView * (*func)(id, SEL) = (void *)imp;
+        UIView * view = func(self, selector);
+        
+        NSAssert(view,
+                 @"Could not find a property with name '%@' on '%@",
+                 view,
+                 NSStringFromClass([self class]));
+        
+        [standardDefaults setObject: [NSNumber numberWithFloat: [view alpha]]
+                             forKey: [NSString stringWithFormat:
+                                      @"viewStatePreservation-alpha-%@",
+                                      viewPropertyName]];
+    }];
+    
+    [standardDefaults synchronize];
+}
 
 - (void) updateContentSize
 {
@@ -318,6 +386,8 @@ currentActivityChanged: (FSCActivity *) newActivity
         FSCControlGroup * controlGroup = [currentActivity transportBasicControlGroup];
         
         FSCFunction * function = playToggle ? [controlGroup playFunction] : [controlGroup pauseFunction];
+        
+        playToggle = !playToggle;
         
         return function;
     }];
