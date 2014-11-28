@@ -29,6 +29,8 @@ typedef NS_ENUM(NSUInteger, FSCHarmonyClientFunctionType) {
 
 @property (nonatomic, strong) FSCHarmonyConfiguration * configuration;
 
+- (void) connect;
+
 - (FSCHarmonyConfiguration *) configurationWithRefresh: (BOOL) refresh;
 - (FSCActivity *) currentActivityFromConfiguration: (FSCHarmonyConfiguration *) configuration;
 

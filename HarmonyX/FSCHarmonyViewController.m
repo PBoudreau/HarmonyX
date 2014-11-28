@@ -18,14 +18,31 @@
 
 #pragma mark - Superclass Methods
 
-- (void) dealloc
+- (void) viewDidAppear: (BOOL) animated
 {
-    [[NSNotificationCenter defaultCenter] removeObserver: self];
+    [super viewDidAppear: animated];
+    
+    if ([self client])
+    {
+        [[self client] connect];
+    }
+}
+
+- (void) viewDidDisappear: (BOOL) animated
+{
+    [super viewDidDisappear: animated];
     
     if ([self client])
     {
         [[self client] disconnect];
     }
+}
+
+- (void) dealloc
+{
+    NSLog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
 }
 
 #pragma mark - Class Methods

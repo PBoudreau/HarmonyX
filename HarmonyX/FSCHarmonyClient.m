@@ -37,6 +37,9 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 @property (nonatomic, copy) NSString * harmonyHubIPAddress;
 @property (nonatomic, assign) NSUInteger harmonyHubPort;
 
+@property (nonatomic, copy) NSString * myHarmonyToken;
+@property (nonatomic, copy) NSString * harmonyHubToken;
+
 @property (nonatomic, strong) XMPPStream * xmppStream;
 
 @property (nonatomic, strong) NSXMLElement * authenticationFailureError;
@@ -67,6 +70,9 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
         [self setHarmonyHubIPAddress: IPAddress];
         [self setHarmonyHubPort: port];
         
+        [self setMyHarmonyToken: nil];
+        [self setHarmonyHubToken: nil];
+        
         didDisconnectWhileConnecting = NO;
         isXMPPConnected = NO;
         isXMPPAuthenticated = NO;
@@ -89,9 +95,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     
     [client setupXMPPStream];
     
-    [client connectToHarmonyHub];
-    
-    [client startHeartbeat];
+    [client connect];
     
     return client;
 }
@@ -128,7 +132,19 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
                                                       userInfo: @{FSCHarmonyClientCurrentActivityChangedNotificationActivityKey: currentActivity}];
 }
 
+- (void) dealloc
+{
+    NSLog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+}
+
 #pragma mark - Initialization & Connection
+
+- (void) connect
+{
+    [self connectToHarmonyHub];
+    
+    [self startHeartbeat];
+}
 
 - (void) connectToHarmonyHub
 {
@@ -139,19 +155,25 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     validOAResponseReceived = NO;
     [self setAuthenticationFailureError: nil];
     
-    NSString * myHarmonyToken = [self requestMyHarmonyToken];
+    if (![self myHarmonyToken])
+    {
+        [self setMyHarmonyToken: [self requestMyHarmonyToken]];
+    }
     
-    [self connectAndAuthenticateXMPPStreamWithUsername: GENERAL_HARMONY_HUB_USERNAME
-                                              password: GENERAL_HARMONY_HUB_PASSWORD];
-    
-    NSString * harmonyHubToken = [self swapMyHarmonyTokenForHarmonyHubToken: myHarmonyToken];
-    
-    [self disconnect];
+    if (![self harmonyHubToken])
+    {
+        [self connectAndAuthenticateXMPPStreamWithUsername: GENERAL_HARMONY_HUB_USERNAME
+                                                  password: GENERAL_HARMONY_HUB_PASSWORD];
+        
+        [self setHarmonyHubToken: [self swapMyHarmonyTokenForHarmonyHubToken: [self myHarmonyToken]]];
+        
+        [self disconnect];
+    }
 
     [self connectAndAuthenticateXMPPStreamWithUsername: [NSString stringWithFormat:
                                                          @"%@@connect.logitech.com/harmony",
-                                                         harmonyHubToken]
-                                              password: harmonyHubToken];
+                                                         [self harmonyHubToken]]
+                                              password: [self harmonyHubToken]];
 }
 
 - (NSString *) requestMyHarmonyToken
@@ -462,11 +484,11 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (FSCHarmonyConfiguration *) configurationWithRefresh: (BOOL) refresh
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-    
     if (![self configuration] ||
         refresh)
     {
+        NSLog(@"%@", NSStringFromSelector(_cmd));
+        
         NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                                 xmlns: @"connect.logitech.com"];
         [actionCmd addAttributeWithName: @"mime"
@@ -515,10 +537,10 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (FSCActivity *) currentActivityFromConfiguration: (FSCHarmonyConfiguration *) configuration
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-    
     if (![self currentActivity])
     {
+        NSLog(@"%@", NSStringFromSelector(_cmd));
+        
         if (!configuration)
         {
             configuration = [self configurationWithRefresh: NO];
