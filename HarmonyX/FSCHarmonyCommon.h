@@ -21,4 +21,9 @@ static NSString * const FSCErrorDomain = @"com.trov.trov";
 static int const FSCErrorCodeUnexpectedMyHarmonyResponse = 1;
 static int const FSCErrorCodeErrorPerformingClientAction = 2;
 
+static NSString * const FSCErrorUserInfoKeyOriginalError = @"FSCErrorUserInfoKeyOriginalError";
+
+static NSString * const FSCErrorHarmonyXMPPNetworkUnreachable = @"Network is unreachable";
+static NSString * const FSCErrorHarmonyXMPPConnectionRefused = @"Connection refused";
+
 #endif

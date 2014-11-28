@@ -22,19 +22,10 @@
 {
     [super viewDidAppear: animated];
     
-    if ([self client])
+    if (![self client])
     {
-        [[self client] connect];
-    }
-}
-
-- (void) viewDidDisappear: (BOOL) animated
-{
-    [super viewDidDisappear: animated];
-    
-    if ([self client])
-    {
-        [[self client] disconnect];
+        [self performBlockingClientActionsWithBlock: nil
+                          mainThreadCompletionBlock: nil];
     }
 }
 
@@ -101,7 +92,10 @@
                 [self clientSetupEnded];
             }
             
-            actionsBlock([self client]);
+            if (actionsBlock)
+            {
+                actionsBlock([self client]);
+            }
         }
         @catch (NSException * exception)
         {
@@ -116,9 +110,21 @@
                 errorDescription = @"Could not connect to Harmony Hub with the provided IP address and port.";
             }
             
+            NSMutableDictionary * userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                              errorDescription, NSLocalizedDescriptionKey,
+                                              nil];
+            
+            NSError * originalError = nil;
+            
+            if ([exception userInfo] &&
+                (originalError = [[exception userInfo] objectForKey: FSCErrorUserInfoKeyOriginalError]))
+            {
+                userInfo[FSCErrorUserInfoKeyOriginalError] = [originalError localizedDescription];
+            }
+            
             error = [NSError errorWithDomain: FSCErrorDomain
                                         code: FSCErrorCodeErrorPerformingClientAction
-                                    userInfo: @{NSLocalizedDescriptionKey: errorDescription}];
+                                    userInfo: userInfo];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
