@@ -11,6 +11,7 @@
 
 #import <Foundation/Foundation.h>
 
+static NSString * const FSCExceptionCredentials = @"FSCExceptionCredentials";
 static NSString * const FSCExceptionMyHarmonyConnection = @"FSCExceptionMyHarmonyConnection";
 static NSString * const FSCExceptionHarmonyHubConnection = @"FSCExceptionHarmonyHubConnection";
 static NSString * const FSCExceptionHarmonyHubConfiguration = @"FSCExceptionHarmonyHubConfiguration";
@@ -20,6 +21,7 @@ static NSString * const FSCErrorDomain = @"com.trov.trov";
 
 static int const FSCErrorCodeUnexpectedMyHarmonyResponse = 1;
 static int const FSCErrorCodeErrorPerformingClientAction = 2;
+static int const FSCErrorCodeMissingCredentials = 3;
 
 static NSString * const FSCErrorUserInfoKeyOriginalError = @"FSCErrorUserInfoKeyOriginalError";
 

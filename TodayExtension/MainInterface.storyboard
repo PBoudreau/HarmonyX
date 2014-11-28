@@ -13,7 +13,7 @@
                         <viewControllerLayoutGuide type="bottom" id="FKl-LY-JtV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="S3S-Oj-5AN">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="165"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cWU-aX-xuy">
@@ -73,10 +73,10 @@
                                     <outlet property="delegate" destination="M4Y-Lb-cyx" id="4Sf-ef-ctP"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="eDy-ut-zxO" userLabel="Status Label">
-                                <rect key="frame" x="20" y="150" width="300" height="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="eDy-ut-zxO" userLabel="Status Label">
+                                <rect key="frame" x="25" y="150" width="295" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="15" id="3cr-ve-bxG"/>
+                                    <constraint firstAttribute="height" constant="50" id="KAT-1E-yNK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -236,7 +236,7 @@
                                 </constraints>
                             </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="iBM-Vv-0Rm">
-                                <rect key="frame" x="0.0" y="145" width="20" height="20"/>
+                                <rect key="frame" x="0.0" y="165" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="SDa-YI-8i2"/>
                                     <constraint firstAttribute="height" constant="20" id="ghu-AN-CI3"/>
@@ -245,13 +245,14 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="dkf-7u-hdk" secondAttribute="trailing" id="6s7-ld-ydk"/>
-                            <constraint firstItem="eDy-ut-zxO" firstAttribute="leading" secondItem="iBM-Vv-0Rm" secondAttribute="trailing" id="HU7-u1-N2P"/>
+                            <constraint firstItem="eDy-ut-zxO" firstAttribute="leading" secondItem="iBM-Vv-0Rm" secondAttribute="trailing" constant="5" id="HU7-u1-N2P"/>
                             <constraint firstAttribute="trailing" secondItem="eDy-ut-zxO" secondAttribute="trailing" id="HvQ-6u-JjV"/>
-                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="eDy-ut-zxO" secondAttribute="bottom" id="RIs-bn-cQu"/>
                             <constraint firstAttribute="trailing" secondItem="cWU-aX-xuy" secondAttribute="trailing" id="THi-Ji-aJ2"/>
                             <constraint firstItem="dkf-7u-hdk" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="Tet-7C-t7p"/>
                             <constraint firstItem="dkf-7u-hdk" firstAttribute="top" secondItem="cWU-aX-xuy" secondAttribute="bottom" id="Xit-EL-riR"/>
-                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="iBM-Vv-0Rm" secondAttribute="bottom" id="gKb-wa-DI6"/>
+                            <constraint firstItem="eDy-ut-zxO" firstAttribute="top" secondItem="dkf-7u-hdk" secondAttribute="bottom" id="Zds-TR-U3H"/>
+                            <constraint firstItem="iBM-Vv-0Rm" firstAttribute="centerY" secondItem="eDy-ut-zxO" secondAttribute="centerY" id="baG-SD-ZJM"/>
+                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="eDy-ut-zxO" secondAttribute="bottom" id="hvg-8a-8K4"/>
                             <constraint firstItem="cWU-aX-xuy" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="p4n-VE-lgL"/>
                             <constraint firstItem="cWU-aX-xuy" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" id="q6S-94-KM7"/>
                             <constraint firstItem="iBM-Vv-0Rm" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="sVB-GQ-mvs"/>
@@ -262,7 +263,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="165"/>
+                    <size key="freeformSize" width="320" height="200"/>
                     <connections>
                         <outlet property="activityCollectionView" destination="cWU-aX-xuy" id="QR1-2N-1XB"/>
                         <outlet property="activityCollectionViewHeightConstraint" destination="63c-Y7-hbQ" id="ZKg-6o-gr7"/>
@@ -274,6 +275,7 @@
                         <outlet property="powerOffLabel" destination="9H9-lm-TaF" id="vwr-Zz-s6I"/>
                         <outlet property="powerOffView" destination="Zua-2B-sVY" id="82H-Rw-kmx"/>
                         <outlet property="staticActivitiesView" destination="dkf-7u-hdk" id="v3v-OQ-x60"/>
+                        <outlet property="staticActivitiesViewHeightConstraint" destination="fER-pV-dlL" id="iXg-vn-4Xh"/>
                         <outlet property="statusLabel" destination="eDy-ut-zxO" id="ktC-tJ-UXU"/>
                         <outlet property="transportView" destination="q89-l6-ILz" id="oAi-Yn-goD"/>
                         <outlet property="volumeView" destination="u0b-ZA-Beo" id="sjW-Bh-nB0"/>

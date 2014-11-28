@@ -23,6 +23,7 @@ static CGFloat const activityCellDim = 75.0;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityCollectionViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *staticActivitiesView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *staticActivitiesViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *volumeView;
 
@@ -54,8 +55,12 @@ static CGFloat const activityCellDim = 75.0;
     [[self playPauseTapGesture] requireGestureRecognizerToFail: [self forwardDoubleTapGesture]];
     [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backLongPressGesture]];
     
+    [[self staticActivitiesView] setAlpha: 0.0];
     [[self volumeView] setAlpha: 0.0];
     [[self transportView] setAlpha: 0.0];
+    [[self powerOffView] setAlpha: 0.0];
+    
+    [self updateContentSize];
     
     [self loadConfiguration];
 }
@@ -88,7 +93,7 @@ static CGFloat const activityCellDim = 75.0;
 - (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
 {
     [super setHarmonyConfiguration: harmonyConfiguration];
-
+    
     NSString * statusLabelText = @"";
     
     if (![self harmonyConfiguration])
@@ -97,21 +102,6 @@ static CGFloat const activityCellDim = 75.0;
     }
     
     [[self statusLabel] setText: statusLabelText];
-    
-    [self updatePreferredContentSize];
-    
-    FSCActivity * powerOffActivity = [[[self harmonyConfiguration] activity] lastObject];
-    
-    if ([[[powerOffActivity label] lowercaseString] isEqualToString: @"poweroff"])
-    {
-        [[self powerOffView] setHidden: NO];
-        [[self powerOffIconImageView] setImage: [powerOffActivity maskedImageWithColor: [self colorForActivityMask]]];
-        [[self powerOffLabel] setText: [powerOffActivity label]];
-    }
-    else
-    {
-        [[self powerOffView] setHidden: YES];
-    }
 }
 
 - (void) clientSetupBegan
@@ -119,6 +109,7 @@ static CGFloat const activityCellDim = 75.0;
     dispatch_sync(dispatch_get_main_queue(), ^{
         
         [[self activityIndicatorView] startAnimating];
+        [[self statusLabel] setText: @"Loading..."];
     });
 }
 
@@ -127,13 +118,14 @@ static CGFloat const activityCellDim = 75.0;
     dispatch_sync(dispatch_get_main_queue(), ^{
         
         [[self activityIndicatorView] stopAnimating];
+        [[self statusLabel] setText: nil];
     });
 }
 
 - (void) handleClient: (FSCHarmonyClient *) client
 currentActivityChanged: (FSCActivity *) newActivity
 {
-    [self updateUIForCurrentActivity];
+    [self updateUIForCurrentActivity: newActivity];
 }
 
 - (void) prepareForBlockingClientAction
@@ -170,6 +162,10 @@ currentActivityChanged: (FSCActivity *) newActivity
                 statusLabelText = @"No Harmony Hub found on network.";
             }
         }
+        else if ([error code] == FSCErrorCodeMissingCredentials)
+        {
+            statusLabelText = @"Please use the app to provide valid credentials and IP address.";
+        }
         else
         {
             statusLabelText = [error localizedDescription];
@@ -188,7 +184,7 @@ currentActivityChanged: (FSCActivity *) newActivity
 
 #pragma mark - Class Methods
 
-- (void) updatePreferredContentSize
+- (void) updateContentSize
 {
     CGRect viewBounds = [[self view] bounds];
     
@@ -201,7 +197,7 @@ currentActivityChanged: (FSCActivity *) newActivity
         numRows = ceilf(([[[self harmonyConfiguration] activity] count] - 1) / numCellsPerRow);
     }
 
-    CGFloat collectionViewHeight = numRows * [[self activityCollectionView] bounds].size.height;
+    CGFloat collectionViewHeight = numRows * activityCellDim;
     
     CGFloat extensionHeight = collectionViewHeight + [[self statusLabel] bounds].size.height;
     
@@ -210,28 +206,52 @@ currentActivityChanged: (FSCActivity *) newActivity
         extensionHeight += [[self staticActivitiesView] bounds].size.height;
     }
     
-    [self setPreferredContentSize: CGSizeMake(0.0, extensionHeight)];
-    
     [[self activityCollectionViewHeightConstraint] setConstant: collectionViewHeight];
     
-    [[self staticActivitiesView] setHidden: (collectionViewHeight == 0.0)];
+    [[self staticActivitiesViewHeightConstraint] setConstant: ([[self staticActivitiesView] alpha] == 0.0) ? 0.0 : activityCellDim];
 }
 
-- (void) updateUIForCurrentActivity
+- (void) updateUIForCurrentActivity: (FSCActivity *) currentActivity
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        
-        FSCActivity * currentActivity = [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
         
         FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
         FSCControlGroup * transportBasicControlGroup = [currentActivity transportBasicControlGroup];
         FSCControlGroup * transportExtendedControlGroup = [currentActivity transportExtendedControlGroup];
         
+        BOOL powerOffActivityHidden = [[[currentActivity label] lowercaseString] isEqualToString: @"poweroff"];
+
+        if (!powerOffActivityHidden)
+        {
+            FSCActivity * powerOffActivity = [[[self harmonyConfiguration] activity] lastObject];
+            
+            if ([[[powerOffActivity label] lowercaseString] isEqualToString: @"poweroff"])
+            {
+                [[self powerOffIconImageView] setImage: [powerOffActivity maskedImageWithColor: [self colorForActivityMask]]];
+                [[self powerOffLabel] setText: [powerOffActivity label]];
+            }
+            else
+            {
+                powerOffActivityHidden = YES;
+            }
+        }
+        
+        [[self view] layoutIfNeeded];
+        
         [UIView animateWithDuration: 0.5
                          animations: ^{
                              
+                             [[self staticActivitiesView] setAlpha: (volumeControlGroup ||
+                                                                     transportBasicControlGroup ||
+                                                                     transportExtendedControlGroup ||
+                                                                     !powerOffActivityHidden) ? 1.0 : 0.0];
                              [[self volumeView] setAlpha: volumeControlGroup ? 1.0 : 0.0];
                              [[self transportView] setAlpha: (transportBasicControlGroup || transportExtendedControlGroup) ? 1.0 : 0.0];
+                             [[self powerOffView] setAlpha: powerOffActivityHidden ? 0.0 : 1.0];
+                             
+                             [self updateContentSize];
+                             
+                             [[self view] layoutIfNeeded];
                          }];
     });
 }
