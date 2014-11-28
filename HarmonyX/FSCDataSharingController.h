@@ -22,6 +22,12 @@
             IPAddress: (NSString **) IPAddress
                  port: (NSUInteger*) port;
 
++ (void) saveMyHarmonyToken: (NSString *) myHarmonyToken;
++ (NSString *) loadMyHarmonyToken;
+
++ (void) saveHarmonyHubToken: (NSString *) harmonyHubToken;
++ (NSString *) loadHarmonyHubToken;
+
 + (void) saveHarmonyConfiguration: (FSCHarmonyConfiguration *) configuration;
 
 + (FSCHarmonyConfiguration *) loadHarmonyConfiguration;

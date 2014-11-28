@@ -12,6 +12,7 @@
 #import <XMPPFramework/XMPP.h>
 
 #import "FSCHarmonyCommon.h"
+#import "FSCDataSharingController.h"
 
 static NSString * const MY_HARMONY_AUTH_URL = @"https://svcs.myharmony.com/CompositeSecurityServices/Security.svc/json/GetUserAuthToken";
 
@@ -37,9 +38,13 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 @property (nonatomic, copy) NSString * harmonyHubIPAddress;
 @property (nonatomic, assign) NSUInteger harmonyHubPort;
 
+@property (nonatomic, copy) NSString * myHarmonyToken;
+@property (nonatomic, copy) NSString * harmonyHubToken;
+
 @property (nonatomic, strong) XMPPStream * xmppStream;
 
-@property (nonatomic, strong) NSXMLElement * authenticationFailureError;
+@property (nonatomic, strong) NSError * connectionError;
+@property (nonatomic, strong) NSXMLElement * authenticationError;
 
 @property (nonatomic, copy) NSXMLElement * OAResponse;
 @property (nonatomic, copy) NSString * expectedOAResponseMime;
@@ -67,7 +72,11 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
         [self setHarmonyHubIPAddress: IPAddress];
         [self setHarmonyHubPort: port];
         
+        [self setMyHarmonyToken: [FSCDataSharingController loadMyHarmonyToken]];
+        [self setHarmonyHubToken: [FSCDataSharingController loadHarmonyHubToken]];
+        
         didDisconnectWhileConnecting = NO;
+        [self setConnectionError: nil];
         isXMPPConnected = NO;
         isXMPPAuthenticated = NO;
         didXMPPFailAuthentication = NO;
@@ -89,16 +98,14 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     
     [client setupXMPPStream];
     
-    [client connectToHarmonyHub];
-    
-    [client startHeartbeat];
+    [client connect];
     
     return client;
 }
 
 - (void) startHeartbeat
 {
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         
         [self setHeartbeatTimer: [NSTimer scheduledTimerWithTimeInterval: 30
                                                                   target: self
@@ -128,7 +135,19 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
                                                       userInfo: @{FSCHarmonyClientCurrentActivityChangedNotificationActivityKey: currentActivity}];
 }
 
+- (void) dealloc
+{
+    NSLog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+}
+
 #pragma mark - Initialization & Connection
+
+- (void) connect
+{
+    [self connectToHarmonyHub];
+    
+    [self startHeartbeat];
+}
 
 - (void) connectToHarmonyHub
 {
@@ -137,25 +156,38 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     isXMPPAuthenticated = NO;
     didXMPPFailAuthentication = NO;
     validOAResponseReceived = NO;
-    [self setAuthenticationFailureError: nil];
+    [self setConnectionError: nil];
+    [self setAuthenticationError: nil];
     
-    NSString * myHarmonyToken = [self requestMyHarmonyToken];
+    if (![self myHarmonyToken])
+    {
+        [self setMyHarmonyToken: [self requestMyHarmonyToken]];
+        
+        [FSCDataSharingController saveMyHarmonyToken: [self myHarmonyToken]];
+    }
     
-    [self connectAndAuthenticateXMPPStreamWithUsername: GENERAL_HARMONY_HUB_USERNAME
-                                              password: GENERAL_HARMONY_HUB_PASSWORD];
-    
-    NSString * harmonyHubToken = [self swapMyHarmonyTokenForHarmonyHubToken: myHarmonyToken];
-    
-    [self disconnect];
+    if (![self harmonyHubToken])
+    {
+        [self connectAndAuthenticateXMPPStreamWithUsername: GENERAL_HARMONY_HUB_USERNAME
+                                                  password: GENERAL_HARMONY_HUB_PASSWORD];
+        
+        [self setHarmonyHubToken: [self swapMyHarmonyTokenForHarmonyHubToken: [self myHarmonyToken]]];
+        
+        [self disconnect];
+        
+        [FSCDataSharingController saveHarmonyHubToken: [self harmonyHubToken]];
+    }
 
     [self connectAndAuthenticateXMPPStreamWithUsername: [NSString stringWithFormat:
                                                          @"%@@connect.logitech.com/harmony",
-                                                         harmonyHubToken]
-                                              password: harmonyHubToken];
+                                                         [self harmonyHubToken]]
+                                              password: [self harmonyHubToken]];
 }
 
 - (NSString *) requestMyHarmonyToken
 {
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     [manager setCompletionQueue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
     
@@ -280,8 +312,8 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                            reason: [NSString stringWithFormat:
                                                     @"Could not connect to Harmony Hub: %@",
-                                                    [error localizedDescription]]
-                                         userInfo: nil];
+                                                    [[self connectionError] localizedDescription]]
+                                         userInfo: @{FSCErrorUserInfoKeyOriginalError: [self connectionError]}];
         }
         
         if (![[self xmppStream] authenticateWithPassword: password
@@ -310,7 +342,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                            reason: [NSString stringWithFormat:
                                                     @"Could not authenticate to Harmony Hub: %@",
-                                                    [self authenticationFailureError]]
+                                                    [self authenticationError]]
                                          userInfo: nil];
         }
     }
@@ -462,11 +494,11 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (FSCHarmonyConfiguration *) configurationWithRefresh: (BOOL) refresh
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-    
     if (![self configuration] ||
         refresh)
     {
+        NSLog(@"%@", NSStringFromSelector(_cmd));
+        
         NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                                 xmlns: @"connect.logitech.com"];
         [actionCmd addAttributeWithName: @"mime"
@@ -515,10 +547,10 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (FSCActivity *) currentActivityFromConfiguration: (FSCHarmonyConfiguration *) configuration
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-    
     if (![self currentActivity])
     {
+        NSLog(@"%@", NSStringFromSelector(_cmd));
+        
         if (!configuration)
         {
             configuration = [self configurationWithRefresh: NO];
@@ -677,7 +709,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     
     didXMPPFailAuthentication = YES;
     
-    [self setAuthenticationFailureError: error];
+    [self setAuthenticationError: error];
 }
 
 - (BOOL) xmppStream: (XMPPStream *) sender
@@ -742,10 +774,26 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     if (!isXMPPConnected)
     {
         didDisconnectWhileConnecting = YES;
+        [self setConnectionError: error];
     }
     
     isXMPPConnected = NO;
     isXMPPAuthenticated = NO;
+}
+
+#pragma mark - DEBUG
+
+- (void) renewTokens
+{
+    [self disconnect];
+    
+    [self setMyHarmonyToken: nil];
+    [self setHarmonyHubToken: nil];
+    
+    [FSCDataSharingController saveMyHarmonyToken: nil];
+    [FSCDataSharingController saveHarmonyHubToken: nil];
+    
+    [self connect];
 }
 
 @end
