@@ -15,6 +15,8 @@ static NSString * const FSCDataSharingDefaultsKeyUsername = @"username";
 static NSString * const FSCDataSharingDefaultsKeyIPAddress = @"ipaddress";
 static NSString * const FSCDataSharingDefaultsKeyPort = @"port";
 static NSString * const FSCDataSharingDefaultsKeyHarmonyConfiguration = @"harmonyConfiguration";
+static NSString * const FSCDataSharingDefaultsKeyMyHarmonyToken = @"myHarmonyToken";
+static NSString * const FSCDataSharingDefaultsKeyHarmonyHubToken = @"harmonyHubToken";
 
 static NSString * const FSCTeamID = @"239SMQFQ7S";
 static NSString * const FSCDataSharingKeychainGroupName = @"com.fasterre.HarmonyX";
@@ -80,6 +82,42 @@ static NSString * const FSCDataSharingKeychainKeyPassword = @"password";
     }
     
     *port = [portString integerValue];
+}
+
++ (void) saveMyHarmonyToken: (NSString *) myHarmonyToken
+{
+    NSUserDefaults * sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: FSCDataSharingGroupName];
+    
+    [sharedDefaults setObject: myHarmonyToken
+                       forKey: FSCDataSharingDefaultsKeyMyHarmonyToken];
+    [sharedDefaults synchronize];
+}
+
++ (NSString *) loadMyHarmonyToken
+{
+    NSUserDefaults * sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: FSCDataSharingGroupName];
+    
+    [sharedDefaults synchronize];
+    
+    return [sharedDefaults stringForKey: FSCDataSharingDefaultsKeyMyHarmonyToken];
+}
+
++ (void) saveHarmonyHubToken: (NSString *) harmonyHubToken
+{
+    NSUserDefaults * sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: FSCDataSharingGroupName];
+    
+    [sharedDefaults setObject: harmonyHubToken
+                       forKey: FSCDataSharingDefaultsKeyHarmonyHubToken];
+    [sharedDefaults synchronize];
+}
+
++ (NSString *) loadHarmonyHubToken
+{
+    NSUserDefaults * sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: FSCDataSharingGroupName];
+    
+    [sharedDefaults synchronize];
+    
+    return [sharedDefaults stringForKey: FSCDataSharingDefaultsKeyHarmonyHubToken];
 }
 
 + (void) saveHarmonyConfiguration: (FSCHarmonyConfiguration *) configuration

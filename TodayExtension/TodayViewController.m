@@ -9,6 +9,7 @@
 #import "TodayViewController.h"
 #import <NotificationCenter/NotificationCenter.h>
 
+#import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
 #import "FSCControlGroup.h"
 
@@ -53,7 +54,30 @@ static CGFloat const activityCellDim = 75.0;
     [[self playPauseTapGesture] requireGestureRecognizerToFail: [self forwardDoubleTapGesture]];
     [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backLongPressGesture]];
     
+    [[self volumeView] setAlpha: 0.0];
+    [[self transportView] setAlpha: 0.0];
+    
     [self loadConfiguration];
+}
+
+- (void) viewDidAppear: (BOOL) animated
+{
+    [super viewDidAppear: animated];
+    
+    if ([self client])
+    {
+        [[self client] connect];
+    }
+}
+
+- (void) viewDidDisappear: (BOOL) animated
+{
+    [super viewDidDisappear: animated];
+    
+    if ([self client])
+    {
+        [[self client] disconnect];
+    }
 }
 
 - (UIEdgeInsets) widgetMarginInsetsForProposedMarginInsets: (UIEdgeInsets) defaultMarginInsets
@@ -127,7 +151,29 @@ currentActivityChanged: (FSCActivity *) newActivity
     
     if (error)
     {
-        statusLabelText = [error localizedDescription];
+        NSString * originalError = nil;
+        
+        if ([error userInfo] &&
+            (originalError = [[error userInfo] objectForKey: FSCErrorUserInfoKeyOriginalError]) &&
+            ([originalError isEqualToString: FSCErrorHarmonyXMPPNetworkUnreachable] ||
+             [originalError isEqualToString: FSCErrorHarmonyXMPPConnectionRefused]))
+        {
+            [[self activityIndicatorView] stopAnimating];
+            [self setHarmonyConfiguration: nil];
+         
+            if ([originalError isEqualToString: FSCErrorHarmonyXMPPNetworkUnreachable])
+            {
+                statusLabelText = @"No network connectivity available.";
+            }
+            else
+            {
+                statusLabelText = @"No Harmony Hub found on network.";
+            }
+        }
+        else
+        {
+            statusLabelText = [error localizedDescription];
+        }
     }
     
     [[self statusLabel] setText: statusLabelText];

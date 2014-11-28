@@ -187,4 +187,30 @@
     }
 }
 
+- (IBAction) harmonyXLabelTapped: (id) sender
+{
+    UIAlertController * controller = [UIAlertController alertControllerWithTitle: @"What would you like to do?"
+                                                                         message: nil
+                                                                  preferredStyle: UIAlertControllerStyleActionSheet];
+    
+    [controller addAction: [UIAlertAction actionWithTitle: @"Cancel"
+                                                    style: UIAlertActionStyleCancel
+                                                  handler: nil]];
+    
+    [controller addAction: [UIAlertAction actionWithTitle: @"Flush Tokens"
+                                                    style: UIAlertActionStyleDestructive
+                                                  handler: ^(UIAlertAction *action) {
+                                                      
+                                                      if ([self client])
+                                                      {
+                                                          [[self client] renewTokens];
+                                                      }
+                                                  }]];
+    
+    [self presentViewController: controller
+                       animated: YES
+                     completion: nil];
+
+}
+
 @end
