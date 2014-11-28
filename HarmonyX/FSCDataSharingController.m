@@ -138,7 +138,12 @@ static NSString * const FSCDataSharingKeychainKeyPassword = @"password";
     
     NSData * encodedConfiguration = [sharedDefaults objectForKey: FSCDataSharingDefaultsKeyHarmonyConfiguration];
     
-    FSCHarmonyConfiguration * configuration = [NSKeyedUnarchiver unarchiveObjectWithData: encodedConfiguration];
+    FSCHarmonyConfiguration * configuration = nil;
+    
+    if (encodedConfiguration)
+    {
+        configuration = [NSKeyedUnarchiver unarchiveObjectWithData: encodedConfiguration];
+    }
     
     return configuration;
 }

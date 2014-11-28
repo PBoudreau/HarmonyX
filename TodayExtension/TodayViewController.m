@@ -162,6 +162,10 @@ currentActivityChanged: (FSCActivity *) newActivity
                 statusLabelText = @"No Harmony Hub found on network.";
             }
         }
+        else if ([error code] == FSCErrorCodeMissingSetup)
+        {
+            statusLabelText = @"Please use the app to load activities.";
+        }
         else if ([error code] == FSCErrorCodeMissingCredentials)
         {
             statusLabelText = @"Please use the app to provide valid credentials and IP address.";

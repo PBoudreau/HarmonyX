@@ -10,6 +10,7 @@
 
 #import <MBProgressHUDExtensions/UIViewController+MBProgressHUD.h>
 
+#import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
 
 @interface ViewController ()
@@ -82,6 +83,14 @@
 
 - (IBAction) connectButtonTapped: (id) sender
 {
+    [self setHarmonyConfiguration: nil];
+    
+    if ([self client])
+    {
+        [[self client] disconnect];
+        [self setClient: nil];
+    }
+    
     [[self usernameTextField] resignFirstResponder];
     [[self passwordTextField] resignFirstResponder];
     [[self IPAddressTextField] resignFirstResponder];
@@ -168,7 +177,8 @@
     
     [self hideHUD];
     
-    if (error)
+    if (error &&
+        [error code] != FSCErrorCodeMissingSetup)
     {
         UIAlertController * controller = [UIAlertController alertControllerWithTitle: @""
                                                                              message: [error localizedDescription]
@@ -177,7 +187,7 @@
                                                         style: UIAlertActionStyleDefault
                                                       handler: ^(UIAlertAction *action) {
                                                           
-                                                          [self dismissViewControllerAnimated: controller
+                                                          [self dismissViewControllerAnimated: YES
                                                                                    completion: nil];
                                                       }]];
         

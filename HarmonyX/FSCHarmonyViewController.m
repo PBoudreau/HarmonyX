@@ -64,8 +64,6 @@
         {
             if (![self client])
             {
-                [self clientSetupBegan];
-                
                 NSString * username;
                 NSString * password;
                 NSString * IPAddress;
@@ -80,6 +78,8 @@
                     password &&
                     IPAddress)
                 {
+                    [self clientSetupBegan];
+                    
                     [self setClient: [FSCHarmonyClient clientWithMyHarmonyUsername: username
                                                                  myHarmonyPassword: password
                                                                harmonyHubIPAddress: IPAddress
@@ -95,10 +95,11 @@
                     [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
                     
                     [self clientSetupEnded];
-                    
                     clientSetupEndedCalled = YES;
                 }
-                else
+                else if (username ||
+                         password ||
+                         IPAddress)
                 {
                     @throw [NSException exceptionWithName: FSCExceptionCredentials
                                                    reason: [NSString stringWithFormat:
@@ -108,6 +109,17 @@
                                                             IPAddress ? IPAddress : @"<empty>"]
                                                  userInfo: nil];
                 }
+                else
+                {
+                    @throw [NSException exceptionWithName: FSCExceptionSetup
+                                                   reason: [NSString stringWithFormat:
+                                                            @"Could not connect to Harmony Hub: setup does not appear to have been performed"]
+                                                 userInfo: nil];
+                }
+            }
+            else if (![[self client] isConnected])
+            {
+                [[self client] connect];
             }
             
             if (actionsBlock)
@@ -120,12 +132,17 @@
             NSString * errorDescription = [exception reason];
             NSInteger errorCode = FSCErrorCodeErrorPerformingClientAction;
             
-            if ([[exception name] isEqualToString: FSCExceptionCredentials] ||
+            if ([[exception name] isEqualToString: FSCExceptionSetup] ||
+                [[exception name] isEqualToString: FSCExceptionCredentials] ||
                 [[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
             {
                 errorDescription = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
                 
-                if ([[exception name] isEqualToString: FSCExceptionCredentials])
+                if ([[exception name] isEqualToString: FSCExceptionSetup])
+                {
+                    errorCode = FSCErrorCodeMissingSetup;
+                }
+                else if ([[exception name] isEqualToString: FSCExceptionCredentials])
                 {
                     errorCode = FSCErrorCodeMissingCredentials;
                 }
