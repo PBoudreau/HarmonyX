@@ -13,19 +13,28 @@
 @property (weak, nonatomic) IBOutlet UIImageView *activityImageView;
 @property (weak, nonatomic) IBOutlet UILabel *activityName;
 
-@property (nonatomic, strong) FSCActivity * activity;
-
 @end
 
 @implementation FSCActivityCollectionViewCell
 
+- (void) awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [[self layer] setCornerRadius: 5.0];
+}
+
 - (void) setActivity: (FSCActivity *) activity
-       withMaskColor: (UIColor *) color
+       withMaskColor: (UIColor *) maskColor
+     backgroundColor: (UIColor *) backgroundColor
 {
     _activity = activity;
     
     [[self activityName] setText: [_activity label]];
-    [[self activityImageView] setImage: [_activity maskedImageWithColor: color]];
+    [[self activityImageView] setImage: [_activity maskedImageWithColor: maskColor]];
+    
+    [self setBackgroundColor: backgroundColor];
+    [[self activityName] setTextColor: maskColor];
 }
 
 @end

@@ -32,6 +32,9 @@
 - (void) cleanupAfterBlockingClientActionWithError: (NSError *) error;
 
 - (UIColor *) colorForActivityMask;
+- (UIColor *) backgroundColorForActivityMask;
+- (UIColor *) inverseColorForActivityMask;
+- (UIColor *) backgroundColorForInverseActivityMask;
 
 - (void) handleClient: (FSCHarmonyClient *) client
 currentActivityChanged: (FSCActivity *) newActivity;

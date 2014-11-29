@@ -149,6 +149,11 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     [self startHeartbeat];
 }
 
+- (BOOL) isConnected
+{
+    return ![[self xmppStream] isDisconnected];
+}
+
 - (void) connectToHarmonyHub
 {
     didDisconnectWhileConnecting = NO;
@@ -309,11 +314,20 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
         {
             didDisconnectWhileConnecting = NO;
             
+            NSDictionary * userInfo = nil;
+            NSString * errorDescription = @"unknown error";
+            
+            if ([self connectionError])
+            {
+                userInfo = @{FSCErrorUserInfoKeyOriginalError: [self connectionError]};
+                errorDescription = [[self connectionError] localizedDescription];
+            }
+            
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                            reason: [NSString stringWithFormat:
                                                     @"Could not connect to Harmony Hub: %@",
-                                                    [[self connectionError] localizedDescription]]
-                                         userInfo: @{FSCErrorUserInfoKeyOriginalError: [self connectionError]}];
+                                                    errorDescription]
+                                         userInfo: userInfo];
         }
         
         if (![[self xmppStream] authenticateWithPassword: password
