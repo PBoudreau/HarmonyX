@@ -296,13 +296,6 @@ currentActivityChanged: (FSCActivity *) newActivity
 
     CGFloat collectionViewHeight = numRows * activityCellDim;
     
-    CGFloat extensionHeight = collectionViewHeight + [[self statusLabel] bounds].size.height;
-    
-    if (collectionViewHeight > 0.0)
-    {
-        extensionHeight += [[self staticActivitiesView] bounds].size.height;
-    }
-    
     [[self activityCollectionViewHeightConstraint] setConstant: collectionViewHeight];
     
     [[self staticActivitiesViewHeightConstraint] setConstant: ([[self staticActivitiesView] alpha] == 0.0) ? 0.0 : activityCellDim];
@@ -343,11 +336,17 @@ currentActivityChanged: (FSCActivity *) newActivity
                          [[self volumeView] setAlpha: volumeControlGroup ? 1.0 : 0.0];
                          [[self transportView] setAlpha: (transportBasicControlGroup || transportExtendedControlGroup) ? 1.0 : 0.0];
                          [[self powerOffView] setAlpha: powerOffActivityHidden ? 0.0 : 1.0];
-                         
-                         [self updateContentSize];
-                         
-                         [[self view] layoutIfNeeded];
-                     }];
+                     }
+     completion: ^(BOOL finished) {
+         
+         [UIView animateWithDuration: 0.5
+                          animations: ^{
+                              
+                              [self updateContentSize];
+                              
+                              [[self view] layoutIfNeeded];
+                          }];
+     }];
 }
 
 - (IBAction) powerOffTapped: (id) sender
