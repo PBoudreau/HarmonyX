@@ -58,13 +58,12 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         NSError * error = nil;
+        BOOL clientSetupEndedCalled = NO;
         
         @try
         {
             if (![self client])
             {
-                [self clientSetupBegan];
-                
                 NSString * username;
                 NSString * password;
                 NSString * IPAddress;
@@ -75,21 +74,52 @@
                                              IPAddress: &IPAddress
                                                   port: &port];
                 
-                [self setClient: [FSCHarmonyClient clientWithMyHarmonyUsername: username
-                                                             myHarmonyPassword: password
-                                                           harmonyHubIPAddress: IPAddress
-                                                                harmonyHubPort: port]];
-                
-                [[self client] setConfiguration: [self harmonyConfiguration]];
-                
-                [[NSNotificationCenter defaultCenter] addObserver: self
-                                                         selector: @selector(handleFSCHarmonyClientCurrentActivityChangedNotification:)
-                                                             name: FSCHarmonyClientCurrentActivityChangedNotification
-                                                           object: [self client]];
-                
-                [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
-                
-                [self clientSetupEnded];
+                if (username &&
+                    password &&
+                    IPAddress)
+                {
+                    [self clientSetupBegan];
+                    
+                    [self setClient: [FSCHarmonyClient clientWithMyHarmonyUsername: username
+                                                                 myHarmonyPassword: password
+                                                               harmonyHubIPAddress: IPAddress
+                                                                    harmonyHubPort: port]];
+                    
+                    [[self client] setConfiguration: [self harmonyConfiguration]];
+                    
+                    [[NSNotificationCenter defaultCenter] addObserver: self
+                                                             selector: @selector(handleFSCHarmonyClientCurrentActivityChangedNotification:)
+                                                                 name: FSCHarmonyClientCurrentActivityChangedNotification
+                                                               object: [self client]];
+                    
+                    [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
+                    
+                    [self clientSetupEnded];
+                    clientSetupEndedCalled = YES;
+                }
+                else if (username ||
+                         password ||
+                         IPAddress)
+                {
+                    @throw [NSException exceptionWithName: FSCExceptionCredentials
+                                                   reason: [NSString stringWithFormat:
+                                                            @"Could not connect to Harmony Hub: username (%@), password (%@) and/or IP address (%@) missing",
+                                                            username ? username : @"<empty>",
+                                                            password ? @"******" : @"<empty>",
+                                                            IPAddress ? IPAddress : @"<empty>"]
+                                                 userInfo: nil];
+                }
+                else
+                {
+                    @throw [NSException exceptionWithName: FSCExceptionSetup
+                                                   reason: [NSString stringWithFormat:
+                                                            @"Could not connect to Harmony Hub: setup does not appear to have been performed"]
+                                                 userInfo: nil];
+                }
+            }
+            else if (![[self client] isConnected])
+            {
+                [[self client] connect];
             }
             
             if (actionsBlock)
@@ -100,10 +130,22 @@
         @catch (NSException * exception)
         {
             NSString * errorDescription = [exception reason];
+            NSInteger errorCode = FSCErrorCodeErrorPerformingClientAction;
             
-            if ([[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
+            if ([[exception name] isEqualToString: FSCExceptionSetup] ||
+                [[exception name] isEqualToString: FSCExceptionCredentials] ||
+                [[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
             {
                 errorDescription = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
+                
+                if ([[exception name] isEqualToString: FSCExceptionSetup])
+                {
+                    errorCode = FSCErrorCodeMissingSetup;
+                }
+                else if ([[exception name] isEqualToString: FSCExceptionCredentials])
+                {
+                    errorCode = FSCErrorCodeMissingCredentials;
+                }
             }
             else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
             {
@@ -123,8 +165,15 @@
             }
             
             error = [NSError errorWithDomain: FSCErrorDomain
-                                        code: FSCErrorCodeErrorPerformingClientAction
+                                        code: errorCode
                                     userInfo: userInfo];
+        }
+        @finally
+        {
+            if (!clientSetupEndedCalled)
+            {
+                [self clientSetupEnded];
+            }
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -152,7 +201,26 @@
 - (void) handleClient: (FSCHarmonyClient *) client
 currentActivityChanged: (FSCActivity *) newActivity
 {
-    
+    [self highlightActivity: newActivity];
+}
+
+- (void) highlightActivity: (FSCActivity *) activity
+{
+    for (FSCActivityCollectionViewCell * cell in [[self activityCollectionView] visibleCells])
+    {
+        if ([[[cell activity] activityIdentifier] isEqualToString: [activity activityIdentifier]])
+        {
+            [cell setActivity: [cell activity]
+                withMaskColor: [self inverseColorForActivityMask]
+              backgroundColor: [self backgroundColorForInverseActivityMask]];
+        }
+        else
+        {
+            [cell setActivity: [cell activity]
+                withMaskColor: [self colorForActivityMask]
+              backgroundColor: [self backgroundColorForActivityMask]];
+        }
+    }
 }
 
 - (void) prepareForBlockingClientAction
@@ -189,12 +257,28 @@ currentActivityChanged: (FSCActivity *) newActivity
     FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
     
     [cell setActivity: activity
-        withMaskColor: [self colorForActivityMask]];
+        withMaskColor: [self colorForActivityMask]
+      backgroundColor: [UIColor clearColor]];
     
     return cell;
 }
 
 - (UIColor *) colorForActivityMask
+{
+    return [UIColor blackColor];
+}
+
+- (UIColor *) backgroundColorForActivityMask
+{
+    return [UIColor clearColor];
+}
+
+- (UIColor *) inverseColorForActivityMask
+{
+    return [UIColor whiteColor];
+}
+
+- (UIColor *) backgroundColorForInverseActivityMask
 {
     return [UIColor blackColor];
 }
@@ -217,8 +301,11 @@ didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 
 - (void) handleFSCHarmonyClientCurrentActivityChangedNotification: (NSNotification *) note
 {
-    [self handleClient: [note object]
-currentActivityChanged: [[note userInfo] objectForKey: FSCHarmonyClientCurrentActivityChangedNotificationActivityKey]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self handleClient: [note object]
+    currentActivityChanged: [[note userInfo] objectForKey: FSCHarmonyClientCurrentActivityChangedNotificationActivityKey]];
+    });
 }
 
 @end

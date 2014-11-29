@@ -12,19 +12,26 @@
 #import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
 #import "FSCControlGroup.h"
+#import "UIImage+Mask.h"
 
 static CGFloat const activityCellDim = 75.0;
+
+static NSArray * viewsForStatePreservation = nil;
 
 @interface TodayViewController () <NCWidgetProviding>
 {
     BOOL playToggle;
 }
 
+@property (weak, nonatomic) IBOutlet UICollectionView *activityCollectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityCollectionViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *staticActivitiesView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *staticActivitiesViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *volumeView;
+@property (weak, nonatomic) IBOutlet UIButton *volumeDownButton;
+@property (weak, nonatomic) IBOutlet UIButton *volumeUpButton;
 
 @property (weak, nonatomic) IBOutlet UIView *transportView;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *playPauseTapGesture;
@@ -49,15 +56,34 @@ static CGFloat const activityCellDim = 75.0;
 {
     [super viewDidLoad];
     
+    for (UIView * aView in @[[self volumeDownButton],
+                             [self volumeUpButton],
+                             [self transportView]])
+    {
+        [[aView layer] setCornerRadius: 5.0];
+        [[aView layer] setBorderWidth: 1.0];
+        [[aView layer] setBorderColor: [[UIColor whiteColor] CGColor]];
+    }
+    
     playToggle = NO;
     
     [[self playPauseTapGesture] requireGestureRecognizerToFail: [self forwardDoubleTapGesture]];
     [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backLongPressGesture]];
     
-    [[self volumeView] setAlpha: 0.0];
-    [[self transportView] setAlpha: 0.0];
+    UIImage * powerOffImage = [UIImage imageNamed: @"activity_powering_off"];
+    UIImage * maskedPowerOffImage = [powerOffImage convertToInverseMaskWithColor: [self colorForActivityMask]];
+    [[self powerOffIconImageView] setImage: maskedPowerOffImage];
+    
+    viewsForStatePreservation = @[@"staticActivitiesView",
+                                  @"volumeView",
+                                  @"transportView",
+                                  @"powerOffView"];
+    
+    [self loadUIState];
     
     [self loadConfiguration];
+    
+    [self updateContentSize];
 }
 
 - (void) viewDidAppear: (BOOL) animated
@@ -74,6 +100,8 @@ static CGFloat const activityCellDim = 75.0;
 {
     [super viewDidDisappear: animated];
     
+    [self saveUIState];
+    
     if ([self client])
     {
         [[self client] disconnect];
@@ -88,7 +116,7 @@ static CGFloat const activityCellDim = 75.0;
 - (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
 {
     [super setHarmonyConfiguration: harmonyConfiguration];
-
+    
     NSString * statusLabelText = @"";
     
     if (![self harmonyConfiguration])
@@ -97,21 +125,6 @@ static CGFloat const activityCellDim = 75.0;
     }
     
     [[self statusLabel] setText: statusLabelText];
-    
-    [self updatePreferredContentSize];
-    
-    FSCActivity * powerOffActivity = [[[self harmonyConfiguration] activity] lastObject];
-    
-    if ([[[powerOffActivity label] lowercaseString] isEqualToString: @"poweroff"])
-    {
-        [[self powerOffView] setHidden: NO];
-        [[self powerOffIconImageView] setImage: [powerOffActivity maskedImageWithColor: [self colorForActivityMask]]];
-        [[self powerOffLabel] setText: [powerOffActivity label]];
-    }
-    else
-    {
-        [[self powerOffView] setHidden: YES];
-    }
 }
 
 - (void) clientSetupBegan
@@ -119,6 +132,7 @@ static CGFloat const activityCellDim = 75.0;
     dispatch_sync(dispatch_get_main_queue(), ^{
         
         [[self activityIndicatorView] startAnimating];
+        [[self statusLabel] setText: @"Loading..."];
     });
 }
 
@@ -127,13 +141,17 @@ static CGFloat const activityCellDim = 75.0;
     dispatch_sync(dispatch_get_main_queue(), ^{
         
         [[self activityIndicatorView] stopAnimating];
+        [[self statusLabel] setText: nil];
     });
 }
 
 - (void) handleClient: (FSCHarmonyClient *) client
 currentActivityChanged: (FSCActivity *) newActivity
 {
-    [self updateUIForCurrentActivity];
+    [super handleClient: client
+ currentActivityChanged: newActivity];
+    
+    [self updateUIForCurrentActivity: newActivity];
 }
 
 - (void) prepareForBlockingClientAction
@@ -170,6 +188,14 @@ currentActivityChanged: (FSCActivity *) newActivity
                 statusLabelText = @"No Harmony Hub found on network.";
             }
         }
+        else if ([error code] == FSCErrorCodeMissingSetup)
+        {
+            statusLabelText = @"Please use the app to load activities.";
+        }
+        else if ([error code] == FSCErrorCodeMissingCredentials)
+        {
+            statusLabelText = @"Please use the app to provide valid credentials and IP address.";
+        }
         else
         {
             statusLabelText = [error localizedDescription];
@@ -186,9 +212,76 @@ currentActivityChanged: (FSCActivity *) newActivity
     return [UIColor whiteColor];
 }
 
+- (UIColor *) inverseColorForActivityMask
+{
+    return [UIColor blackColor];
+}
+
+- (UIColor *) backgroundColorForInverseActivityMask
+{
+    return [UIColor whiteColor];
+}
+
 #pragma mark - Class Methods
 
-- (void) updatePreferredContentSize
+- (void) loadUIState
+{
+    NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
+    [standardDefaults synchronize];
+    
+    [viewsForStatePreservation enumerateObjectsUsingBlock: ^(NSString * viewPropertyName, NSUInteger idx, BOOL *stop) {
+        
+        SEL selector = NSSelectorFromString(viewPropertyName);
+        IMP imp = [self methodForSelector:selector];
+        UIView * (*func)(id, SEL) = (void *)imp;
+        UIView * view = func(self, selector);
+        
+        NSAssert(view,
+                 @"Could not find a property with name '%@' on '%@",
+                 view,
+                 NSStringFromClass([self class]));
+        
+        NSNumber * alphaNum = [standardDefaults objectForKey: [NSString stringWithFormat:
+                                                               @"viewStatePreservation-alpha-%@",
+                                                               viewPropertyName]];
+        
+        CGFloat newAlpha = 0.0;
+        
+        if (alphaNum)
+        {
+            newAlpha = [alphaNum floatValue];
+        }
+        
+        [view setAlpha: newAlpha];
+    }];
+}
+
+- (void) saveUIState
+{
+    NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [viewsForStatePreservation enumerateObjectsUsingBlock: ^(NSString * viewPropertyName, NSUInteger idx, BOOL *stop) {
+        
+        SEL selector = NSSelectorFromString(viewPropertyName);
+        IMP imp = [self methodForSelector:selector];
+        UIView * (*func)(id, SEL) = (void *)imp;
+        UIView * view = func(self, selector);
+        
+        NSAssert(view,
+                 @"Could not find a property with name '%@' on '%@",
+                 view,
+                 NSStringFromClass([self class]));
+        
+        [standardDefaults setObject: [NSNumber numberWithFloat: [view alpha]]
+                             forKey: [NSString stringWithFormat:
+                                      @"viewStatePreservation-alpha-%@",
+                                      viewPropertyName]];
+    }];
+    
+    [standardDefaults synchronize];
+}
+
+- (void) updateContentSize
 {
     CGRect viewBounds = [[self view] bounds];
     
@@ -201,39 +294,59 @@ currentActivityChanged: (FSCActivity *) newActivity
         numRows = ceilf(([[[self harmonyConfiguration] activity] count] - 1) / numCellsPerRow);
     }
 
-    CGFloat collectionViewHeight = numRows * [[self activityCollectionView] bounds].size.height;
-    
-    CGFloat extensionHeight = collectionViewHeight + [[self statusLabel] bounds].size.height;
-    
-    if (collectionViewHeight > 0.0)
-    {
-        extensionHeight += [[self staticActivitiesView] bounds].size.height;
-    }
-    
-    [self setPreferredContentSize: CGSizeMake(0.0, extensionHeight)];
+    CGFloat collectionViewHeight = numRows * activityCellDim;
     
     [[self activityCollectionViewHeightConstraint] setConstant: collectionViewHeight];
     
-    [[self staticActivitiesView] setHidden: (collectionViewHeight == 0.0)];
+    [[self staticActivitiesViewHeightConstraint] setConstant: ([[self staticActivitiesView] alpha] == 0.0) ? 0.0 : activityCellDim];
 }
 
-- (void) updateUIForCurrentActivity
+- (void) updateUIForCurrentActivity: (FSCActivity *) currentActivity
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
+    FSCControlGroup * transportBasicControlGroup = [currentActivity transportBasicControlGroup];
+    FSCControlGroup * transportExtendedControlGroup = [currentActivity transportExtendedControlGroup];
+    
+    BOOL powerOffActivityHidden = [[[currentActivity label] lowercaseString] isEqualToString: @"poweroff"];
+    
+    if (!powerOffActivityHidden)
+    {
+        FSCActivity * powerOffActivity = [[[self harmonyConfiguration] activity] lastObject];
         
-        FSCActivity * currentActivity = [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
-        
-        FSCControlGroup * volumeControlGroup = [currentActivity volumeControlGroup];
-        FSCControlGroup * transportBasicControlGroup = [currentActivity transportBasicControlGroup];
-        FSCControlGroup * transportExtendedControlGroup = [currentActivity transportExtendedControlGroup];
-        
-        [UIView animateWithDuration: 0.5
-                         animations: ^{
-                             
-                             [[self volumeView] setAlpha: volumeControlGroup ? 1.0 : 0.0];
-                             [[self transportView] setAlpha: (transportBasicControlGroup || transportExtendedControlGroup) ? 1.0 : 0.0];
-                         }];
-    });
+        if ([[[powerOffActivity label] lowercaseString] isEqualToString: @"poweroff"])
+        {
+            [[self powerOffIconImageView] setImage: [powerOffActivity maskedImageWithColor: [self colorForActivityMask]]];
+            [[self powerOffLabel] setText: [powerOffActivity label]];
+        }
+        else
+        {
+            powerOffActivityHidden = YES;
+        }
+    }
+    
+    [[self view] layoutIfNeeded];
+    
+    [UIView animateWithDuration: 0.5
+                     animations: ^{
+                         
+                         [[self staticActivitiesView] setAlpha: (volumeControlGroup ||
+                                                                 transportBasicControlGroup ||
+                                                                 transportExtendedControlGroup ||
+                                                                 !powerOffActivityHidden) ? 1.0 : 0.0];
+                         [[self volumeView] setAlpha: volumeControlGroup ? 1.0 : 0.0];
+                         [[self transportView] setAlpha: (transportBasicControlGroup || transportExtendedControlGroup) ? 1.0 : 0.0];
+                         [[self powerOffView] setAlpha: powerOffActivityHidden ? 0.0 : 1.0];
+                     }
+     completion: ^(BOOL finished) {
+         
+         [UIView animateWithDuration: 0.5
+                          animations: ^{
+                              
+                              [self updateContentSize];
+                              
+                              [[self view] layoutIfNeeded];
+                          }];
+     }];
 }
 
 - (IBAction) powerOffTapped: (id) sender
@@ -294,6 +407,8 @@ currentActivityChanged: (FSCActivity *) newActivity
         FSCControlGroup * controlGroup = [currentActivity transportBasicControlGroup];
         
         FSCFunction * function = playToggle ? [controlGroup playFunction] : [controlGroup pauseFunction];
+        
+        playToggle = !playToggle;
         
         return function;
     }];
