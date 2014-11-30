@@ -18,6 +18,8 @@ static CGFloat const activityCellDim = 75.0;
 
 static NSArray * viewsForStatePreservation = nil;
 
+static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewStatePreservation-alpha-";
+
 @interface TodayViewController () <NCWidgetProviding>
 {
     BOOL playToggle;
@@ -132,7 +134,7 @@ static NSArray * viewsForStatePreservation = nil;
     dispatch_sync(dispatch_get_main_queue(), ^{
         
         [[self activityIndicatorView] startAnimating];
-        [[self statusLabel] setText: @"Loading..."];
+        [[self statusLabel] setText: @"Connecting..."];
     });
 }
 
@@ -242,7 +244,8 @@ currentActivityChanged: (FSCActivity *) newActivity
                  NSStringFromClass([self class]));
         
         NSNumber * alphaNum = [standardDefaults objectForKey: [NSString stringWithFormat:
-                                                               @"viewStatePreservation-alpha-%@",
+                                                               @"%@%@",
+                                                               standardDefaultsKeyViewStatePreservationAlpha,
                                                                viewPropertyName]];
         
         CGFloat newAlpha = 0.0;
@@ -274,7 +277,8 @@ currentActivityChanged: (FSCActivity *) newActivity
         
         [standardDefaults setObject: [NSNumber numberWithFloat: [view alpha]]
                              forKey: [NSString stringWithFormat:
-                                      @"viewStatePreservation-alpha-%@",
+                                      @"%@%@",
+                                      standardDefaultsKeyViewStatePreservationAlpha,
                                       viewPropertyName]];
     }];
     

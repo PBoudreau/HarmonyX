@@ -14,6 +14,14 @@
 
 #import "FSCDataSharingController.h"
 
+static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
+
+@interface FSCHarmonyViewController ()
+
+@property (nonatomic, strong) FSCActivity * currentActivity;
+
+@end
+
 @implementation FSCHarmonyViewController
 
 #pragma mark - Superclass Methods
@@ -41,6 +49,8 @@
 - (void) loadConfiguration
 {
     [self setHarmonyConfiguration: [FSCDataSharingController loadHarmonyConfiguration]];
+    
+    [self loadCurrentActivity];
 }
 
 - (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
@@ -49,6 +59,28 @@
     
     [[self activityCollectionView] reloadData];
 }
+
+- (void) loadCurrentActivity
+{
+    NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
+    [standardDefaults synchronize];
+    NSString * currentActivityIdentifier = [standardDefaults objectForKey: standardDefaultsKeyCurrentActivity];
+    
+    FSCActivity * currentActivity = [[self harmonyConfiguration] activityWithId: currentActivityIdentifier];
+    
+    [self setCurrentActivity: currentActivity];
+    
+    [self highlightCurrentActivity];
+}
+
+- (void) saveCurrentActivity
+{
+    NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
+    [standardDefaults setObject: [[self currentActivity] activityIdentifier]
+                         forKey: standardDefaultsKeyCurrentActivity];
+    [standardDefaults synchronize];
+}
+
 
 - (void) performBlockingClientActionsWithBlock: (void (^)(FSCHarmonyClient * client))actionsBlock
                      mainThreadCompletionBlock: (void (^)(void))completionBlock
@@ -201,26 +233,23 @@
 - (void) handleClient: (FSCHarmonyClient *) client
 currentActivityChanged: (FSCActivity *) newActivity
 {
-    [self highlightActivity: newActivity];
+    [self setCurrentActivity: newActivity];
+    
+    [self saveCurrentActivity];
+    
+    [self highlightCurrentActivity];
 }
 
-- (void) highlightActivity: (FSCActivity *) activity
+- (void) highlightCurrentActivity
 {
-    for (FSCActivityCollectionViewCell * cell in [[self activityCollectionView] visibleCells])
-    {
-        if ([[[cell activity] activityIdentifier] isEqualToString: [activity activityIdentifier]])
+    [[[self harmonyConfiguration] activity] enumerateObjectsUsingBlock:^(FSCActivity * anActivity, NSUInteger idx, BOOL *stop) {
+        
+        if ([[anActivity activityIdentifier] isEqualToString: [[self currentActivity] activityIdentifier]])
         {
-            [cell setActivity: [cell activity]
-                withMaskColor: [self inverseColorForActivityMask]
-              backgroundColor: [self backgroundColorForInverseActivityMask]];
+            [[self activityCollectionView] reloadItemsAtIndexPaths: @[[NSIndexPath indexPathForItem: idx
+                                                                                          inSection: 0]]];
         }
-        else
-        {
-            [cell setActivity: [cell activity]
-                withMaskColor: [self colorForActivityMask]
-              backgroundColor: [self backgroundColorForActivityMask]];
-        }
-    }
+    }];
 }
 
 - (void) prepareForBlockingClientAction
@@ -256,9 +285,18 @@ currentActivityChanged: (FSCActivity *) newActivity
     
     FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
     
-    [cell setActivity: activity
-        withMaskColor: [self colorForActivityMask]
-      backgroundColor: [UIColor clearColor]];
+    if ([[activity activityIdentifier] isEqualToString: [[self currentActivity] activityIdentifier]])
+    {
+        [cell setActivity: activity
+            withMaskColor: [self inverseColorForActivityMask]
+          backgroundColor: [self backgroundColorForInverseActivityMask]];
+    }
+    else
+    {
+        [cell setActivity: activity
+            withMaskColor: [self colorForActivityMask]
+          backgroundColor: [self backgroundColorForActivityMask]];
+    }
     
     return cell;
 }
