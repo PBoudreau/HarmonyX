@@ -1,43 +1,18 @@
-# General
-*.swp
-*.swo
-*.rbo
-*.gem
-.DS_Store
-.rbenv-version
-.rbx/
+# Xcode
+#
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
 xcuserdata
-project.xcworkspace
-DerivedData
-/concatenated.*
-
-# Yardoc
-.yardoc
-/doc
-
-# Specs
-tmp
-spec/fixtures/banana-lib
-spec/fixtures/chameleon
-spec/fixtures/integration/Headers/
-spec/fixtures/vcr
-
-# Examples
-examples/**/Podfile.lock
-examples/Pods
-examples/**/Pods
-examples/RelativePathProject/RelativePathProject/RelativePathProject.xcodeproj
-coverage/
-.coveralls.yml
-
-# IDEs
 *.xccheckout
-.idea/
-
-# RVM files
-/.rvmrc
-/.ruby-version
-/.ruby-gemset
-
-# Bundler files
-/.bundle
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
