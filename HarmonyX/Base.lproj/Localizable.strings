@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  HarmonyX
+
+  Created by Philippe Boudreau on 2014-11-30.
+  Copyright (c) 2014 Fasterre. All rights reserved.
+*/
+
+// FSCHarmonyViewController
+
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-SETUP" = "Could not connect to Harmony Hub: setup does not appear to have been performed";
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS" = "Could not connect to Harmony Hub: username (%@), password (%@) and/or IP address (%@) missing";
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT" = "<empty>";

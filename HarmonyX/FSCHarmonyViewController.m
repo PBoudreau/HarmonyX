@@ -135,17 +135,16 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
                 {
                     @throw [NSException exceptionWithName: FSCExceptionCredentials
                                                    reason: [NSString stringWithFormat:
-                                                            @"Could not connect to Harmony Hub: username (%@), password (%@) and/or IP address (%@) missing",
-                                                            username ? username : @"<empty>",
-                                                            password ? @"******" : @"<empty>",
-                                                            IPAddress ? IPAddress : @"<empty>"]
+                                                            NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS", nil),
+                                                            username ? username : NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT", nil),
+                                                            password ? @"******" : NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT", nil),
+                                                            IPAddress ? IPAddress : NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT", nil)]
                                                  userInfo: nil];
                 }
                 else
                 {
                     @throw [NSException exceptionWithName: FSCExceptionSetup
-                                                   reason: [NSString stringWithFormat:
-                                                            @"Could not connect to Harmony Hub: setup does not appear to have been performed"]
+                                                   reason: NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-SETUP", nil)
                                                  userInfo: nil];
                 }
             }
