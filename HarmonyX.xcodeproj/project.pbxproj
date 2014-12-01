@@ -11,7 +11,6 @@
 		1A2742621A275E7E00F5C933 /* FSCTransparentTouchableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2742601A275E7700F5C933 /* FSCTransparentTouchableView.m */; };
 		1A60430C1A0A887B0074D6A5 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A60430B1A0A887B0074D6A5 /* NotificationCenter.framework */; };
 		1A6043121A0A887B0074D6A5 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A6043111A0A887B0074D6A5 /* TodayViewController.m */; };
-		1A6043141A0A887B0074D6A5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6043131A0A887B0074D6A5 /* MainInterface.storyboard */; };
 		1A6043171A0A887B0074D6A5 /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1A60430A1A0A887B0074D6A5 /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1A6043201A0A89CF0074D6A5 /* libPods-HarmonyX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A60431F1A0A89CF0074D6A5 /* libPods-HarmonyX.a */; };
 		1A69F4181A00497000860482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A69F4171A00497000860482 /* main.m */; };
@@ -45,6 +44,9 @@
 		1AC0923F1A10074400602E69 /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; };
 		1AC092401A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; };
 		1AC092411A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; };
+		1AF6ED541A2BBA5B0008F3C3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AF6ED561A2BBA5B0008F3C3 /* Localizable.strings */; };
+		1AF6ED5B1A2BBB630008F3C3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF6ED5D1A2BBB630008F3C3 /* MainInterface.storyboard */; };
+		1AF6ED601A2BBC970008F3C3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AF6ED561A2BBA5B0008F3C3 /* Localizable.strings */; };
 		9A62F38490611F1CF944D4BC /* libPods-HarmonyX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */; };
 /* End PBXBuildFile section */
 
@@ -80,7 +82,6 @@
 		1A60430F1A0A887B0074D6A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A6043101A0A887B0074D6A5 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		1A6043111A0A887B0074D6A5 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
-		1A6043131A0A887B0074D6A5 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		1A60431F1A0A89CF0074D6A5 /* libPods-HarmonyX.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-HarmonyX.a"; path = "Pods/build/Debug-iphoneos/libPods-HarmonyX.a"; sourceTree = "<group>"; };
 		1A6043211A0AB67E0074D6A5 /* TodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TodayExtension.entitlements; sourceTree = "<group>"; };
 		1A6043221A0AB6E70074D6A5 /* HarmonyX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HarmonyX.entitlements; sourceTree = "<group>"; };
@@ -119,6 +120,12 @@
 		1AC092231A10074400602E69 /* FSCGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCGlobal.m; sourceTree = "<group>"; };
 		1AC092241A10074400602E69 /* FSCHarmonyConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyConfiguration.h; sourceTree = "<group>"; };
 		1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyConfiguration.m; sourceTree = "<group>"; };
+		1AF6ED571A2BBA890008F3C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1AF6ED581A2BBAA20008F3C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		1AF6ED591A2BBAA20008F3C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		1AF6ED5A1A2BBAA20008F3C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1AF6ED5C1A2BBB630008F3C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		1AF6ED5F1A2BBB670008F3C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HarmonyX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A384876B9C2DE38E228004E /* Pods-HarmonyX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyX.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyX/Pods-HarmonyX.release.xcconfig"; sourceTree = "<group>"; };
 		A53D7F1A523A83F84823D85F /* Pods-HarmonyX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyX/Pods-HarmonyX.debug.xcconfig"; sourceTree = "<group>"; };
@@ -150,7 +157,7 @@
 			children = (
 				1A6043101A0A887B0074D6A5 /* TodayViewController.h */,
 				1A6043111A0A887B0074D6A5 /* TodayViewController.m */,
-				1A6043131A0A887B0074D6A5 /* MainInterface.storyboard */,
+				1AF6ED5D1A2BBB630008F3C3 /* MainInterface.storyboard */,
 				1A6043211A0AB67E0074D6A5 /* TodayExtension.entitlements */,
 				1A60430E1A0A887B0074D6A5 /* Supporting Files */,
 			);
@@ -210,6 +217,7 @@
 				1A69F4221A00497000860482 /* Images.xcassets */,
 				1A69F4241A00497000860482 /* LaunchScreen.xib */,
 				1A6043221A0AB6E70074D6A5 /* HarmonyX.entitlements */,
+				1AF6ED561A2BBA5B0008F3C3 /* Localizable.strings */,
 				1A69F4151A00497000860482 /* Supporting Files */,
 			);
 			path = HarmonyX;
@@ -348,6 +356,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 1A69F4091A00497000860482;
 			productRefGroup = 1A69F4131A00497000860482 /* Products */;
@@ -365,7 +374,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A6043141A0A887B0074D6A5 /* MainInterface.storyboard in Resources */,
+				1AF6ED5B1A2BBB630008F3C3 /* MainInterface.storyboard in Resources */,
+				1AF6ED601A2BBC970008F3C3 /* Localizable.strings in Resources */,
 				1AA9E7251A113CE4000CE1DD /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A69F4211A00497000860482 /* Main.storyboard in Resources */,
+				1AF6ED541A2BBA5B0008F3C3 /* Localizable.strings in Resources */,
 				1A69F4261A00497000860482 /* LaunchScreen.xib in Resources */,
 				1A69F4231A00497000860482 /* Images.xcassets in Resources */,
 			);
@@ -475,6 +486,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1A69F4201A00497000860482 /* Base */,
+				1AF6ED581A2BBAA20008F3C3 /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -483,8 +495,27 @@
 			isa = PBXVariantGroup;
 			children = (
 				1A69F4251A00497000860482 /* Base */,
+				1AF6ED591A2BBAA20008F3C3 /* fr */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		1AF6ED561A2BBA5B0008F3C3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1AF6ED571A2BBA890008F3C3 /* Base */,
+				1AF6ED5A1A2BBAA20008F3C3 /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		1AF6ED5D1A2BBB630008F3C3 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1AF6ED5C1A2BBB630008F3C3 /* Base */,
+				1AF6ED5F1A2BBB670008F3C3 /* fr */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

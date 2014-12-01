@@ -1,0 +1,31 @@
+/* 
+  Localizable.strings
+  HarmonyX
+
+  Created by Philippe Boudreau on 2014-11-30.
+  Copyright (c) 2014 Fasterre. All rights reserved.
+*/
+
+// General
+
+"GENERAL-OK" = "OK";
+"GENERAL-CANCEL" = "Annuler";
+
+// FSCHarmonyViewController
+
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-SETUP" = "La connexion à My harmony a échoué: vérifiez l'adresse IP et le port.";
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-CREDENTIALS" = "La connexion à My harmony a échoué: vérifiez votre nom d'usager et mot de passe.";
+
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-SETUP" = "La connexion au Harmony Hub a échoué: la configuration n'a pas été effectuée.";
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS" = "La connexion au Harmony Hub a échoué: nom d'usager (%@), mot de passe (%@) et/ou adresse IP (%@) manquant.";
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT" = "<vide>";
+
+// ViewController
+
+"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-MISSING_USERNAME" = "Veuillez fournier votre nom d'usager.";
+"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-MISSING_PASSWORD" = "Veuillez fournier votre mot de passe.";
+"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-MISSING_IP_ADDRESS" = "Veuillez spécifier l'adresse IP.";
+"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-INVALID_PORT" = "Numéro de port non-valide.";
+
+"VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-TITLE" = "Faites votre choix:";
+"VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-BUTTON-FLUSH_TOKENS" = "Effacer jeton";

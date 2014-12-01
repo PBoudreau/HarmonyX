@@ -53,6 +53,11 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
     [self loadCurrentActivity];
 }
 
+- (NSArray *) activities
+{
+    return [[self harmonyConfiguration] activity];
+}
+
 - (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
 {
     _harmonyConfiguration = harmonyConfiguration;
@@ -135,17 +140,16 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
                 {
                     @throw [NSException exceptionWithName: FSCExceptionCredentials
                                                    reason: [NSString stringWithFormat:
-                                                            @"Could not connect to Harmony Hub: username (%@), password (%@) and/or IP address (%@) missing",
-                                                            username ? username : @"<empty>",
-                                                            password ? @"******" : @"<empty>",
-                                                            IPAddress ? IPAddress : @"<empty>"]
+                                                            NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS", nil),
+                                                            username ? username : NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT", nil),
+                                                            password ? @"******" : NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT", nil),
+                                                            IPAddress ? IPAddress : NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT", nil)]
                                                  userInfo: nil];
                 }
                 else
                 {
                     @throw [NSException exceptionWithName: FSCExceptionSetup
-                                                   reason: [NSString stringWithFormat:
-                                                            @"Could not connect to Harmony Hub: setup does not appear to have been performed"]
+                                                   reason: NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-SETUP", nil)
                                                  userInfo: nil];
                 }
             }
@@ -168,7 +172,7 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
                 [[exception name] isEqualToString: FSCExceptionCredentials] ||
                 [[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
             {
-                errorDescription = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
+                errorDescription = NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-CREDENTIALS", nil);
                 
                 if ([[exception name] isEqualToString: FSCExceptionSetup])
                 {
@@ -181,7 +185,7 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
             }
             else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
             {
-                errorDescription = @"Could not connect to Harmony Hub with the provided IP address and port.";
+                errorDescription = NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-SETUP", nil);
             }
             
             NSMutableDictionary * userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
@@ -242,14 +246,7 @@ currentActivityChanged: (FSCActivity *) newActivity
 
 - (void) highlightCurrentActivity
 {
-    [[[self harmonyConfiguration] activity] enumerateObjectsUsingBlock:^(FSCActivity * anActivity, NSUInteger idx, BOOL *stop) {
-        
-        if ([[anActivity activityIdentifier] isEqualToString: [[self currentActivity] activityIdentifier]])
-        {
-            [[self activityCollectionView] reloadItemsAtIndexPaths: @[[NSIndexPath indexPathForItem: idx
-                                                                                          inSection: 0]]];
-        }
-    }];
+    [[self activityCollectionView] reloadData];
 }
 
 - (void) prepareForBlockingClientAction
@@ -271,7 +268,7 @@ currentActivityChanged: (FSCActivity *) newActivity
     
     if ([self harmonyConfiguration])
     {
-        count = [[[self harmonyConfiguration] activity] count];
+        count = [[self activities] count];
     }
     
     return count;
@@ -283,7 +280,7 @@ currentActivityChanged: (FSCActivity *) newActivity
     FSCActivityCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier: FSCActtivityCellIdentifier
                                                                                      forIndexPath: indexPath];
     
-    FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
+    FSCActivity * activity = [self activities][[indexPath item]];
     
     if ([[activity activityIdentifier] isEqualToString: [[self currentActivity] activityIdentifier]])
     {
@@ -326,7 +323,7 @@ currentActivityChanged: (FSCActivity *) newActivity
 - (void) collectionView:(UICollectionView *) collectionView
 didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 {
-    FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
+    FSCActivity * activity = [self activities][[indexPath item]];
     
     [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
         
