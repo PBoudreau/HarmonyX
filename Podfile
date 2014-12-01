@@ -9,6 +9,7 @@ pod 'AFNetworking', '~> 2.4'
 pod 'XMPPFramework', '~> 3.6'
 pod 'SimpleKeychain', '~> 0.2'
 pod 'MBProgressHUDExtensions', '~> 0.0'
+pod 'TRZSlideLicenseViewController'
 
 end
 

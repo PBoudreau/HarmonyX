@@ -31,6 +31,7 @@ PODS:
   - MBProgressHUDExtensions (0.0.1):
     - MBProgressHUD (~> 0.4)
   - SimpleKeychain (0.2.0)
+  - TRZSlideLicenseViewController (0.9.4)
   - XMPPFramework (3.6.4):
     - XMPPFramework/Authentication
     - XMPPFramework/BandwidthMonitor
@@ -176,6 +177,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.4)
   - MBProgressHUDExtensions (~> 0.0)
   - SimpleKeychain (~> 0.2)
+  - TRZSlideLicenseViewController
   - XMPPFramework (~> 3.6)
 
 SPEC CHECKSUMS:
@@ -185,6 +187,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
   MBProgressHUDExtensions: 7ec6088776ed623bcfa93b420b35e69d318b858c
   SimpleKeychain: f7c55140169037f7540c949b25da53096036b231
+  TRZSlideLicenseViewController: bc539e1a9831fdd7aeeab844f49b24c5b8ad52fa
   XMPPFramework: 5a8555132822ebb3e11d2bac0258e62754315bc5
 
 COCOAPODS: 0.34.4

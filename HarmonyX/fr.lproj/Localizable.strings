@@ -10,6 +10,7 @@
 
 "GENERAL-OK" = "OK";
 "GENERAL-CANCEL" = "Annuler";
+"GENERAL-CLOSE" = "Fermer";
 
 "GENERAL-UNKNOWN_ERROR" = "erreur inconnue";
 
@@ -46,6 +47,10 @@
 
 "VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-TITLE" = "Faites votre choix:";
 "VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-BUTTON-FLUSH_TOKENS" = "Effacer jeton";
+
+"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-TITLE" = "Remerciements";
+"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER_TITLE" = "Bibliothèques tierces";
+"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER" = "Cette application utilise les bibliothèques tierces mentionnées dans les pages suivantes (➟).";
 
 // TodayViewController
 

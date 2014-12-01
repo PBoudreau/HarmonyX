@@ -93,6 +93,12 @@
 #define COCOAPODS_VERSION_MINOR_SimpleKeychain 2
 #define COCOAPODS_VERSION_PATCH_SimpleKeychain 0
 
+// TRZSlideLicenseViewController
+#define COCOAPODS_POD_AVAILABLE_TRZSlideLicenseViewController
+#define COCOAPODS_VERSION_MAJOR_TRZSlideLicenseViewController 0
+#define COCOAPODS_VERSION_MINOR_TRZSlideLicenseViewController 9
+#define COCOAPODS_VERSION_PATCH_TRZSlideLicenseViewController 4
+
 // XMPPFramework
 #define COCOAPODS_POD_AVAILABLE_XMPPFramework
 #define COCOAPODS_VERSION_MAJOR_XMPPFramework 3

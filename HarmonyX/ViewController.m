@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 #import <MBProgressHUDExtensions/UIViewController+MBProgressHUD.h>
+#import <TRZSlideLicenseViewController.h>
 
 #import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
@@ -193,6 +194,36 @@
                            animated: YES
                          completion: nil];
     }
+}
+
+- (IBAction) infoButtonTapped: (id) sender
+{
+    TRZSlideLicenseViewController * controller = [[TRZSlideLicenseViewController alloc] init];
+    [controller setPodsPlistName: @"Pods-acknowledgements.plist"];
+    [[controller navigationItem] setTitle: NSLocalizedString(@"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-TITLE", nil)];
+    
+    [controller setHeaderType: TRZSlideLicenseViewHeaderTypeCustom];
+    [controller setHeaderTitle: NSLocalizedString(@"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER_TITLE", nil)];
+    [controller setHeaderText: NSLocalizedString(@"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER", nil)];
+    [controller setTitleColor: [[self view] tintColor]];
+    
+    [[controller navigationItem] setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"GENERAL-CLOSE", nil)
+                                                                                        style: UIBarButtonItemStylePlain
+                                                                                       target: self
+                                                                                       action: @selector(closeInfoScreen:)]];
+    
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController: controller];
+    [navController setModalTransitionStyle: UIModalTransitionStyleFlipHorizontal];
+    
+    [self presentViewController: navController
+                       animated: YES
+                     completion: nil];
+}
+
+- (void) closeInfoScreen: (id) sender
+{
+    [self dismissViewControllerAnimated: YES
+                             completion: nil];
 }
 
 - (IBAction) harmonyXLabelTapped: (id) sender

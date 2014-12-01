@@ -10,6 +10,7 @@
 
 "GENERAL-OK" = "OK";
 "GENERAL-CANCEL" = "Cancel";
+"GENERAL-CLOSE" = "Close";
 
 "GENERAL-UNKNOWN_ERROR" = "unknown error";
 
@@ -46,6 +47,10 @@
 
 "VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-TITLE" = "What would you like to do?";
 "VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-BUTTON-FLUSH_TOKENS" = "Flush Tokens";
+
+"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-TITLE" = "Acknowledgments";
+"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER_TITLE" = "Third Party Libraries";
+"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER" = "This application makes use of the third party libraries listed on the following pages (➟).";
 
 // TodayViewController
 

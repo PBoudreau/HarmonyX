@@ -148,6 +148,15 @@
                                     <constraint firstAttribute="centerX" secondItem="B2y-TP-xdN" secondAttribute="centerX" id="uzA-6g-cvX"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUq-jh-gZN">
+                                <rect key="frame" x="568" y="30" width="22" height="22"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="infoButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZvX-ec-Tgt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -155,7 +164,9 @@
                             <constraint firstAttribute="bottom" secondItem="YH1-NL-TI5" secondAttribute="bottom" constant="20" id="7lR-0t-Mqh"/>
                             <constraint firstItem="gwo-Nq-ECJ" firstAttribute="top" secondItem="l7F-wq-6tB" secondAttribute="bottom" constant="8" id="7tM-Q7-0eg"/>
                             <constraint firstItem="gwo-Nq-ECJ" firstAttribute="leading" secondItem="zUP-As-b8V" secondAttribute="leadingMargin" id="A7H-8U-fd0"/>
+                            <constraint firstAttribute="trailing" secondItem="SUq-jh-gZN" secondAttribute="trailing" constant="10" id="JxU-pD-bqj"/>
                             <constraint firstAttribute="centerX" secondItem="YH1-NL-TI5" secondAttribute="centerX" id="NWF-6a-iKe"/>
+                            <constraint firstItem="SUq-jh-gZN" firstAttribute="top" secondItem="Rzt-q9-Eoa" secondAttribute="bottom" constant="10" id="O8O-AM-TjI"/>
                             <constraint firstItem="YH1-NL-TI5" firstAttribute="leading" secondItem="zUP-As-b8V" secondAttribute="leading" constant="20" symbolic="YES" id="OWo-e2-JA1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gwo-Nq-ECJ" secondAttribute="trailing" id="Oup-dv-VbH"/>
                             <constraint firstAttribute="centerX" secondItem="l7F-wq-6tB" secondAttribute="centerX" id="V9r-5C-nTh"/>
