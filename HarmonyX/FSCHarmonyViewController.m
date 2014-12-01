@@ -172,7 +172,7 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
                 [[exception name] isEqualToString: FSCExceptionCredentials] ||
                 [[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
             {
-                errorDescription = @"Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
+                errorDescription = NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-CREDENTIALS", nil);
                 
                 if ([[exception name] isEqualToString: FSCExceptionSetup])
                 {
@@ -185,7 +185,7 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
             }
             else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
             {
-                errorDescription = @"Could not connect to Harmony Hub with the provided IP address and port.";
+                errorDescription = NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-SETUP", nil);
             }
             
             NSMutableDictionary * userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
@@ -246,14 +246,7 @@ currentActivityChanged: (FSCActivity *) newActivity
 
 - (void) highlightCurrentActivity
 {
-    [[self activities] enumerateObjectsUsingBlock:^(FSCActivity * anActivity, NSUInteger idx, BOOL *stop) {
-        
-        if ([[anActivity activityIdentifier] isEqualToString: [[self currentActivity] activityIdentifier]])
-        {
-            [[self activityCollectionView] reloadItemsAtIndexPaths: @[[NSIndexPath indexPathForItem: idx
-                                                                                          inSection: 0]]];
-        }
-    }];
+    [[self activityCollectionView] reloadData];
 }
 
 - (void) prepareForBlockingClientAction

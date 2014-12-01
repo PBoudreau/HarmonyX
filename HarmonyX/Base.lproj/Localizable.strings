@@ -6,8 +6,26 @@
   Copyright (c) 2014 Fasterre. All rights reserved.
 */
 
+// General
+
+"GENERAL-OK" = "OK";
+"GENERAL-CANCEL" = "Cancel";
+
 // FSCHarmonyViewController
 
-"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-SETUP" = "Could not connect to Harmony Hub: setup does not appear to have been performed";
-"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS" = "Could not connect to Harmony Hub: username (%@), password (%@) and/or IP address (%@) missing";
-"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT" = "<empty>";
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-SETUP" = "Could not connect to Harmony Hub with the provided IP address and port.";
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-CREDENTIALS" = "Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
+
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-HARMONY_HUB-SETUP" = "Could not connect to Harmony Hub: setup does not appear to have been performed.";
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-HARMONY_HUB-CREDENTIALS" = "Could not connect to Harmony Hub: username (%@), password (%@) and/or IP address (%@) missing.";
+"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-HARMONY_HUB-CREDENTIALS-EMPYT" = "<empty>";
+
+// ViewController
+
+"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-MISSING_USERNAME" = "Username is required.";
+"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-MISSING_PASSWORD" = "Password is required.";
+"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-MISSING_IP_ADDRESS" = "IP Address is required.";
+"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-INVALID_PORT" = "Invalid port number.";
+
+"VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-TITLE" = "What would you like to do?";
+"VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-BUTTON-FLUSH_TOKENS" = "Flush Tokens";

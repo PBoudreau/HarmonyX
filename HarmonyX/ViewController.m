@@ -106,21 +106,21 @@
     if (!username ||
         [username isEqualToString: @""])
     {
-        errorMessage = @"Username is required.";
+        errorMessage = NSLocalizedString(@"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-MISSING_USERNAME", nil);
     }
     else if (!passsword ||
              [passsword isEqualToString: @""])
     {
-        errorMessage = @"Password is required.";
+        errorMessage = NSLocalizedString(@"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-MISSING_PASSWORD", nil);
     }
     else if (!IPAddress ||
              [IPAddress isEqualToString: @""])
     {
-        errorMessage = @"IP Address is required.";
+        errorMessage = NSLocalizedString(@"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-MISSING_IP_ADDRESS", nil);
     }
     else if (port == 0)
     {
-        errorMessage = @"Invalid port number.";
+        errorMessage = NSLocalizedString(@"VIEWCONTROLLER-CREDENTIALS_AND_SETUP_VALIDATION-INVALID_PORT", nil);
     }
     
     if (errorMessage)
@@ -128,7 +128,7 @@
         UIAlertController * controller = [UIAlertController alertControllerWithTitle: @""
                                                                              message: errorMessage
                                                                       preferredStyle: UIAlertControllerStyleAlert];
-        [controller addAction: [UIAlertAction actionWithTitle: @"OK"
+        [controller addAction: [UIAlertAction actionWithTitle: NSLocalizedString(@"GENERAL-OK", nil)
                                                         style: UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction *action) {
                                                           
@@ -183,7 +183,7 @@
         UIAlertController * controller = [UIAlertController alertControllerWithTitle: @""
                                                                              message: [error localizedDescription]
                                                                       preferredStyle: UIAlertControllerStyleAlert];
-        [controller addAction: [UIAlertAction actionWithTitle: @"OK"
+        [controller addAction: [UIAlertAction actionWithTitle: NSLocalizedString(@"GENERAL-OK", nil)
                                                         style: UIAlertActionStyleDefault
                                                       handler: ^(UIAlertAction *action) {
                                                           
@@ -199,15 +199,15 @@
 
 - (IBAction) harmonyXLabelTapped: (id) sender
 {
-    UIAlertController * controller = [UIAlertController alertControllerWithTitle: @"What would you like to do?"
+    UIAlertController * controller = [UIAlertController alertControllerWithTitle: NSLocalizedString(@"VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-TITLE", nil)
                                                                          message: nil
                                                                   preferredStyle: UIAlertControllerStyleActionSheet];
     
-    [controller addAction: [UIAlertAction actionWithTitle: @"Cancel"
+    [controller addAction: [UIAlertAction actionWithTitle: NSLocalizedString(@"GENERAL-CANCEL", nil)
                                                     style: UIAlertActionStyleCancel
                                                   handler: nil]];
     
-    [controller addAction: [UIAlertAction actionWithTitle: @"Flush Tokens"
+    [controller addAction: [UIAlertAction actionWithTitle: NSLocalizedString(@"VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-BUTTON-FLUSH_TOKENS", nil)
                                                     style: UIAlertActionStyleDestructive
                                                   handler: ^(UIAlertAction *action) {
                                                       
