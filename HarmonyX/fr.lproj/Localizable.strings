@@ -46,3 +46,13 @@
 
 "VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-TITLE" = "Faites votre choix:";
 "VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-BUTTON-FLUSH_TOKENS" = "Effacer jeton";
+
+// TodayViewController
+
+"TODAYVIEWCONTROLLER-STATUS-NO_HARMONY_CONFIGURATION" = "Veuillez utiliser l'app pour charger les activités.";
+"TODAYVIEWCONTROLLER-STATUS-CONNECTING" = "Connexion...";
+"TODAYVIEWCONTROLLER-STATUS-NOT_NETWORK_CONNECTIVITY" = "Connectivité réseau absente.";
+"TODAYVIEWCONTROLLER-STATUS-NO_HARMONY_HUB_FOUND_ON_NETWORK" = "Harmony Hub non détecté sur le réseau.";
+"TODAYVIEWCONTROLLER-STATUS-INVALID_IP_PORT" = "Veuillez utiliser l'app pour fournir un nom d'usager et mot de passe valide.";
+"TODAYVIEWCONTROLLER-STATUS-POWERING_OFF" = "Mise hors tension...";
+"TODAYVIEWCONTROLLER-STATUS-STARTING" = "Démarrage de %@...";
