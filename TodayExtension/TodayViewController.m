@@ -130,7 +130,7 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
     
     if (![self harmonyConfiguration])
     {
-        statusLabelText = @"Please use the app to load activities.";
+        statusLabelText = NSLocalizedString(@"TODAYVIEWCONTROLLER-STATUS-NO_HARMONY_CONFIGURATION", nil);
     }
     
     [[self statusLabel] setText: statusLabelText];
@@ -141,7 +141,7 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
     dispatch_sync(dispatch_get_main_queue(), ^{
         
         [[self activityIndicatorView] startAnimating];
-        [[self statusLabel] setText: @"Connecting..."];
+        [[self statusLabel] setText: NSLocalizedString(@"TODAYVIEWCONTROLLER-STATUS-CONNECTING", nil)];
     });
 }
 
@@ -187,20 +187,20 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
          
             if ([originalError isEqualToString: FSCErrorHarmonyXMPPNetworkUnreachable])
             {
-                statusLabelText = @"No network connectivity available.";
+                statusLabelText = NSLocalizedString(@"TODAYVIEWCONTROLLER-STATUS-NOT_NETWORK_CONNECTIVITY", nil);
             }
             else
             {
-                statusLabelText = @"No Harmony Hub found on network.";
+                statusLabelText = NSLocalizedString(@"TODAYVIEWCONTROLLER-STATUS-NO_HARMONY_HUB_FOUND_ON_NETWORK", nil);
             }
         }
         else if ([error code] == FSCErrorCodeMissingSetup)
         {
-            statusLabelText = @"Please use the app to load activities.";
+            statusLabelText = NSLocalizedString(@"TODAYVIEWCONTROLLER-STATUS-NO_HARMONY_CONFIGURATION", nil);
         }
         else if ([error code] == FSCErrorCodeMissingCredentials)
         {
-            statusLabelText = @"Please use the app to provide valid credentials and IP address.";
+            statusLabelText = NSLocalizedString(@"TODAYVIEWCONTROLLER-STATUS-INVALID_IP_PORT", nil);
         }
         else
         {
@@ -359,7 +359,7 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
 
 - (IBAction) powerOffTapped: (id) sender
 {
-    [[self statusLabel] setText: @"Powering off..."];
+    [[self statusLabel] setText: NSLocalizedString(@"TODAYVIEWCONTROLLER-STATUS-POWERING_OFF", nil)];
     
     [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
         
@@ -449,7 +449,7 @@ didSelectItemAtIndexPath: (NSIndexPath *) indexPath
     FSCActivity * activity = [self activities][[indexPath item]];
     
     [[self statusLabel] setText: [NSString stringWithFormat:
-                                  @"Starting %@...",
+                                  NSLocalizedString(@"TODAYVIEWCONTROLLER-STATUS-STARTING", nil),
                                   [activity label]]];
     
     [super collectionView: collectionView

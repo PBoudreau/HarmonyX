@@ -216,7 +216,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
              error = [NSError errorWithDomain: FSCErrorDomain
                                          code: FSCErrorCodeUnexpectedMyHarmonyResponse
                                      userInfo: @{NSLocalizedDescriptionKey: [NSString stringWithFormat:
-                                                                             @"Could not find user auth token result keyed on 'GetUserAuthTokenResult' in JSON: %@",
+                                                                             NSLocalizedString(@"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-MISSING_GETUSERAUTHTOKENRESULT", nil),
                                                                              responseObject]}];
          }
          
@@ -229,7 +229,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
                  error = [NSError errorWithDomain: FSCErrorDomain
                                              code: FSCErrorCodeUnexpectedMyHarmonyResponse
                                          userInfo: @{NSLocalizedDescriptionKey: [NSString stringWithFormat:
-                                                                                 @"Could not find token keyed on 'UserAuthToken' in JSON: %@",
+                                                                                 NSLocalizedString(@"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-MISSING_USERAUTHTOKEN", nil),
                                                                                  responseObject]}];
              }
          }
@@ -241,7 +241,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
          error = [NSError errorWithDomain: FSCErrorDomain
                                      code: FSCErrorCodeUnexpectedMyHarmonyResponse
                                  userInfo: @{NSLocalizedDescriptionKey: [NSString stringWithFormat:
-                                                                         @"An error occurred in GetUserToken: %@",
+                                                                         NSLocalizedString(@"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-ERROR_IN_GETUSERTOKEN", nil),
                                                                          [myHarmonyError localizedDescription]]}];
          
          asyncOperationCompleted = YES;
@@ -259,7 +259,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     {
         @throw [NSException exceptionWithName: FSCExceptionMyHarmonyConnection
                                        reason: [NSString stringWithFormat:
-                                                @"An error occurred while requesting My Harmony token: %@",
+                                                NSLocalizedString(@"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-ERROR_REQUESTING_MY_HARMONHY_TOKEN", nil),
                                                 [error description]]
                                      userInfo: nil];
     }
@@ -296,7 +296,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
         {
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                            reason: [NSString stringWithFormat:
-                                                    @"Could not connect to Harmony Hub: %@",
+                                                    NSLocalizedString(@"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-COULD_NOT_CONNECT", nil),
                                                     [error localizedDescription]]
                                          userInfo: nil];
         }
@@ -315,7 +315,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
             didDisconnectWhileConnecting = NO;
             
             NSDictionary * userInfo = nil;
-            NSString * errorDescription = @"unknown error";
+            NSString * errorDescription = NSLocalizedString(@"GENERAL-UNKNOWN_ERROR", nil);
             
             if ([self connectionError])
             {
@@ -325,7 +325,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
             
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                            reason: [NSString stringWithFormat:
-                                                    @"Could not connect to Harmony Hub: %@",
+                                                    NSLocalizedString(@"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-COULD_NOT_CONNECT", nil),
                                                     errorDescription]
                                          userInfo: userInfo];
         }
@@ -335,7 +335,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
         {
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                            reason: [NSString stringWithFormat:
-                                                    @"Could not authenticate to Harmony Hub: %@",
+                                                    NSLocalizedString(@"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-COULD_NOT_AUTHENTICATE", nil),
                                                     [error localizedDescription]]
                                          userInfo: nil];
         }
@@ -355,7 +355,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
             
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                            reason: [NSString stringWithFormat:
-                                                    @"Could not authenticate to Harmony Hub: %@",
+                                                    NSLocalizedString(@"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-COULD_NOT_AUTHENTICATE", nil),
                                                     [self authenticationError]]
                                          userInfo: nil];
         }
@@ -363,7 +363,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     else
     {
         @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
-                                       reason: @"XMPP Stream is already connected"
+                                       reason: NSLocalizedString(@"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-XMPP_STREAM_ALREADY_CONNECTED", nil)
                                      userInfo: nil];
     }
 }
@@ -412,7 +412,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     {
         @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
                                        reason: [NSString stringWithFormat:
-                                                @"Unexpected pair response from HUB: %@",
+                                                NSLocalizedString(@"FSCHARMONYCLIENT-HARMONY_HUB-API-UNEXPECTED_RESPONSE-PAIR", nil),
                                                 OAAttributesAndValuesString]
                                      userInfo: nil];
     }
@@ -546,7 +546,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
         {
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConfiguration
                                            reason: [NSString stringWithFormat:
-                                                    @"Unexpected config response from HUB: %@",
+                                                    NSLocalizedString(@"FSCHARMONYCLIENT-HARMONY_HUB-API-UNEXPECTED_RESPONSE-CONFIG", nil),
                                                     OAString]
                                          userInfo: nil];
         }
@@ -602,7 +602,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
         {
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubCurrentActivity
                                            reason: [NSString stringWithFormat:
-                                                    @"Unexpected getCurrentActivity response from HUB: %@",
+                                                    NSLocalizedString(@"FSCHARMONYCLIENT-HARMONY_HUB-API-UNEXPECTED_RESPONSE-GET_CURRENT_ACTIVITY", nil),
                                                     OAString]
                                          userInfo: nil];
         }
