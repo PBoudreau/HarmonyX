@@ -303,6 +303,7 @@
 				1A69F4101A00497000860482 /* Resources */,
 				46A8E1BD8E196AFCEFA95CFB /* Copy Pods Resources */,
 				1A60431B1A0A887B0074D6A5 /* Embed App Extensions */,
+				1AB48A241A2D0BD8002F68E7 /* Copy Pods-acknowledgements.plist */,
 			);
 			buildRules = (
 			);
@@ -408,6 +409,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		1AB48A241A2D0BD8002F68E7 /* Copy Pods-acknowledgements.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods-acknowledgements.plist";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp \"${SRCROOT}/Pods/Target Support Files/Pods-HarmonyX/Pods-HarmonyX-acknowledgements.plist\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Pods-acknowledgements.plist\"";
 		};
 		46A8E1BD8E196AFCEFA95CFB /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
