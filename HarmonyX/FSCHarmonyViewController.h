@@ -37,7 +37,6 @@
 - (UIColor *) inverseColorForActivityMask;
 - (UIColor *) backgroundColorForInverseActivityMask;
 
-- (void) handleClient: (FSCHarmonyClient *) client
-currentActivityChanged: (FSCActivity *) newActivity;
+- (void) handleCurrentActivityChanged: (FSCActivity *) newActivity;
 
 @end
