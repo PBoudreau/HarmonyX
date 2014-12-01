@@ -11,10 +11,27 @@
 "GENERAL-OK" = "OK";
 "GENERAL-CANCEL" = "Annuler";
 
+"GENERAL-UNKNOWN_ERROR" = "erreur inconnue";
+
+// FSCHarmonyClient
+
+"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-MISSING_GETUSERAUTHTOKENRESULT" = "Impossible de localiser l'attribut 'GetUserAuthTokenResult' dans le JSON: %@";
+"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-MISSING_USERAUTHTOKEN" = "Impossible de localiser l'attribut 'UserAuthToken' dans le JSON: %@";
+"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-ERROR_IN_GETUSERTOKEN" = "Une erreur est survenue dans GetUserToken: %@";
+"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-ERROR_REQUESTING_MY_HARMONHY_TOKEN" = "Une erreur est survenue durant l'obtention du jeton My Harmony: %@";
+
+"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-COULD_NOT_CONNECT" = "La connexion au Harmony Hub a échoué: %@";
+"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-COULD_NOT_AUTHENTICATE" = "L'authentification au Harmony Hub a échoué: %@";
+"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-XMPP_STREAM_ALREADY_CONNECTED" = "Le stream XMPP est déjà connecté";
+
+"FSCHARMONYCLIENT-HARMONY_HUB-API-UNEXPECTED_RESPONSE-PAIR" = "Réponse inattendue du HUB pour l'API 'pair': %@";
+"FSCHARMONYCLIENT-HARMONY_HUB-API-UNEXPECTED_RESPONSE-CONFIG" = "Réponse inattendue du HUB pour l'API 'config': %@";
+"FSCHARMONYCLIENT-HARMONY_HUB-API-UNEXPECTED_RESPONSE-GET_CURRENT_ACTIVITY" = "Réponse inattendue du HUB pour l'API 'getCurrentActivity': %@";
+
 // FSCHarmonyViewController
 
-"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-SETUP" = "La connexion à My harmony a échoué: vérifiez l'adresse IP et le port.";
-"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-CREDENTIALS" = "La connexion à My harmony a échoué: vérifiez votre nom d'usager et mot de passe.";
+"FSCHARMONYVIEWCONTROLLER-MY_HARMONY-CONNECTION_ERROR-SETUP" = "La connexion à My harmony a échoué: vérifiez l'adresse IP et le port.";
+"FSCHARMONYVIEWCONTROLLER-MY_HARMONY-CONNECTION_ERROR-CREDENTIALS" = "La connexion à My harmony a échoué: vérifiez votre nom d'usager et mot de passe.";
 
 "FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-SETUP" = "La connexion au Harmony Hub a échoué: la configuration n'a pas été effectuée.";
 "FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS" = "La connexion au Harmony Hub a échoué: nom d'usager (%@), mot de passe (%@) et/ou adresse IP (%@) manquant.";

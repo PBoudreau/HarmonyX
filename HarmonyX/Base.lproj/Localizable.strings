@@ -11,14 +11,31 @@
 "GENERAL-OK" = "OK";
 "GENERAL-CANCEL" = "Cancel";
 
+"GENERAL-UNKNOWN_ERROR" = "unknown error";
+
+// FSCHarmonyClient
+
+"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-MISSING_GETUSERAUTHTOKENRESULT" = "Could not find user auth token result keyed on 'GetUserAuthTokenResult' in JSON: %@";
+"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-MISSING_USERAUTHTOKEN" = "Could not find token keyed on 'UserAuthToken' in JSON: %@";
+"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-ERROR_IN_GETUSERTOKEN" = "An error occurred in GetUserToken: %@";
+"FSCHARMONYCLIENT-MY_HARMONY-RESPONSE_FORMAT-ERROR_REQUESTING_MY_HARMONHY_TOKEN" = "An error occurred while requesting My Harmony token: %@";
+
+"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-COULD_NOT_CONNECT" = "Could not connect to Harmony Hub: %@";
+"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-COULD_NOT_AUTHENTICATE" = "Could not authenticate to Harmony Hub: %@";
+"FSCHARMONYCLIENT-HARMONY_HUB-CONNECTION_ERROR-XMPP_STREAM_ALREADY_CONNECTED" = "XMPP Stream is already connected";
+
+"FSCHARMONYCLIENT-HARMONY_HUB-API-UNEXPECTED_RESPONSE-PAIR" = "Unexpected 'pair' API response from HUB: %@";
+"FSCHARMONYCLIENT-HARMONY_HUB-API-UNEXPECTED_RESPONSE-CONFIG" = "Unexpected 'config' API response from HUB: %@";
+"FSCHARMONYCLIENT-HARMONY_HUB-API-UNEXPECTED_RESPONSE-GET_CURRENT_ACTIVITY" = "Unexpected 'getCurrentActivity' API response from HUB: %@";
+
 // FSCHarmonyViewController
 
-"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-SETUP" = "Could not connect to Harmony Hub with the provided IP address and port.";
-"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-CREDENTIALS" = "Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
+"FSCHARMONYVIEWCONTROLLER-MY_HARMONY-CONNECTION_ERROR-SETUP" = "Could not connect to Harmony Hub with the provided IP address and port.";
+"FSCHARMONYVIEWCONTROLLER-MY_HARMONY-CONNECTION_ERROR-CREDENTIALS" = "Could not connect to My Harmony with the provided credentials.\n\nPlease verify that your username and password are correct.";
 
-"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-HARMONY_HUB-SETUP" = "Could not connect to Harmony Hub: setup does not appear to have been performed.";
-"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-HARMONY_HUB-CREDENTIALS" = "Could not connect to Harmony Hub: username (%@), password (%@) and/or IP address (%@) missing.";
-"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-HARMONY_HUB-CREDENTIALS-EMPYT" = "<empty>";
+"FSCHARMONYVIEWCONTROLLER-HARMONY_HUB-CONNECTION_ERROR-SETUP" = "Could not connect to Harmony Hub: setup does not appear to have been performed.";
+"FSCHARMONYVIEWCONTROLLER-HARMONY_HUB-CONNECTION_ERROR-CREDENTIALS" = "Could not connect to Harmony Hub: username (%@), password (%@) and/or IP address (%@) missing.";
+"FSCHARMONYVIEWCONTROLLER-HARMONY_HUB-CONNECTION_ERROR-CREDENTIALS-EMPYT" = "<empty>";
 
 // ViewController
 

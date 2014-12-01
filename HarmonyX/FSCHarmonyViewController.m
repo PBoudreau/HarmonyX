@@ -172,7 +172,7 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
                 [[exception name] isEqualToString: FSCExceptionCredentials] ||
                 [[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
             {
-                errorDescription = NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-CREDENTIALS", nil);
+                errorDescription = NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-MY_HARMONY-CONNECTION_ERROR-CREDENTIALS", nil);
                 
                 if ([[exception name] isEqualToString: FSCExceptionSetup])
                 {
@@ -185,7 +185,7 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
             }
             else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
             {
-                errorDescription = NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-MY_HARMONY-SETUP", nil);
+                errorDescription = NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-MY_HARMONY-CONNECTION_ERROR-SETUP", nil);
             }
             
             NSMutableDictionary * userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
