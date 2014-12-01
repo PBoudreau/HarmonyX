@@ -53,6 +53,11 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
     [self loadCurrentActivity];
 }
 
+- (NSArray *) activities
+{
+    return [[self harmonyConfiguration] activity];
+}
+
 - (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
 {
     _harmonyConfiguration = harmonyConfiguration;
@@ -241,7 +246,7 @@ currentActivityChanged: (FSCActivity *) newActivity
 
 - (void) highlightCurrentActivity
 {
-    [[[self harmonyConfiguration] activity] enumerateObjectsUsingBlock:^(FSCActivity * anActivity, NSUInteger idx, BOOL *stop) {
+    [[self activities] enumerateObjectsUsingBlock:^(FSCActivity * anActivity, NSUInteger idx, BOOL *stop) {
         
         if ([[anActivity activityIdentifier] isEqualToString: [[self currentActivity] activityIdentifier]])
         {
@@ -270,7 +275,7 @@ currentActivityChanged: (FSCActivity *) newActivity
     
     if ([self harmonyConfiguration])
     {
-        count = [[[self harmonyConfiguration] activity] count];
+        count = [[self activities] count];
     }
     
     return count;
@@ -282,7 +287,7 @@ currentActivityChanged: (FSCActivity *) newActivity
     FSCActivityCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier: FSCActtivityCellIdentifier
                                                                                      forIndexPath: indexPath];
     
-    FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
+    FSCActivity * activity = [self activities][[indexPath item]];
     
     if ([[activity activityIdentifier] isEqualToString: [[self currentActivity] activityIdentifier]])
     {
@@ -325,7 +330,7 @@ currentActivityChanged: (FSCActivity *) newActivity
 - (void) collectionView:(UICollectionView *) collectionView
 didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 {
-    FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
+    FSCActivity * activity = [self activities][[indexPath item]];
     
     [self performBlockingClientActionsWithBlock:^(FSCHarmonyClient *client) {
         

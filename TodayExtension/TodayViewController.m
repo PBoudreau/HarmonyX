@@ -115,6 +115,13 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
     return UIEdgeInsetsZero;
 }
 
+- (NSArray *) activities
+{
+    NSArray * allActivities = [[self harmonyConfiguration] activity];
+    
+    return [allActivities subarrayWithRange: NSMakeRange(0, [allActivities count] - 1)];
+}
+
 - (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
 {
     [super setHarmonyConfiguration: harmonyConfiguration];
@@ -437,21 +444,12 @@ currentActivityChanged: (FSCActivity *) newActivity
     }
 }
 
-#pragma mark - UICollectionViewDatasource
-
-- (NSInteger) collectionView: (UICollectionView *) collectionView
-      numberOfItemsInSection: (NSInteger) section
-{
-    return [super collectionView: collectionView
-          numberOfItemsInSection: section] - 1;
-}
-
 #pragma mark - UICollectionViewDelegate
 
 - (void) collectionView:(UICollectionView *) collectionView
 didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 {
-    FSCActivity * activity = [[self harmonyConfiguration] activity][[indexPath item]];
+    FSCActivity * activity = [self activities][[indexPath item]];
     
     [[self statusLabel] setText: [NSString stringWithFormat:
                                   @"Starting %@...",

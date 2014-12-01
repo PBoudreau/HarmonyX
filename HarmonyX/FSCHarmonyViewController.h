@@ -23,6 +23,7 @@
 @property (strong, nonatomic) FSCHarmonyConfiguration * harmonyConfiguration;
 
 - (void) loadConfiguration;
+- (NSArray *) activities;
 
 - (void) performBlockingClientActionsWithBlock: (void (^)(FSCHarmonyClient * client))actionsBlock
                      mainThreadCompletionBlock: (void (^)(void))completionBlock;
