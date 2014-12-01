@@ -1,0 +1,27 @@
+
+/* Class = "IBUITextField"; placeholder = "Harmony Hub IP Address"; ObjectID = "Ado-UL-SOr"; */
+"Ado-UL-SOr.placeholder" = "Adresse IP Harmony Hub";
+
+/* Class = "IBUIButton"; normalTitle = "Refresh"; ObjectID = "B2y-TP-xdN"; */
+"B2y-TP-xdN.normalTitle" = "Mettre à jour";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "GEB-49-sua"; */
+"GEB-49-sua.text" = "Label";
+
+/* Class = "IBUITextField"; placeholder = "Harmony Hub Port"; ObjectID = "Ki2-oP-2tW"; */
+"Ki2-oP-2tW.placeholder" = "Port Harmony Hub";
+
+/* Class = "IBUITextField"; text = "5222"; ObjectID = "Ki2-oP-2tW"; */
+"Ki2-oP-2tW.text" = "5222";
+
+/* Class = "IBUILabel"; text = "Copyright (c) 2014 Fasterre. All rights reserved."; ObjectID = "YH1-NL-TI5"; */
+"YH1-NL-TI5.text" = "Copyright (c) 2014 Fasterre. Tous droits réservés.";
+
+/* Class = "IBUITextField"; placeholder = "MyHarmony Username"; ObjectID = "hLA-P5-EF7"; */
+"hLA-P5-EF7.placeholder" = "Nom d'usager MyHarmony";
+
+/* Class = "IBUILabel"; text = "HarmonyX"; ObjectID = "l7F-wq-6tB"; */
+"l7F-wq-6tB.text" = "HarmonyX";
+
+/* Class = "IBUITextField"; placeholder = "MyHarmony Password"; ObjectID = "zpY-49-nh8"; */
+"zpY-49-nh8.placeholder" = "Mot de passe MyHarmony";
