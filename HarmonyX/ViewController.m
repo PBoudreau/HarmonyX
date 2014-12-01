@@ -83,8 +83,6 @@
 
 - (IBAction) connectButtonTapped: (id) sender
 {
-    [self setHarmonyConfiguration: nil];
-    
     if ([self client])
     {
         [[self client] disconnect];

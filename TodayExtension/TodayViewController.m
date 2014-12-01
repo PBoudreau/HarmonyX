@@ -85,7 +85,7 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
     
     [self loadConfiguration];
     
-    [self updateContentSize];
+    [self updateContentLayout];
 }
 
 - (void) viewDidAppear: (BOOL) animated
@@ -154,11 +154,9 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
     });
 }
 
-- (void) handleClient: (FSCHarmonyClient *) client
-currentActivityChanged: (FSCActivity *) newActivity
+- (void) handleCurrentActivityChanged: (FSCActivity *) newActivity
 {
-    [super handleClient: client
- currentActivityChanged: newActivity];
+    [super handleCurrentActivityChanged: newActivity];
     
     [self updateUIForCurrentActivity: newActivity];
 }
@@ -186,7 +184,6 @@ currentActivityChanged: (FSCActivity *) newActivity
              [originalError isEqualToString: FSCErrorHarmonyXMPPConnectionRefused]))
         {
             [[self activityIndicatorView] stopAnimating];
-            [self setHarmonyConfiguration: nil];
          
             if ([originalError isEqualToString: FSCErrorHarmonyXMPPNetworkUnreachable])
             {
@@ -292,7 +289,7 @@ currentActivityChanged: (FSCActivity *) newActivity
     [standardDefaults synchronize];
 }
 
-- (void) updateContentSize
+- (void) updateContentLayout
 {
     CGRect viewBounds = [[self view] bounds];
     
@@ -353,7 +350,7 @@ currentActivityChanged: (FSCActivity *) newActivity
          [UIView animateWithDuration: 0.5
                           animations: ^{
                               
-                              [self updateContentSize];
+                              [self updateContentLayout];
                               
                               [[self view] layoutIfNeeded];
                           }];

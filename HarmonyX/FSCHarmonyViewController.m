@@ -234,8 +234,7 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
     
 }
 
-- (void) handleClient: (FSCHarmonyClient *) client
-currentActivityChanged: (FSCActivity *) newActivity
+- (void) handleCurrentActivityChanged: (FSCActivity *) newActivity
 {
     [self setCurrentActivity: newActivity];
     
@@ -338,8 +337,7 @@ didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [self handleClient: [note object]
-    currentActivityChanged: [[note userInfo] objectForKey: FSCHarmonyClientCurrentActivityChangedNotificationActivityKey]];
+        [self handleCurrentActivityChanged: [[note userInfo] objectForKey: FSCHarmonyClientCurrentActivityChangedNotificationActivityKey]];
     });
 }
 
