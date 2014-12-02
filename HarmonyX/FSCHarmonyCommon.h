@@ -17,6 +17,7 @@ static NSString * const FSCExceptionMyHarmonyConnection = @"FSCExceptionMyHarmon
 static NSString * const FSCExceptionHarmonyHubConnection = @"FSCExceptionHarmonyHubConnection";
 static NSString * const FSCExceptionHarmonyHubConfiguration = @"FSCExceptionHarmonyHubConfiguration";
 static NSString * const FSCExceptionHarmonyHubCurrentActivity = @"FSCExceptionHarmonyHubCurrentActivity";
+static NSString * const FSCExceptionHarmonyHubIQCmdTimedOut = @"FSCExceptionHarmonyHubIQCmdTimedOut";
 
 static NSString * const FSCErrorDomain = @"com.trov.trov";
 
