@@ -39,6 +39,8 @@ Once a connection has been successfully established, the configured activities w
 
 ![iOS App Screenshot](/../readme_and_wiki_resources/readme_and_wiki_resources/readme/today_extension.png?raw=true)
 
+Once setup has been completed with the app, the today extension becomes functional and displays the configured activities as well as volume and transport controls, when appropriate.
+
 Maintainers
 -----------
 
