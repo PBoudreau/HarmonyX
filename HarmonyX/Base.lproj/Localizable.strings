@@ -49,8 +49,7 @@
 "VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-BUTTON-FLUSH_TOKENS" = "Flush Tokens";
 
 "VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-TITLE" = "Acknowledgments";
-"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER_TITLE" = "Third Party Libraries";
-"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER" = "This application makes use of the third party libraries listed on the following pages (➟).";
+"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER" = "Based on the work done to reverse engineer and implement the Logitech Harmony Hub communications protocol in the following projects:\n\n* https://github.com/jterrace/pyharmony\n* https://github.com/tuck182/harmony-java-client\n\nThis application makes use of the third party libraries listed on the following pages (➟).";
 
 // TodayViewController
 
