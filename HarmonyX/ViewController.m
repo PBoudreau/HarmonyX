@@ -203,7 +203,7 @@
     [[controller navigationItem] setTitle: NSLocalizedString(@"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-TITLE", nil)];
     
     [controller setHeaderType: TRZSlideLicenseViewHeaderTypeCustom];
-    [controller setHeaderTitle: NSLocalizedString(@"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER_TITLE", nil)];
+    [controller setHeaderTitle: @""];
     [controller setHeaderText: NSLocalizedString(@"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER", nil)];
     [controller setTitleColor: [[self view] tintColor]];
     

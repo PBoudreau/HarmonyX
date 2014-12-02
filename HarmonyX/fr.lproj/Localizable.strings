@@ -49,8 +49,7 @@
 "VIEWCONTROLLER-HARMONY_LABEL_TAPPED-ACTION_SHEET-BUTTON-FLUSH_TOKENS" = "Effacer jeton";
 
 "VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-TITLE" = "Remerciements";
-"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER_TITLE" = "Bibliothèques tierces";
-"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER" = "Cette application utilise les bibliothèques tierces mentionnées dans les pages suivantes (➟).";
+"VIEWCONTROLLER-TRZSLIDELICENSEVIEWCONTROLLER-HEADER" = "Basé sur le travail d'ingénierie inverse du protocol de communication du Harmony Hub de Logitech effectué dans les projets suivants:\n\n* https://github.com/jterrace/pyharmony\n* https://github.com/tuck182/harmony-java-client\n\nCette application utilise les bibliothèques tierces mentionnées dans les pages suivantes (➟).";
 
 // TodayViewController
 
