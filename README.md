@@ -28,6 +28,13 @@ There are two parts to this project:
 
 ![iOS App Screenshot](/../readme_and_wiki_resources/readme_and_wiki_resources/readme/app.png?raw=true)
 
+The app is a configuration tool used to establish the connection with the Logitech Harmony Hub. It requires:
+
+* Valid myharmony.com credentials to obtain a Harmony Hub connection token.
+* The Harmony Hub's IP address and port (default 5222).
+
+Once a connection has been successfully established, the configured activities will be displayed.
+
 ####Today Extension####
 
 ![iOS App Screenshot](/../readme_and_wiki_resources/readme_and_wiki_resources/readme/today_extension.png?raw=true)
