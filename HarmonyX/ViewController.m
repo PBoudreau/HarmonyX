@@ -152,7 +152,7 @@
             
             configuration = [client configurationWithRefresh: YES];
             
-            NSLog(@"Current activity: %@", [[client currentActivityFromConfiguration: configuration] label]);
+            ALog(@"Current activity: %@", [[client currentActivityFromConfiguration: configuration] label]);
             
             [FSCDataSharingController saveHarmonyConfiguration: configuration];
         }

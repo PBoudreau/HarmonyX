@@ -95,7 +95,10 @@
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="volumeUpTapped:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="1Hy-m9-iQD"/>
+                                                    <action selector="volumeReleased:" destination="M4Y-Lb-cyx" eventType="touchUpOutside" id="HEL-hK-ApF"/>
+                                                    <action selector="volumeReleased:" destination="M4Y-Lb-cyx" eventType="touchCancel" id="UI6-2W-4YE"/>
+                                                    <action selector="volumeReleased:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="eXT-eT-bNB"/>
+                                                    <action selector="volumeUpPressed:" destination="M4Y-Lb-cyx" eventType="touchDown" id="NEt-c1-5NG"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J5j-vk-GyB">
@@ -104,7 +107,10 @@
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="volumeDownTapped:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="lyW-yZ-HT3"/>
+                                                    <action selector="volumeDownPressed:" destination="M4Y-Lb-cyx" eventType="touchDown" id="VZY-sY-0YN"/>
+                                                    <action selector="volumeReleased:" destination="M4Y-Lb-cyx" eventType="touchUpOutside" id="O6e-1d-tdx"/>
+                                                    <action selector="volumeReleased:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="etz-am-eEe"/>
+                                                    <action selector="volumeReleased:" destination="M4Y-Lb-cyx" eventType="touchCancel" id="nv3-tU-yZK"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -177,7 +183,6 @@
                                                 <gestureRecognizers/>
                                                 <connections>
                                                     <outletCollection property="gestureRecognizers" destination="uY1-eS-fCq" appends="YES" id="Ry0-Ft-g8g"/>
-                                                    <outletCollection property="gestureRecognizers" destination="8y5-JZ-YCS" appends="YES" id="dAC-M3-fSD"/>
                                                     <outletCollection property="gestureRecognizers" destination="xDH-VC-Xhf" appends="YES" id="PDz-Ua-odk"/>
                                                 </connections>
                                             </view>
@@ -256,8 +261,7 @@
                         <outlet property="activityCollectionView" destination="cWU-aX-xuy" id="rla-68-q87"/>
                         <outlet property="activityCollectionViewHeightConstraint" destination="63c-Y7-hbQ" id="ZKg-6o-gr7"/>
                         <outlet property="activityIndicatorView" destination="iBM-Vv-0Rm" id="JLn-LL-e60"/>
-                        <outlet property="backLongPressGesture" destination="xDH-VC-Xhf" id="BOt-72-wlr"/>
-                        <outlet property="forwardDoubleTapGesture" destination="8y5-JZ-YCS" id="xu2-XB-CpI"/>
+                        <outlet property="backwardForwardLongPressGesture" destination="xDH-VC-Xhf" id="nuR-tm-sFL"/>
                         <outlet property="playPauseTapGesture" destination="uY1-eS-fCq" id="fXt-lZ-Uof"/>
                         <outlet property="powerOffIconImageView" destination="jUc-H9-y2B" id="DbL-On-Ztx"/>
                         <outlet property="powerOffLabel" destination="9H9-lm-TaF" id="vwr-Zz-s6I"/>
@@ -277,16 +281,11 @@
                         <action selector="powerOffTapped:" destination="M4Y-Lb-cyx" id="yKw-aY-J6s"/>
                     </connections>
                 </tapGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="xDH-VC-Xhf" userLabel="Back Long Press Gesture Recognizer">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="xDH-VC-Xhf" userLabel="Backward/Forward Long Press Gesture Recognizer">
                     <connections>
-                        <action selector="backwardTapped:" destination="M4Y-Lb-cyx" id="DJB-CO-hIZ"/>
+                        <action selector="backwardForwardLongPressed:" destination="M4Y-Lb-cyx" id="9zK-yu-Q6A"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="8y5-JZ-YCS" userLabel="Forward Double Tap Gesture Recognizer">
-                    <connections>
-                        <action selector="forwardTapped:" destination="M4Y-Lb-cyx" id="Sqt-PX-YMg"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <tapGestureRecognizer id="uY1-eS-fCq" userLabel="Play/Pause Tap Gesture Recognizer">
                     <connections>
                         <action selector="playPauseTapped:" destination="M4Y-Lb-cyx" id="LET-Wa-q1x"/>

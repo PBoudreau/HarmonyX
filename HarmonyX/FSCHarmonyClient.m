@@ -63,7 +63,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
              harmonyHubIPAddress: (NSString *) IPAddress
                   harmonyHubPort: (NSUInteger) port
 {
-    NSLog(@"Creating client");
+    ALog(@"Creating client");
     
     if (self = [super init])
     {
@@ -140,7 +140,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 
 - (void) dealloc
 {
-    NSLog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    ALog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 }
 
 #pragma mark - Initialization & Connection
@@ -194,7 +194,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 
 - (NSString *) requestMyHarmonyToken
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     [manager setCompletionQueue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
@@ -286,7 +286,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 - (void) connectAndAuthenticateXMPPStreamWithUsername: (NSString *) username
                                              password: (NSString *) password
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     if ([[self xmppStream] isDisconnected])
     {
@@ -373,7 +373,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 
 - (NSString *) swapMyHarmonyTokenForHarmonyHubToken: (NSString *) myHarmonyToken
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                             xmlns: @"connect.logitech.com"];
@@ -422,7 +422,6 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 
     return harmonyHubToken;
 }
-
 
 - (NSXMLElement *) sendIQCmdAndWaitForResponse: (XMPPIQ *) IQCmd
                             withMimeValidation: (BOOL) performMimeValidation
@@ -501,7 +500,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
     }
     else
     {
-        NSLog(@"Sending heartbeat");
+        DLog(@"Sending heartbeat");
         
         NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                                 xmlns: @"connect.logitech.com"];
@@ -529,7 +528,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
     if (![self configuration] ||
         refresh)
     {
-        NSLog(@"%@", NSStringFromSelector(_cmd));
+        ALog(@"%@", NSStringFromSelector(_cmd));
         
         NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                                 xmlns: @"connect.logitech.com"];
@@ -581,7 +580,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 {
     if (![self currentActivity])
     {
-        NSLog(@"%@", NSStringFromSelector(_cmd));
+        ALog(@"%@", NSStringFromSelector(_cmd));
         
         if (!configuration)
         {
@@ -633,7 +632,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 
 - (void) startActivityWithId: (NSString *) activityId
 {
-    NSLog(@"%@ %@", NSStringFromSelector(_cmd), activityId);
+    ALog(@"%@ %@", NSStringFromSelector(_cmd), activityId);
     
     NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                             xmlns: @"connect.logitech.com"];
@@ -667,7 +666,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 - (void) executeFunction: (FSCFunction *) function
                 withType: (FSCHarmonyClientFunctionType) type
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    DLog(@"%@", NSStringFromSelector(_cmd));
     
     NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                             xmlns: @"connect.logitech.com"];
@@ -693,14 +692,14 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 
 - (void) turnOff
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     [self startActivity: [[self configurationWithRefresh: NO] activityWithId: @"-1"]];
 }
 
 - (void) disconnect
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     [self stopHeartbeatTimer];
     
@@ -722,14 +721,14 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 
 - (void) xmppStreamDidConnect: (XMPPStream *) sender
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     isXMPPConnected = YES;
 }
 
 - (void) xmppStreamDidAuthenticate: (XMPPStream *) sender
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     isXMPPAuthenticated = YES;
 }
@@ -737,7 +736,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 - (void) xmppStream:(XMPPStream *) sender
  didNotAuthenticate: (NSXMLElement *) error
 {
-    NSLog(@"%@ %@", NSStringFromSelector(_cmd), error);
+    ALog(@"%@ %@", NSStringFromSelector(_cmd), error);
     
     didXMPPFailAuthentication = YES;
     
@@ -747,7 +746,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 - (BOOL) xmppStream: (XMPPStream *) sender
        didReceiveIQ: (XMPPIQ *) iq
 {
-    NSLog(@"%@: %@", NSStringFromSelector(_cmd), iq);
+    DLog(@"%@: %@", NSStringFromSelector(_cmd), iq);
     
     BOOL validOAResponse = NO;
     
@@ -793,13 +792,13 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 - (void) xmppStream: (XMPPStream *) sender
     didReceiveError: (id) error
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
 }
 
 - (void) xmppStreamDidDisconnect: (XMPPStream *) sender
                        withError: (NSError *) error
 {
-    NSLog(@"%@ %@", NSStringFromSelector(_cmd), [error localizedDescription]);
+    ALog(@"%@ %@", NSStringFromSelector(_cmd), [error localizedDescription]);
     
     [self stopHeartbeatTimer];
     

@@ -10,6 +10,8 @@
 
 #import <SimpleKeychain/A0SimpleKeychain.h>
 
+#import "FSCHarmonyCommon.h"
+
 static NSString * const FSCDataSharingGroupName = @"group.fasterre.HarmonyXTodayExtensionSharingDefaults";
 static NSString * const FSCDataSharingDefaultsKeyUsername = @"username";
 static NSString * const FSCDataSharingDefaultsKeyIPAddress = @"ipaddress";
@@ -44,7 +46,7 @@ static NSString * const FSCDataSharingKeychainKeyPassword = @"password";
     
     if (!result)
     {
-        NSLog(@"Could not save password to the keychain");
+        ALog(@"Could not save password to the keychain");
     }
     
     [sharedDefaults setObject: IPAddress
