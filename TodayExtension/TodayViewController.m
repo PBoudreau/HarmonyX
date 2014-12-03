@@ -23,6 +23,7 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
 @interface TodayViewController () <NCWidgetProviding>
 {
     BOOL playToggle;
+    BOOL repeatFunction;
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *activityCollectionView;
@@ -370,6 +371,15 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
 
 - (void) executeFunction: (FSCFunction * (^)(FSCActivity * currentActivity))functionBlock
 {
+    BOOL repeat = NO;
+    
+    [self executeFunction: functionBlock
+                   repeat: &repeat];
+}
+
+- (void) executeFunction: (FSCFunction * (^)(FSCActivity * currentActivity))functionBlock
+                  repeat: (BOOL *) repeat
+{
     [self performBlockingClientActionsWithBlock: ^(FSCHarmonyClient *client) {
         
         FSCActivity * currentActivity = [client currentActivityFromConfiguration: [self harmonyConfiguration]];
@@ -385,32 +395,51 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
                                               [function label]]];
             });
             
-            [client executeFunction: function
-                           withType: FSCHarmonyClientFunctionTypePress];
-            [client executeFunction: function
-                           withType: FSCHarmonyClientFunctionTypeRelease];
+            BOOL firstTime = YES;
+            
+            while (*repeat ||
+                   firstTime)
+            {
+                firstTime = NO;
+                
+                [client executeFunction: function
+                               withType: FSCHarmonyClientFunctionTypePress];
+                [client executeFunction: function
+                               withType: FSCHarmonyClientFunctionTypeRelease];
+            }
         }
     }
      mainThreadCompletionBlock: nil];
 }
 
-- (IBAction) volumeDownTapped: (id) sender
+- (IBAction) volumeDownPressed: (id) sender
 {
+    repeatFunction = YES;
+    
     [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
         
         return [[currentActivity volumeControlGroup] volumeDownFunction];
-    }];
+    }
+     repeat: &repeatFunction];
 }
 
-- (IBAction) volumeUpTapped: (id) sender
+- (IBAction) volumeUpPressed: (id) sender
 {
+    repeatFunction = YES;
+    
     [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
         
         return [[currentActivity volumeControlGroup] volumeUpFunction];
-    }];
+    }
+     repeat: &repeatFunction];
 }
 
-- (IBAction) playPauseTapped: (id) sender
+- (IBAction) volumeReleased: (id) sender
+{
+    repeatFunction = NO;
+}
+
+- (IBAction) playPauseTapped: (UIGestureRecognizer *) gesture
 {
     [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
         
@@ -424,7 +453,7 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
     }];
 }
 
-- (IBAction) forwardTapped: (id) sender
+- (IBAction) forwardTapped: (UIGestureRecognizer *) gesture
 {
     [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
         
@@ -432,9 +461,9 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
     }];
 }
 
-- (IBAction) backwardTapped: (UILongPressGestureRecognizer *) sender
+- (IBAction) backwardTapped: (UILongPressGestureRecognizer *) gesture
 {
-    if ([sender state] == UIGestureRecognizerStateEnded)
+    if ([gesture state] == UIGestureRecognizerStateEnded)
     {
         [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
             
