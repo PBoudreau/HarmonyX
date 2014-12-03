@@ -430,7 +430,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
     
     @synchronized(self)
     {
-        NSLog(@"%@: %@", NSStringFromSelector(_cmd), IQCmd);
+        DLog(@"%@: %@", NSStringFromSelector(_cmd), IQCmd);
         
         validOAResponseReceived = NO;
         [self setOAResponse: nil];
