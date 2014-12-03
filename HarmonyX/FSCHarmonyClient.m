@@ -19,6 +19,8 @@ static NSString * const MY_HARMONY_AUTH_URL = @"https://svcs.myharmony.com/Compo
 static NSString * const GENERAL_HARMONY_HUB_USERNAME = @"guest@connect.logitech.com/harmonyx";
 static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
+static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
+
 @interface FSCHarmonyClient ()
 {
     BOOL didDisconnectWhileConnecting;
@@ -65,6 +67,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     
     if (self = [super init])
     {
+        [self setIQCmdTimeout: IQ_CMD_TIMEOUT_DEFAULT];
         [self setCreationTime: [NSDate date]];
         
         [self setMyHarmonyUsername: username];
@@ -420,13 +423,6 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     return harmonyHubToken;
 }
 
-- (void) sendIQCmd: (XMPPIQ *) IQCmd
-{
-    DLog(@"%@: %@", NSStringFromSelector(_cmd), IQCmd);
-    
-    [[self xmppStream] sendElement: IQCmd];
-}
-
 - (NSXMLElement *) sendIQCmdAndWaitForResponse: (XMPPIQ *) IQCmd
                             withMimeValidation: (BOOL) performMimeValidation
 {
@@ -434,34 +430,55 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     
     @synchronized(self)
     {
+        NSLog(@"%@: %@", NSStringFromSelector(_cmd), IQCmd);
+        
         validOAResponseReceived = NO;
         [self setOAResponse: nil];
         [self setExpectedOAResponseMime: nil];
+
+        NSXMLElement * oaElement = [IQCmd elementForName: @"oa"];
+        
+        NSAssert(oaElement,
+                 @"Could not find 'oa' element in IQ Cmd '%@'",
+                 IQCmd);
+        
+        DDXMLNode * mimeNode = [oaElement attributeForName: @"mime"];
+        
+        NSAssert(oaElement,
+                 @"Could not find 'mime' attribute in IQ Cmd '%@'",
+                 IQCmd);
+        
+        NSString * mime = [mimeNode stringValue];
         
         if (performMimeValidation)
         {
-            NSXMLElement * oaElement = [IQCmd elementForName: @"oa"];
-            
-            if (oaElement)
-            {
-                DDXMLNode * mimeNode = [oaElement attributeForName: @"mime"];
-                
-                if (mimeNode)
-                {
-                    [self setExpectedOAResponseMime: [mimeNode stringValue]];
-                }
-            }
+            [self setExpectedOAResponseMime: mime];
         }
         
-        [self sendIQCmd: IQCmd];
+        NSDate * IQSendTimestamp = [NSDate date];
+        __block BOOL timedOut = NO;
+        
+        [[self xmppStream] sendElement: IQCmd];
         
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             
-            while (!validOAResponseReceived)
+            while (!validOAResponseReceived &&
+                   !(timedOut = ([[NSDate date] timeIntervalSinceDate: IQSendTimestamp] > [self IQCmdTimeout])))
             {
                 [NSThread sleepForTimeInterval: 0.25];
             }
         });
+        
+        if (timedOut)
+        {
+            NSString * command = [[[[mime componentsSeparatedByString: @"/"] lastObject] componentsSeparatedByString: @"?"] lastObject];
+            
+            @throw [NSException exceptionWithName: FSCExceptionHarmonyHubIQCmdTimedOut
+                                           reason: [NSString stringWithFormat:
+                                                    NSLocalizedString(@"FSCHARMONYCLIENT-HARMONY_HUB-API-IQ_CMD_TIMED_OUT", nil),
+                                                    command]
+                                         userInfo: nil];
+        }
         
         OAResponse = [self OAResponse];
         
