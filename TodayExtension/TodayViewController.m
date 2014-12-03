@@ -456,8 +456,6 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 
 - (IBAction) backwardForwardLongPressed: (UILongPressGestureRecognizer *) gesture
 {
-    NSLog(@"%@: state: %ld", NSStringFromSelector(_cmd), [gesture state]);
-    
     if ([gesture state] == UIGestureRecognizerStateBegan)
     {
         backwardForwardGestureInitialLocation = [gesture locationInView: [gesture view]];
@@ -478,7 +476,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
              
                     FSCFunction * function = nil;
                     
-                    if (delta > 0.0)
+                    if (delta < 0.0)
                     {
                         function = [[currentActivity transportExtendedControlGroup] skipForwardFunction];
                     }
