@@ -387,6 +387,8 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
             
             [client executeFunction: function
                            withType: FSCHarmonyClientFunctionTypePress];
+            [client executeFunction: function
+                           withType: FSCHarmonyClientFunctionTypeRelease];
         }
     }
      mainThreadCompletionBlock: nil];
