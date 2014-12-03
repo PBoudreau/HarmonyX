@@ -61,7 +61,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
              harmonyHubIPAddress: (NSString *) IPAddress
                   harmonyHubPort: (NSUInteger) port
 {
-    NSLog(@"Creating client");
+    ALog(@"Creating client");
     
     if (self = [super init])
     {
@@ -137,7 +137,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (void) dealloc
 {
-    NSLog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    ALog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 }
 
 #pragma mark - Initialization & Connection
@@ -191,7 +191,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (NSString *) requestMyHarmonyToken
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     [manager setCompletionQueue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
@@ -283,7 +283,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 - (void) connectAndAuthenticateXMPPStreamWithUsername: (NSString *) username
                                              password: (NSString *) password
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     if ([[self xmppStream] isDisconnected])
     {
@@ -370,7 +370,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (NSString *) swapMyHarmonyTokenForHarmonyHubToken: (NSString *) myHarmonyToken
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                             xmlns: @"connect.logitech.com"];
@@ -422,7 +422,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (void) sendIQCmd: (XMPPIQ *) IQCmd
 {
-    NSLog(@"%@: %@", NSStringFromSelector(_cmd), IQCmd);
+    DLog(@"%@: %@", NSStringFromSelector(_cmd), IQCmd);
     
     [[self xmppStream] sendElement: IQCmd];
 }
@@ -483,7 +483,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     }
     else
     {
-        NSLog(@"Sending heartbeat");
+        DLog(@"Sending heartbeat");
         
         NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                                 xmlns: @"connect.logitech.com"];
@@ -511,7 +511,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
     if (![self configuration] ||
         refresh)
     {
-        NSLog(@"%@", NSStringFromSelector(_cmd));
+        ALog(@"%@", NSStringFromSelector(_cmd));
         
         NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                                 xmlns: @"connect.logitech.com"];
@@ -563,7 +563,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 {
     if (![self currentActivity])
     {
-        NSLog(@"%@", NSStringFromSelector(_cmd));
+        ALog(@"%@", NSStringFromSelector(_cmd));
         
         if (!configuration)
         {
@@ -615,7 +615,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (void) startActivityWithId: (NSString *) activityId
 {
-    NSLog(@"%@ %@", NSStringFromSelector(_cmd), activityId);
+    ALog(@"%@ %@", NSStringFromSelector(_cmd), activityId);
     
     NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                             xmlns: @"connect.logitech.com"];
@@ -649,7 +649,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 - (void) executeFunction: (FSCFunction *) function
                 withType: (FSCHarmonyClientFunctionType) type
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    DLog(@"%@", NSStringFromSelector(_cmd));
     
     NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                             xmlns: @"connect.logitech.com"];
@@ -675,14 +675,14 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (void) turnOff
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     [self startActivity: [[self configurationWithRefresh: NO] activityWithId: @"-1"]];
 }
 
 - (void) disconnect
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     [self stopHeartbeatTimer];
     
@@ -704,14 +704,14 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
 - (void) xmppStreamDidConnect: (XMPPStream *) sender
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     isXMPPConnected = YES;
 }
 
 - (void) xmppStreamDidAuthenticate: (XMPPStream *) sender
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
     
     isXMPPAuthenticated = YES;
 }
@@ -719,7 +719,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 - (void) xmppStream:(XMPPStream *) sender
  didNotAuthenticate: (NSXMLElement *) error
 {
-    NSLog(@"%@ %@", NSStringFromSelector(_cmd), error);
+    ALog(@"%@ %@", NSStringFromSelector(_cmd), error);
     
     didXMPPFailAuthentication = YES;
     
@@ -729,7 +729,7 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 - (BOOL) xmppStream: (XMPPStream *) sender
        didReceiveIQ: (XMPPIQ *) iq
 {
-    NSLog(@"%@: %@", NSStringFromSelector(_cmd), iq);
+    DLog(@"%@: %@", NSStringFromSelector(_cmd), iq);
     
     BOOL validOAResponse = NO;
     
@@ -775,13 +775,13 @@ static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 - (void) xmppStream: (XMPPStream *) sender
     didReceiveError: (id) error
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    ALog(@"%@", NSStringFromSelector(_cmd));
 }
 
 - (void) xmppStreamDidDisconnect: (XMPPStream *) sender
                        withError: (NSError *) error
 {
-    NSLog(@"%@ %@", NSStringFromSelector(_cmd), [error localizedDescription]);
+    ALog(@"%@ %@", NSStringFromSelector(_cmd), [error localizedDescription]);
     
     [self stopHeartbeatTimer];
     

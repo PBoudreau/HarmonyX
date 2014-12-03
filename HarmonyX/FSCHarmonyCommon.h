@@ -9,6 +9,13 @@
 #ifndef HarmonyX_FSCHarmonyCommon_h
 #define HarmonyX_FSCHarmonyCommon_h
 
+#ifdef DEBUG
+#    define DLog(...) NSLog(__VA_ARGS__)
+#else
+#    define DLog(...)
+#endif
+#define ALog(...) NSLog(__VA_ARGS__)
+
 #import <Foundation/Foundation.h>
 
 static NSString * const FSCExceptionSetup = @"FSCExceptionSetup";

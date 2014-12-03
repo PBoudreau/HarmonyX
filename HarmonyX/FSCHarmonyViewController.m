@@ -39,7 +39,7 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
 
 - (void) dealloc
 {
-    NSLog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    ALog(@"%@.%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     
     [[NSNotificationCenter defaultCenter] removeObserver: self];
 }
