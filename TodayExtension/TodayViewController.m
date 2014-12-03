@@ -20,10 +20,13 @@ static NSArray * viewsForStatePreservation = nil;
 
 static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewStatePreservation-alpha-";
 
+static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
+
 @interface TodayViewController () <NCWidgetProviding>
 {
     BOOL playToggle;
     BOOL repeatFunction;
+    CGPoint backwardForwardGestureInitialLocation;
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *activityCollectionView;
@@ -38,8 +41,7 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
 
 @property (weak, nonatomic) IBOutlet UIView *transportView;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *playPauseTapGesture;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *forwardDoubleTapGesture;
-@property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *backLongPressGesture;
+@property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *backwardForwardLongPressGesture;
 
 @property (weak, nonatomic) IBOutlet UIView *powerOffView;
 @property (weak, nonatomic) IBOutlet UIImageView *powerOffIconImageView;
@@ -70,8 +72,7 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
     
     playToggle = NO;
     
-    [[self playPauseTapGesture] requireGestureRecognizerToFail: [self forwardDoubleTapGesture]];
-    [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backLongPressGesture]];
+    [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backwardForwardLongPressGesture]];
     
     UIImage * powerOffImage = [UIImage imageNamed: @"activity_powering_off"];
     UIImage * maskedPowerOffImage = [powerOffImage convertToInverseMaskWithColor: [self colorForActivityMask]];
@@ -453,22 +454,49 @@ static NSString * const standardDefaultsKeyViewStatePreservationAlpha = @"viewSt
     }];
 }
 
-- (IBAction) forwardTapped: (UIGestureRecognizer *) gesture
+- (IBAction) backwardForwardLongPressed: (UILongPressGestureRecognizer *) gesture
 {
-    [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
-        
-        return [[currentActivity transportExtendedControlGroup] skipForwardFunction];
-    }];
-}
-
-- (IBAction) backwardTapped: (UILongPressGestureRecognizer *) gesture
-{
-    if ([gesture state] == UIGestureRecognizerStateEnded)
+    NSLog(@"%@: state: %ld", NSStringFromSelector(_cmd), [gesture state]);
+    
+    if ([gesture state] == UIGestureRecognizerStateBegan)
     {
-        [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+        backwardForwardGestureInitialLocation = [gesture locationInView: [gesture view]];
+    }
+    else if ([gesture state] == UIGestureRecognizerStateChanged)
+    {
+        if (!repeatFunction)
+        {
+            CGPoint newLocation = [gesture locationInView: [gesture view]];
             
-            return [[currentActivity transportExtendedControlGroup] skipBackwardFunction];
-        }];
+            CGFloat delta = backwardForwardGestureInitialLocation.x - newLocation.x;
+            
+            if (fabsf(delta) >= backwardForwardGestureMinimumDelta)
+            {
+                repeatFunction = YES;
+                
+                [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
+             
+                    FSCFunction * function = nil;
+                    
+                    if (delta > 0.0)
+                    {
+                        function = [[currentActivity transportExtendedControlGroup] skipForwardFunction];
+                    }
+                    else
+                    {
+                        function = [[currentActivity transportExtendedControlGroup] skipBackwardFunction];
+                    }
+                    
+                    return function;
+                }
+                               repeat: &repeatFunction];
+            }
+        }
+    }
+    else if ([gesture state] == UIGestureRecognizerStateEnded ||
+             [gesture state] == UIGestureRecognizerStateCancelled)
+    {
+        repeatFunction = NO;
     }
 }
 
