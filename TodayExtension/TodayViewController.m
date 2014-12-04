@@ -42,6 +42,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 @property (weak, nonatomic) IBOutlet UIView *transportView;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *playPauseTapGesture;
 @property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *backwardForwardLongPressGesture;
+@property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *backwardForwardRepeatLongPressGesture;
 
 @property (weak, nonatomic) IBOutlet UIView *powerOffView;
 @property (weak, nonatomic) IBOutlet UIImageView *powerOffIconImageView;
@@ -73,6 +74,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
     playToggle = NO;
     
     [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backwardForwardLongPressGesture]];
+    [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backwardForwardRepeatLongPressGesture]];
     
     UIImage * powerOffImage = [UIImage imageNamed: @"activity_powering_off"];
     UIImage * maskedPowerOffImage = [powerOffImage convertToInverseMaskWithColor: [self colorForActivityMask]];
@@ -470,7 +472,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
             
             if (fabsf(delta) >= backwardForwardGestureMinimumDelta)
             {
-                repeatFunction = YES;
+                repeatFunction = ([gesture numberOfTapsRequired] == 2);
                 
                 [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
              

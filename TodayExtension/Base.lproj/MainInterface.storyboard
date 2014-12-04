@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="M4Y-Lb-cyx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="M4Y-Lb-cyx">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -184,6 +184,7 @@
                                                 <connections>
                                                     <outletCollection property="gestureRecognizers" destination="uY1-eS-fCq" appends="YES" id="Ry0-Ft-g8g"/>
                                                     <outletCollection property="gestureRecognizers" destination="xDH-VC-Xhf" appends="YES" id="PDz-Ua-odk"/>
+                                                    <outletCollection property="gestureRecognizers" destination="rht-zz-rkX" appends="YES" id="Bp3-Cs-dyc"/>
                                                 </connections>
                                             </view>
                                         </subviews>
@@ -261,7 +262,8 @@
                         <outlet property="activityCollectionView" destination="cWU-aX-xuy" id="rla-68-q87"/>
                         <outlet property="activityCollectionViewHeightConstraint" destination="63c-Y7-hbQ" id="ZKg-6o-gr7"/>
                         <outlet property="activityIndicatorView" destination="iBM-Vv-0Rm" id="JLn-LL-e60"/>
-                        <outlet property="backwardForwardLongPressGesture" destination="xDH-VC-Xhf" id="nuR-tm-sFL"/>
+                        <outlet property="backwardForwardLongPressGesture" destination="rht-zz-rkX" id="Ibm-31-6cS"/>
+                        <outlet property="backwardForwardRepeatLongPressGesture" destination="xDH-VC-Xhf" id="y2z-bt-IIV"/>
                         <outlet property="playPauseTapGesture" destination="uY1-eS-fCq" id="fXt-lZ-Uof"/>
                         <outlet property="powerOffIconImageView" destination="jUc-H9-y2B" id="DbL-On-Ztx"/>
                         <outlet property="powerOffLabel" destination="9H9-lm-TaF" id="vwr-Zz-s6I"/>
@@ -281,7 +283,7 @@
                         <action selector="powerOffTapped:" destination="M4Y-Lb-cyx" id="yKw-aY-J6s"/>
                     </connections>
                 </tapGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="xDH-VC-Xhf" userLabel="Backward/Forward Long Press Gesture Recognizer">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" numberOfTapsRequired="2" id="xDH-VC-Xhf" userLabel="Backward/Forward Repeat Long Press Gesture Recognizer">
                     <connections>
                         <action selector="backwardForwardLongPressed:" destination="M4Y-Lb-cyx" id="9zK-yu-Q6A"/>
                     </connections>
@@ -291,6 +293,7 @@
                         <action selector="playPauseTapped:" destination="M4Y-Lb-cyx" id="LET-Wa-q1x"/>
                     </connections>
                 </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" numberOfTapsRequired="1" id="rht-zz-rkX" userLabel="Backward/Forward Long Press Gesture Recognizer"/>
             </objects>
             <point key="canvasLocation" x="516" y="284.5"/>
         </scene>
