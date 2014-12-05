@@ -19,7 +19,7 @@ static NSString * const MY_HARMONY_AUTH_URL = @"https://svcs.myharmony.com/Compo
 static NSString * const GENERAL_HARMONY_HUB_USERNAME = @"guest@connect.logitech.com/harmonyx";
 static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
-static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
+static NSTimeInterval const TIMEOUT_DEFAULT = 10;
 
 @interface FSCHarmonyClient ()
 {
@@ -48,6 +48,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
 @property (nonatomic, strong) NSError * connectionError;
 @property (nonatomic, strong) NSXMLElement * authenticationError;
 
+@property (strong) NSDate * IQSendTimestamp;
 @property (nonatomic, copy) NSXMLElement * OAResponse;
 @property (nonatomic, copy) NSString * expectedOAResponseMime;
 @property (nonatomic, strong) id validOAResponse;
@@ -67,7 +68,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
     
     if (self = [super init])
     {
-        [self setIQCmdTimeout: IQ_CMD_TIMEOUT_DEFAULT];
+        [self setTimeout: TIMEOUT_DEFAULT];
         [self setCreationTime: [NSDate date]];
         
         [self setMyHarmonyUsername: username];
@@ -294,7 +295,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
         
         NSError * error = nil;
         
-        if (![[self xmppStream] connectWithTimeout: 5
+        if (![[self xmppStream] connectWithTimeout: [self timeout]
                                              error: &error])
         {
             @throw [NSException exceptionWithName: FSCExceptionHarmonyHubConnection
@@ -455,7 +456,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
             [self setExpectedOAResponseMime: mime];
         }
         
-        NSDate * IQSendTimestamp = [NSDate date];
+        [self setIQSendTimestamp: [NSDate date]];
         __block BOOL timedOut = NO;
         
         [[self xmppStream] sendElement: IQCmd];
@@ -463,7 +464,7 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             
             while (!validOAResponseReceived &&
-                   !(timedOut = ([[NSDate date] timeIntervalSinceDate: IQSendTimestamp] > [self IQCmdTimeout])))
+                   !(timedOut = ([[NSDate date] timeIntervalSinceDate: [self IQSendTimestamp]] > [self timeout])))
             {
                 [NSThread sleepForTimeInterval: 0.25];
             }
@@ -765,6 +766,13 @@ static NSTimeInterval const IQ_CMD_TIMEOUT_DEFAULT = 5;
                 NSString * mimeResponse = [mimeNode stringValue];
                 
                 validOAResponse = [mimeResponse isEqualToString: [self expectedOAResponseMime]];
+            }
+            
+            // If the response is considered valid so far, reset the IQSendTimestamp;
+            // the hub is replyting that it is in the process of executing the IQ cmd.
+            if (validOAResponse)
+            {
+                [self setIQSendTimestamp: [NSDate date]];
             }
             
             DDXMLNode * errorCodeNode = [oaResponse attributeForName: @"errorcode"];

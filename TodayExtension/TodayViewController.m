@@ -26,6 +26,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 {
     BOOL playToggle;
     BOOL repeatFunction;
+    BOOL gestureHandled;
     CGPoint backwardForwardGestureInitialLocation;
 }
 
@@ -461,10 +462,12 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
     if ([gesture state] == UIGestureRecognizerStateBegan)
     {
         backwardForwardGestureInitialLocation = [gesture locationInView: [gesture view]];
+        
+        gestureHandled = NO;
     }
     else if ([gesture state] == UIGestureRecognizerStateChanged)
     {
-        if (!repeatFunction)
+        if (!gestureHandled)
         {
             CGPoint newLocation = [gesture locationInView: [gesture view]];
             
@@ -472,7 +475,8 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
             
             if (fabsf(delta) >= backwardForwardGestureMinimumDelta)
             {
-                repeatFunction = ([gesture numberOfTapsRequired] == 2);
+                gestureHandled = YES;
+                repeatFunction = ([gesture numberOfTapsRequired] == 1);
                 
                 [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
              
@@ -497,6 +501,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
              [gesture state] == UIGestureRecognizerStateCancelled)
     {
         repeatFunction = NO;
+        gestureHandled = NO;
     }
 }
 

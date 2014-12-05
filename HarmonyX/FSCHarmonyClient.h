@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, FSCHarmonyClientFunctionType) {
                     harmonyHubPort: (NSUInteger) port;
 
 @property (nonatomic, strong) FSCHarmonyConfiguration * configuration;
-@property (nonatomic, assign) NSTimeInterval IQCmdTimeout;
+@property (nonatomic, assign) NSTimeInterval timeout;
 
 - (void) connect;
 - (BOOL) isConnected;
