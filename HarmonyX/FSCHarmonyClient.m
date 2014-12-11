@@ -14,6 +14,10 @@
 #import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
 
+#ifdef STATIC_ACTIVITY
+static NSString * const STATIC_ACTIVITY_ID = @"5881221";
+#endif
+
 static NSString * const MY_HARMONY_AUTH_URL = @"https://svcs.myharmony.com/CompositeSecurityServices/Security.svc/json/GetUserAuthToken";
 
 static NSString * const GENERAL_HARMONY_HUB_USERNAME = @"guest@connect.logitech.com/harmonyx";
@@ -592,6 +596,15 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
             [self setConfiguration: configuration];
         }
         
+        NSString * currentActivityId = nil;
+        
+#ifdef STATIC_ACTIVITY
+        currentActivityId = STATIC_ACTIVITY_ID;
+        
+        NSAssert([configuration activityWithId: currentActivityId],
+                 @"Could not find an activity with ID %@",
+                 currentActivityId);
+#else
         NSXMLElement * actionCmd = [[NSXMLElement alloc] initWithName: @"oa"
                                                                 xmlns: @"connect.logitech.com"];
         [actionCmd addAttributeWithName: @"mime"
@@ -603,8 +616,6 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
         DDXMLElement * OAResponse =[self sendIQCmdAndWaitForResponse: IQCmd
                                                   withMimeValidation: YES];
         NSString * OAString = [OAResponse stringValue];
-        
-        NSString * currentActivityId = nil;
         
         if (OAString)
         {
@@ -624,6 +635,7 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
                                                     OAString]
                                          userInfo: nil];
         }
+#endif
         
         [self setCurrentActivity: [configuration activityWithId: currentActivityId]];
     }

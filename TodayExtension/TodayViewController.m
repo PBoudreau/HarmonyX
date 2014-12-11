@@ -405,11 +405,16 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
                    firstTime)
             {
                 firstTime = NO;
-                
+              
+#ifdef STATIC_ACTIVITY
+                DLog(@"Executing %@", [function label]);
+                [NSThread sleepForTimeInterval: 1];
+#else
                 [client executeFunction: function
                                withType: FSCHarmonyClientFunctionTypePress];
                 [client executeFunction: function
                                withType: FSCHarmonyClientFunctionTypeRelease];
+#endif
             }
         }
     }
@@ -459,6 +464,11 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 
 - (IBAction) backwardForwardLongPressed: (UILongPressGestureRecognizer *) gesture
 {
+    DLog(@"%@ state: %li; num taps required: %lu",
+         NSStringFromSelector(_cmd),
+         [gesture state],
+         (unsigned long)[gesture numberOfTapsRequired]);
+    
     if ([gesture state] == UIGestureRecognizerStateBegan)
     {
         backwardForwardGestureInitialLocation = [gesture locationInView: [gesture view]];
