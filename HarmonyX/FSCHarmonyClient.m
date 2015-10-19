@@ -23,7 +23,7 @@ static NSString * const MY_HARMONY_AUTH_URL = @"https://svcs.myharmony.com/Compo
 static NSString * const GENERAL_HARMONY_HUB_USERNAME = @"guest@connect.logitech.com/harmonyx";
 static NSString * const GENERAL_HARMONY_HUB_PASSWORD = @"harmonyx";
 
-static NSTimeInterval const TIMEOUT_DEFAULT = 10;
+static NSTimeInterval const TIMEOUT_DEFAULT = 100;
 
 @interface FSCHarmonyClient ()
 {
@@ -54,8 +54,12 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
 
 @property (strong) NSDate * IQSendTimestamp;
 @property (nonatomic, copy) NSXMLElement * OAResponse;
-@property (nonatomic, copy) NSString * expectedOAResponseMime;
+@property (atomic, copy) NSString * expectedOAResponseMime;
+@property (nonatomic, assign) BOOL performProgressValidation;
 @property (nonatomic, strong) id validOAResponse;
+
+@property (atomic, strong) NSString * sendIQCmdLock;
+@property (atomic, strong) NSString * receiveIQCmdLock;
 
 @end
 
@@ -89,6 +93,11 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
         isXMPPAuthenticated = NO;
         didXMPPFailAuthentication = NO;
         validOAResponseReceived = NO;
+        
+        [self setPerformProgressValidation: NO];
+        
+        [self setSendIQCmdLock: @"sendIQCmdLock"];
+        [self setReceiveIQCmdLock: @"receiveIQCmdLock"];
     }
     
     return self;
@@ -431,15 +440,25 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
 - (NSXMLElement *) sendIQCmdAndWaitForResponse: (XMPPIQ *) IQCmd
                             withMimeValidation: (BOOL) performMimeValidation
 {
+    return [self sendIQCmdAndWaitForResponse: IQCmd
+                          withMimeValidation: performMimeValidation
+                      withProgressValidation: NO];
+}
+
+- (NSXMLElement *) sendIQCmdAndWaitForResponse: (XMPPIQ *) IQCmd
+                            withMimeValidation: (BOOL) performMimeValidation
+                        withProgressValidation: (BOOL) performProgressValidation
+{
     NSXMLElement * OAResponse = nil;
     
-    @synchronized(self)
+    @synchronized([self sendIQCmdLock])
     {
         DLog(@"%@: %@", NSStringFromSelector(_cmd), IQCmd);
         
         validOAResponseReceived = NO;
         [self setOAResponse: nil];
         [self setExpectedOAResponseMime: nil];
+        [self setPerformProgressValidation: performProgressValidation];
 
         NSXMLElement * oaElement = [IQCmd elementForName: @"oa"];
         
@@ -487,6 +506,7 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
         
         OAResponse = [self OAResponse];
         
+        [self setPerformProgressValidation: NO];
         [self setExpectedOAResponseMime: nil];
         [self setOAResponse: nil];
     }
@@ -666,7 +686,8 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
                                   child: actionCmd];
     
     [self sendIQCmdAndWaitForResponse: IQCmd
-                   withMimeValidation: YES];
+                   withMimeValidation: YES
+               withProgressValidation: YES];
 }
 
 - (void) startActivity: (FSCActivity *) activity
@@ -759,54 +780,123 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
 - (BOOL) xmppStream: (XMPPStream *) sender
        didReceiveIQ: (XMPPIQ *) iq
 {
-    DLog(@"%@: %@", NSStringFromSelector(_cmd), iq);
-    
-    BOOL validOAResponse = NO;
-    
-    if ([self expectedOAResponseMime])
+    @synchronized([self receiveIQCmdLock])
     {
-        NSXMLElement * oaResponse = [iq elementForName: @"oa"];
-    
-        if (oaResponse)
+        DLog(@"%@: %@", NSStringFromSelector(_cmd), iq);
+        
+        BOOL validOAResponse = NO;
+        
+        if ([self expectedOAResponseMime])
         {
-            [self setOAResponse: oaResponse];
+            NSXMLElement * oaResponse = [iq elementForName: @"oa"];
             
-            DDXMLNode * mimeNode = [oaResponse attributeForName: @"mime"];
-            
-            if (mimeNode)
+            if (oaResponse)
             {
-                NSString * mimeResponse = [mimeNode stringValue];
+                [self setOAResponse: oaResponse];
                 
-                validOAResponse = [mimeResponse isEqualToString: [self expectedOAResponseMime]];
-            }
-            
-            // If the response is considered valid so far, reset the IQSendTimestamp;
-            // the hub is replyting that it is in the process of executing the IQ cmd.
-            if (validOAResponse)
-            {
-                [self setIQSendTimestamp: [NSDate date]];
-            }
-            
-            DDXMLNode * errorCodeNode = [oaResponse attributeForName: @"errorcode"];
-            
-            if (errorCodeNode)
-            {
-                NSString * errorCode = [errorCodeNode stringValue];
+                DDXMLNode * mimeNode = [oaResponse attributeForName: @"mime"];
                 
-                validOAResponse = validOAResponse && [errorCode isEqualToString: @"200"];
+                if (mimeNode)
+                {
+                    NSString * mimeResponse = [mimeNode stringValue];
+                    
+                    validOAResponse = [[mimeResponse lowercaseString] isEqualToString: [[self expectedOAResponseMime] lowercaseString]];
+                }
+                
+                if (validOAResponse &&
+                    [self performProgressValidation])
+                {
+                    validOAResponse = NO;
+                    
+                    NSString * oaResponseStringValue = [oaResponse stringValue];
+                    
+                    if (oaResponseStringValue &&
+                        ![oaResponseStringValue isEqualToString: @""])
+                    {
+                        NSString * doneCount = nil;
+                        NSString * totalCount = nil;
+                        
+                        for (NSString * aParameter in [oaResponseStringValue componentsSeparatedByString: @":"])
+                        {
+                            NSArray * parameterKeyValue = [aParameter componentsSeparatedByString: @"="];
+                            
+                            if ([parameterKeyValue count] == 2)
+                            {
+                                if ([parameterKeyValue[0] isEqualToString: @"done"])
+                                {
+                                    doneCount = parameterKeyValue[1];
+                                }
+                                else if ([parameterKeyValue[0] isEqualToString: @"total"])
+                                {
+                                    totalCount = parameterKeyValue[1];
+                                }
+                            }
+                        }
+                        
+                        if (doneCount &&
+                            totalCount &&
+                            [doneCount isEqualToString: totalCount])
+                        {
+                            validOAResponse = YES;
+                        }
+                    }
+                }
+                
+                // If the response is considered valid so far, reset the IQSendTimestamp;
+                // the hub is replyting that it is in the process of executing the IQ cmd.
+                if (validOAResponse)
+                {
+                    [self setIQSendTimestamp: [NSDate date]];
+                }
+                
+                DDXMLNode * errorCodeNode = [oaResponse attributeForName: @"errorcode"];
+                
+                if (errorCodeNode)
+                {
+                    NSString * errorCode = [errorCodeNode stringValue];
+                    
+                    validOAResponse = validOAResponse && [errorCode isEqualToString: @"200"];
+                }
             }
         }
+        else
+        {
+            validOAResponse = YES;
+        }
+        
+        validOAResponseReceived = validOAResponse;
+        
+        // Returning NO would cause some errors to be received from Hub as well as duplicate
+        // responses.
+        return YES;
     }
-    else
-    {
-        validOAResponse = YES;
+}
+
+static inline char itoh(int i) {
+    if (i > 9) return 'A' + (i - 10);
+    return '0' + i;
+}
+
+NSString * NSStringToHex(NSString * originalString)
+{
+    NSUInteger i, len;
+    unsigned char *buf, *bytes;
+ 
+    NSData * data = [originalString dataUsingEncoding: NSUTF8StringEncoding];
+    
+    len = data.length;
+    bytes = (unsigned char*)data.bytes;
+    buf = malloc(len*2);
+    
+    for (i=0; i<len; i++) {
+        buf[i*2] = itoh((bytes[i] >> 4) & 0xF);
+        buf[i*2+1] = itoh(bytes[i] & 0xF);
     }
     
-    validOAResponseReceived = validOAResponse;
-    
-    // Returning NO would cause some errors to be received from Hub as well as duplicate
-    // responses.
-    return YES;
+    return [[NSString alloc] initWithBytesNoCopy:buf
+                                          length:len*2
+                                        encoding:NSASCIIStringEncoding
+                                    freeWhenDone:YES];
 }
 
 - (void) xmppStream: (XMPPStream *) sender
