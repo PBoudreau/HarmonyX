@@ -26,6 +26,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 {
     BOOL playToggle;
     BOOL repeatFunction;
+    BOOL gestureHandled;
     CGPoint backwardForwardGestureInitialLocation;
 }
 
@@ -42,6 +43,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 @property (weak, nonatomic) IBOutlet UIView *transportView;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *playPauseTapGesture;
 @property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *backwardForwardLongPressGesture;
+@property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *backwardForwardRepeatLongPressGesture;
 
 @property (weak, nonatomic) IBOutlet UIView *powerOffView;
 @property (weak, nonatomic) IBOutlet UIImageView *powerOffIconImageView;
@@ -73,6 +75,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
     playToggle = NO;
     
     [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backwardForwardLongPressGesture]];
+    [[self playPauseTapGesture] requireGestureRecognizerToFail: [self backwardForwardRepeatLongPressGesture]];
     
     UIImage * powerOffImage = [UIImage imageNamed: @"activity_powering_off"];
     UIImage * maskedPowerOffImage = [powerOffImage convertToInverseMaskWithColor: [self colorForActivityMask]];
@@ -402,11 +405,16 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
                    firstTime)
             {
                 firstTime = NO;
-                
+              
+#ifdef STATIC_ACTIVITY
+                DLog(@"Executing %@", [function label]);
+                [NSThread sleepForTimeInterval: 1];
+#else
                 [client executeFunction: function
                                withType: FSCHarmonyClientFunctionTypePress];
                 [client executeFunction: function
                                withType: FSCHarmonyClientFunctionTypeRelease];
+#endif
             }
         }
     }
@@ -456,13 +464,20 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 
 - (IBAction) backwardForwardLongPressed: (UILongPressGestureRecognizer *) gesture
 {
+    DLog(@"%@ state: %li; num taps required: %lu",
+         NSStringFromSelector(_cmd),
+         [gesture state],
+         (unsigned long)[gesture numberOfTapsRequired]);
+    
     if ([gesture state] == UIGestureRecognizerStateBegan)
     {
         backwardForwardGestureInitialLocation = [gesture locationInView: [gesture view]];
+        
+        gestureHandled = NO;
     }
     else if ([gesture state] == UIGestureRecognizerStateChanged)
     {
-        if (!repeatFunction)
+        if (!gestureHandled)
         {
             CGPoint newLocation = [gesture locationInView: [gesture view]];
             
@@ -470,7 +485,8 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
             
             if (fabsf(delta) >= backwardForwardGestureMinimumDelta)
             {
-                repeatFunction = YES;
+                gestureHandled = YES;
+                repeatFunction = ([gesture numberOfTapsRequired] == 1);
                 
                 [self executeFunction: ^FSCFunction *(FSCActivity *currentActivity) {
              
@@ -495,6 +511,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
              [gesture state] == UIGestureRecognizerStateCancelled)
     {
         repeatFunction = NO;
+        gestureHandled = NO;
     }
 }
 
