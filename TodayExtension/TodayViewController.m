@@ -30,7 +30,6 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
     CGPoint backwardForwardGestureInitialLocation;
 }
 
-@property (weak, nonatomic) IBOutlet UICollectionView *activityCollectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityCollectionViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *staticActivitiesView;
@@ -466,7 +465,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 {
     DLog(@"%@ state: %li; num taps required: %lu",
          NSStringFromSelector(_cmd),
-         [gesture state],
+         (long)[gesture state],
          (unsigned long)[gesture numberOfTapsRequired]);
     
     if ([gesture state] == UIGestureRecognizerStateBegan)
@@ -483,7 +482,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
             
             CGFloat delta = backwardForwardGestureInitialLocation.x - newLocation.x;
             
-            if (fabsf(delta) >= backwardForwardGestureMinimumDelta)
+            if (fabs(delta) >= backwardForwardGestureMinimumDelta)
             {
                 gestureHandled = YES;
                 repeatFunction = ([gesture numberOfTapsRequired] == 1);
