@@ -80,7 +80,7 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
     {
         if ([command isEqualToString: @"getHarmonyState"])
         {
-            FSCHarmonyConfiguration * config = [[self client] configurationWithRefresh: @YES];
+            FSCHarmonyConfiguration * config = [[self client] configurationWithRefresh: YES];
             FSCActivity * currentActivity = [[self client] currentActivityFromConfiguration: config];
             
             replyHandler(@{

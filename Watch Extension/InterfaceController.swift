@@ -32,6 +32,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     override init() {
         super.init()
         
+        self.loadData()
     }
     
     override func awakeWithContext(context: AnyObject?) {
@@ -43,29 +44,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        
-        self.table.setHidden(true)
-        self.activityImage.setHidden(false)
-        self.activityImage.startAnimating()
-        
-//        if !dataLoadedOnce
-//        {
-//            self.loadData()
-//        }
-//        else
-//        {
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {                
-                self.loadData()
-//            }
-        }
     }
 
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
-        
-        table.setHidden(true)
     }
 
     private func loadData() {

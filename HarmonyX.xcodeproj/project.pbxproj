@@ -23,6 +23,7 @@
 		1A8AE5E21A0BA6900047436B /* FSCDataSharingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */; };
 		1A8AE5E51A0BC10F0047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
 		1A8AE5E61A0C1AE40047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
+		1AA230D11BE811AC00B122F3 /* FSCHarmonyConfigKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD797F1BE6D77B0013160E /* FSCHarmonyConfigKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1AA9E71B1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71A1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m */; };
 		1AA9E71C1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71A1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m */; };
 		1AA9E71F1A110595000CE1DD /* UIImage+Mask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71E1A110595000CE1DD /* UIImage+Mask.m */; };
@@ -89,6 +90,13 @@
 			remoteGlobalIDString = 1A6043091A0A887B0074D6A5;
 			remoteInfo = TodayExtension;
 		};
+		1AA230D21BE811AC00B122F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A69F40A1A00497000860482 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1ACD797E1BE6D77B0013160E;
+			remoteInfo = FSCHarmonyConfigKit;
+		};
 		1ACD79501BE67F7F0013160E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1A69F40A1A00497000860482 /* Project object */;
@@ -129,6 +137,17 @@
 				1A6043171A0A887B0074D6A5 /* TodayExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1AA230D41BE811AC00B122F3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1AA230D11BE811AC00B122F3 /* FSCHarmonyConfigKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		1ACD79681BE67F7F0013160E /* Embed App Extensions */ = {
@@ -575,11 +594,13 @@
 				1ACD794A1BE67F7F0013160E /* Sources */,
 				1ACD794B1BE67F7F0013160E /* Frameworks */,
 				1ACD794C1BE67F7F0013160E /* Resources */,
+				1AA230D41BE811AC00B122F3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				1ACD79DC1BE6F07E0013160E /* PBXTargetDependency */,
+				1AA230D31BE811AC00B122F3 /* PBXTargetDependency */,
 			);
 			name = "Watch Extension";
 			productName = "Watch Extension";
@@ -661,6 +682,7 @@
 					};
 					1ACD794D1BE67F7F0013160E = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 239SMQFQ7S;
 					};
 					1ACD797E1BE6D77B0013160E = {
 						CreatedOnToolsVersion = 7.0;
@@ -873,6 +895,11 @@
 			isa = PBXTargetDependency;
 			target = 1A6043091A0A887B0074D6A5 /* TodayExtension */;
 			targetProxy = 1A6043151A0A887B0074D6A5 /* PBXContainerItemProxy */;
+		};
+		1AA230D31BE811AC00B122F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1ACD797E1BE6D77B0013160E /* FSCHarmonyConfigKit */;
+			targetProxy = 1AA230D21BE811AC00B122F3 /* PBXContainerItemProxy */;
 		};
 		1ACD79511BE67F7F0013160E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1097,6 +1124,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Watch_Extension;
@@ -1120,6 +1148,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Watch_Extension;
@@ -1144,6 +1173,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = Watch/Info.plist;
@@ -1161,7 +1191,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
@@ -1180,7 +1212,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
@@ -1199,8 +1233,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1229,7 +1265,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = FSCHarmonyConfigKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.FSCHarmonyConfigKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1255,7 +1291,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = FSCHarmonyConfigKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.FSCHarmonyConfigKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1281,7 +1317,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = FSCHarmonyConfigKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.FSCHarmonyConfigKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1303,6 +1339,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "FSCHarmonyConfigWatchKit-Info.plist";
@@ -1331,6 +1368,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "FSCHarmonyConfigWatchKit-Info.plist";
@@ -1360,6 +1398,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "FSCHarmonyConfigWatchKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
