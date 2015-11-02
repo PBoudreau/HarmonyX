@@ -30,20 +30,51 @@
 		1AA9E7231A113239000CE1DD /* FSCHarmonyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E7221A113239000CE1DD /* FSCHarmonyViewController.m */; };
 		1AA9E7241A113239000CE1DD /* FSCHarmonyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E7221A113239000CE1DD /* FSCHarmonyViewController.m */; };
 		1AA9E7251A113CE4000CE1DD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A69F4221A00497000860482 /* Images.xcassets */; };
-		1AC092321A10074400602E69 /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; };
-		1AC092331A10074400602E69 /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; };
-		1AC092341A10074400602E69 /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; };
-		1AC092351A10074400602E69 /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; };
-		1AC092361A10074400602E69 /* FSCControlGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921B1A10074400602E69 /* FSCControlGroup.m */; };
-		1AC092371A10074400602E69 /* FSCControlGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921B1A10074400602E69 /* FSCControlGroup.m */; };
-		1AC092381A10074400602E69 /* FSCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921D1A10074400602E69 /* FSCDevice.m */; };
-		1AC092391A10074400602E69 /* FSCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921D1A10074400602E69 /* FSCDevice.m */; };
-		1AC0923C1A10074400602E69 /* FSCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092211A10074400602E69 /* FSCFunction.m */; };
-		1AC0923D1A10074400602E69 /* FSCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092211A10074400602E69 /* FSCFunction.m */; };
-		1AC0923E1A10074400602E69 /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; };
-		1AC0923F1A10074400602E69 /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; };
-		1AC092401A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; };
-		1AC092411A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; };
+		1ACD79461BE67F7F0013160E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ACD79441BE67F7F0013160E /* Interface.storyboard */; };
+		1ACD79481BE67F7F0013160E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1ACD79471BE67F7F0013160E /* Assets.xcassets */; };
+		1ACD794F1BE67F7F0013160E /* Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1ACD794E1BE67F7F0013160E /* Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1ACD79541BE67F7F0013160E /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD79531BE67F7F0013160E /* InterfaceController.swift */; };
+		1ACD79561BE67F7F0013160E /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD79551BE67F7F0013160E /* ExtensionDelegate.swift */; };
+		1ACD79581BE67F7F0013160E /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD79571BE67F7F0013160E /* GlanceController.swift */; };
+		1ACD795A1BE67F7F0013160E /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD79591BE67F7F0013160E /* ComplicationController.swift */; };
+		1ACD795C1BE67F7F0013160E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1ACD795B1BE67F7F0013160E /* Assets.xcassets */; };
+		1ACD79601BE67F7F0013160E /* Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1ACD79421BE67F7F0013160E /* Watch.app */; };
+		1ACD796C1BE683410013160E /* ActivityTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD796B1BE683410013160E /* ActivityTableRowController.swift */; settings = {ASSET_TAGS = (); }; };
+		1ACD79721BE69CF20013160E /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD79711BE69CF20013160E /* WatchConnectivity.framework */; };
+		1ACD79821BE6D77B0013160E /* FSCHarmonyConfigKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ACD79811BE6D77B0013160E /* FSCHarmonyConfigKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79861BE6D77B0013160E /* FSCHarmonyConfigKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD797F1BE6D77B0013160E /* FSCHarmonyConfigKit.framework */; };
+		1ACD79871BE6D77B0013160E /* FSCHarmonyConfigKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD797F1BE6D77B0013160E /* FSCHarmonyConfigKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1ACD799C1BE6EB5B0013160E /* FSCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092161A10074400602E69 /* FSCActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD799D1BE6EB6C0013160E /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD799E1BE6EB700013160E /* FSCContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092181A10074400602E69 /* FSCContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD799F1BE6EB790013160E /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79A01BE6EB7C0013160E /* FSCControlGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC0921A1A10074400602E69 /* FSCControlGroup.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79A11BE6EB850013160E /* FSCControlGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921B1A10074400602E69 /* FSCControlGroup.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79A21BE6EB8B0013160E /* FSCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC0921C1A10074400602E69 /* FSCDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79A31BE6EB920013160E /* FSCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921D1A10074400602E69 /* FSCDevice.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79A41BE6EB970013160E /* FSCFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092201A10074400602E69 /* FSCFunction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79A51BE6EB9E0013160E /* FSCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092211A10074400602E69 /* FSCFunction.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79A61BE6EBA20013160E /* FSCGlobal.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092221A10074400602E69 /* FSCGlobal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79A71BE6EBAB0013160E /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79A81BE6EBAF0013160E /* FSCHarmonyConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092241A10074400602E69 /* FSCHarmonyConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79A91BE6EBBA0013160E /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79C11BE6EECA0013160E /* FSCControlGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921B1A10074400602E69 /* FSCControlGroup.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79C21BE6EECA0013160E /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79C31BE6EECA0013160E /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79C41BE6EECA0013160E /* FSCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921D1A10074400602E69 /* FSCDevice.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79C51BE6EECA0013160E /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79C61BE6EECA0013160E /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79C71BE6EECA0013160E /* FSCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092211A10074400602E69 /* FSCFunction.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79CA1BE6EECA0013160E /* FSCContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092181A10074400602E69 /* FSCContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79CB1BE6EECA0013160E /* FSCHarmonyConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092241A10074400602E69 /* FSCHarmonyConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79CC1BE6EECA0013160E /* FSCGlobal.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092221A10074400602E69 /* FSCGlobal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79CD1BE6EECA0013160E /* FSCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC0921C1A10074400602E69 /* FSCDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79CE1BE6EECA0013160E /* FSCControlGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC0921A1A10074400602E69 /* FSCControlGroup.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79CF1BE6EECA0013160E /* FSCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092161A10074400602E69 /* FSCActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79D01BE6EECA0013160E /* FSCHarmonyConfigKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ACD79811BE6D77B0013160E /* FSCHarmonyConfigKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79D11BE6EECA0013160E /* FSCFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092201A10074400602E69 /* FSCFunction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1ACD79DA1BE6EFED0013160E /* FSCHarmonyConfigKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD79D71BE6EECA0013160E /* FSCHarmonyConfigKit.framework */; };
+		1ACD79DF1BE7B7B80013160E /* FSCHarmonyWatchProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD79DE1BE7B7B80013160E /* FSCHarmonyWatchProxy.m */; settings = {ASSET_TAGS = (); }; };
 		1AF6ED541A2BBA5B0008F3C3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AF6ED561A2BBA5B0008F3C3 /* Localizable.strings */; };
 		1AF6ED5B1A2BBB630008F3C3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF6ED5D1A2BBB630008F3C3 /* MainInterface.storyboard */; };
 		1AF6ED601A2BBC970008F3C3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AF6ED561A2BBA5B0008F3C3 /* Localizable.strings */; };
@@ -58,6 +89,34 @@
 			remoteGlobalIDString = 1A6043091A0A887B0074D6A5;
 			remoteInfo = TodayExtension;
 		};
+		1ACD79501BE67F7F0013160E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A69F40A1A00497000860482 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1ACD794D1BE67F7F0013160E;
+			remoteInfo = "Watch Extension";
+		};
+		1ACD795E1BE67F7F0013160E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A69F40A1A00497000860482 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1ACD79411BE67F7F0013160E;
+			remoteInfo = Watch;
+		};
+		1ACD79841BE6D77B0013160E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A69F40A1A00497000860482 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1ACD797E1BE6D77B0013160E;
+			remoteInfo = FSCHarmonyConfigKit;
+		};
+		1ACD79DB1BE6F07E0013160E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A69F40A1A00497000860482 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1ACD79BF1BE6EECA0013160E;
+			remoteInfo = FSCHarmonyConfigWatchKit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -70,6 +129,49 @@
 				1A6043171A0A887B0074D6A5 /* TodayExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD79681BE67F7F0013160E /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1ACD794F1BE67F7F0013160E /* Watch Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD796A1BE67F7F0013160E /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				1ACD79601BE67F7F0013160E /* Watch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD798C1BE6D77B0013160E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1ACD79871BE6D77B0013160E /* FSCHarmonyConfigKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD79BD1BE6EE4A0013160E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -120,6 +222,26 @@
 		1AC092231A10074400602E69 /* FSCGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCGlobal.m; sourceTree = "<group>"; };
 		1AC092241A10074400602E69 /* FSCHarmonyConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyConfiguration.h; sourceTree = "<group>"; };
 		1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyConfiguration.m; sourceTree = "<group>"; };
+		1ACD79421BE67F7F0013160E /* Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1ACD79451BE67F7F0013160E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		1ACD79471BE67F7F0013160E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1ACD79491BE67F7F0013160E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1ACD794E1BE67F7F0013160E /* Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1ACD79531BE67F7F0013160E /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		1ACD79551BE67F7F0013160E /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		1ACD79571BE67F7F0013160E /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
+		1ACD79591BE67F7F0013160E /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		1ACD795B1BE67F7F0013160E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1ACD795D1BE67F7F0013160E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1ACD796B1BE683410013160E /* ActivityTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTableRowController.swift; sourceTree = "<group>"; };
+		1ACD79711BE69CF20013160E /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
+		1ACD797F1BE6D77B0013160E /* FSCHarmonyConfigKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FSCHarmonyConfigKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1ACD79811BE6D77B0013160E /* FSCHarmonyConfigKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyConfigKit.h; sourceTree = "<group>"; };
+		1ACD79831BE6D77B0013160E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1ACD79D71BE6EECA0013160E /* FSCHarmonyConfigKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FSCHarmonyConfigKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1ACD79D81BE6EECA0013160E /* FSCHarmonyConfigWatchKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FSCHarmonyConfigWatchKit-Info.plist"; path = "/Users/pboudreau/Development/HarmonyX/FSCHarmonyConfigWatchKit-Info.plist"; sourceTree = "<absolute>"; };
+		1ACD79DD1BE7B7B80013160E /* FSCHarmonyWatchProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyWatchProxy.h; sourceTree = "<group>"; };
+		1ACD79DE1BE7B7B80013160E /* FSCHarmonyWatchProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyWatchProxy.m; sourceTree = "<group>"; };
 		1AF6ED571A2BBA890008F3C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1AF6ED581A2BBAA20008F3C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		1AF6ED591A2BBAA20008F3C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -145,7 +267,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ACD79721BE69CF20013160E /* WatchConnectivity.framework in Frameworks */,
+				1ACD79861BE6D77B0013160E /* FSCHarmonyConfigKit.framework in Frameworks */,
 				9A62F38490611F1CF944D4BC /* libPods-HarmonyX.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD794B1BE67F7F0013160E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1ACD79DA1BE6EFED0013160E /* FSCHarmonyConfigKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD797B1BE6D77B0013160E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD79B81BE6EE4A0013160E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD79C81BE6EECA0013160E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +329,11 @@
 			isa = PBXGroup;
 			children = (
 				1A69F4141A00497000860482 /* HarmonyX */,
+				1ACD79801BE6D77B0013160E /* FSCHarmonyConfigKit */,
+				1ACD79D81BE6EECA0013160E /* FSCHarmonyConfigWatchKit-Info.plist */,
 				1A60430D1A0A887B0074D6A5 /* TodayExtension */,
+				1ACD79431BE67F7F0013160E /* Watch */,
+				1ACD79521BE67F7F0013160E /* Watch Extension */,
 				1A69F4131A00497000860482 /* Products */,
 				6C9BB0B337799E64ACD2170A /* Pods */,
 				9192D6F6BC8535EE12E2BE45 /* Frameworks */,
@@ -188,6 +345,10 @@
 			children = (
 				1A69F4121A00497000860482 /* HarmonyX.app */,
 				1A60430A1A0A887B0074D6A5 /* TodayExtension.appex */,
+				1ACD79421BE67F7F0013160E /* Watch.app */,
+				1ACD794E1BE67F7F0013160E /* Watch Extension.appex */,
+				1ACD797F1BE6D77B0013160E /* FSCHarmonyConfigKit.framework */,
+				1ACD79D71BE6EECA0013160E /* FSCHarmonyConfigKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -195,7 +356,6 @@
 		1A69F4141A00497000860482 /* HarmonyX */ = {
 			isa = PBXGroup;
 			children = (
-				1AC092081A1006FD00602E69 /* Harmony Config */,
 				1A69F4191A00497000860482 /* AppDelegate.h */,
 				1A69F41A1A00497000860482 /* AppDelegate.m */,
 				1AA9E7211A113239000CE1DD /* FSCHarmonyViewController.h */,
@@ -213,6 +373,8 @@
 				1AA9E71E1A110595000CE1DD /* UIImage+Mask.m */,
 				1A27425F1A275E7700F5C933 /* FSCTransparentTouchableView.h */,
 				1A2742601A275E7700F5C933 /* FSCTransparentTouchableView.m */,
+				1ACD79DD1BE7B7B80013160E /* FSCHarmonyWatchProxy.h */,
+				1ACD79DE1BE7B7B80013160E /* FSCHarmonyWatchProxy.m */,
 				1A69F41F1A00497000860482 /* Main.storyboard */,
 				1A69F4221A00497000860482 /* Images.xcassets */,
 				1A69F4241A00497000860482 /* LaunchScreen.xib */,
@@ -254,6 +416,40 @@
 			path = HarmonyConfig;
 			sourceTree = "<group>";
 		};
+		1ACD79431BE67F7F0013160E /* Watch */ = {
+			isa = PBXGroup;
+			children = (
+				1ACD79441BE67F7F0013160E /* Interface.storyboard */,
+				1ACD79471BE67F7F0013160E /* Assets.xcassets */,
+				1ACD79491BE67F7F0013160E /* Info.plist */,
+			);
+			path = Watch;
+			sourceTree = "<group>";
+		};
+		1ACD79521BE67F7F0013160E /* Watch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				1ACD79531BE67F7F0013160E /* InterfaceController.swift */,
+				1ACD796B1BE683410013160E /* ActivityTableRowController.swift */,
+				1ACD79551BE67F7F0013160E /* ExtensionDelegate.swift */,
+				1ACD79571BE67F7F0013160E /* GlanceController.swift */,
+				1ACD79591BE67F7F0013160E /* ComplicationController.swift */,
+				1ACD795B1BE67F7F0013160E /* Assets.xcassets */,
+				1ACD795D1BE67F7F0013160E /* Info.plist */,
+			);
+			path = "Watch Extension";
+			sourceTree = "<group>";
+		};
+		1ACD79801BE6D77B0013160E /* FSCHarmonyConfigKit */ = {
+			isa = PBXGroup;
+			children = (
+				1ACD79811BE6D77B0013160E /* FSCHarmonyConfigKit.h */,
+				1AC092081A1006FD00602E69 /* Harmony Config */,
+				1ACD79831BE6D77B0013160E /* Info.plist */,
+			);
+			path = FSCHarmonyConfigKit;
+			sourceTree = "<group>";
+		};
 		6C9BB0B337799E64ACD2170A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +462,7 @@
 		9192D6F6BC8535EE12E2BE45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1ACD79711BE69CF20013160E /* WatchConnectivity.framework */,
 				1A60431F1A0A89CF0074D6A5 /* libPods-HarmonyX.a */,
 				37E3B18D9E6EDD5DAB88C2F1 /* libPods-HarmonyX.a */,
 				1A60430B1A0A887B0074D6A5 /* NotificationCenter.framework */,
@@ -274,6 +471,39 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1ACD797C1BE6D77B0013160E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1ACD799E1BE6EB700013160E /* FSCContent.h in Headers */,
+				1ACD79A81BE6EBAF0013160E /* FSCHarmonyConfiguration.h in Headers */,
+				1ACD79A61BE6EBA20013160E /* FSCGlobal.h in Headers */,
+				1ACD79A21BE6EB8B0013160E /* FSCDevice.h in Headers */,
+				1ACD79A01BE6EB7C0013160E /* FSCControlGroup.h in Headers */,
+				1ACD799C1BE6EB5B0013160E /* FSCActivity.h in Headers */,
+				1ACD79821BE6D77B0013160E /* FSCHarmonyConfigKit.h in Headers */,
+				1ACD79A41BE6EB970013160E /* FSCFunction.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD79C91BE6EECA0013160E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1ACD79CA1BE6EECA0013160E /* FSCContent.h in Headers */,
+				1ACD79CB1BE6EECA0013160E /* FSCHarmonyConfiguration.h in Headers */,
+				1ACD79CC1BE6EECA0013160E /* FSCGlobal.h in Headers */,
+				1ACD79CD1BE6EECA0013160E /* FSCDevice.h in Headers */,
+				1ACD79CE1BE6EECA0013160E /* FSCControlGroup.h in Headers */,
+				1ACD79CF1BE6EECA0013160E /* FSCActivity.h in Headers */,
+				1ACD79D01BE6EECA0013160E /* FSCHarmonyConfigKit.h in Headers */,
+				1ACD79D11BE6EECA0013160E /* FSCFunction.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		1A6043091A0A887B0074D6A5 /* TodayExtension */ = {
@@ -304,16 +534,93 @@
 				46A8E1BD8E196AFCEFA95CFB /* Copy Pods Resources */,
 				1A60431B1A0A887B0074D6A5 /* Embed App Extensions */,
 				1AB48A241A2D0BD8002F68E7 /* Copy Pods-acknowledgements.plist */,
+				1ACD796A1BE67F7F0013160E /* Embed Watch Content */,
+				1ACD798C1BE6D77B0013160E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				1A6043161A0A887B0074D6A5 /* PBXTargetDependency */,
+				1ACD795F1BE67F7F0013160E /* PBXTargetDependency */,
+				1ACD79851BE6D77B0013160E /* PBXTargetDependency */,
 			);
 			name = HarmonyX;
 			productName = HarmonyX;
 			productReference = 1A69F4121A00497000860482 /* HarmonyX.app */;
 			productType = "com.apple.product-type.application";
+		};
+		1ACD79411BE67F7F0013160E /* Watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1ACD79691BE67F7F0013160E /* Build configuration list for PBXNativeTarget "Watch" */;
+			buildPhases = (
+				1ACD79401BE67F7F0013160E /* Resources */,
+				1ACD79681BE67F7F0013160E /* Embed App Extensions */,
+				1ACD79B81BE6EE4A0013160E /* Frameworks */,
+				1ACD79BD1BE6EE4A0013160E /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1ACD79511BE67F7F0013160E /* PBXTargetDependency */,
+			);
+			name = Watch;
+			productName = Watch;
+			productReference = 1ACD79421BE67F7F0013160E /* Watch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		1ACD794D1BE67F7F0013160E /* Watch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1ACD79671BE67F7F0013160E /* Build configuration list for PBXNativeTarget "Watch Extension" */;
+			buildPhases = (
+				1ACD794A1BE67F7F0013160E /* Sources */,
+				1ACD794B1BE67F7F0013160E /* Frameworks */,
+				1ACD794C1BE67F7F0013160E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1ACD79DC1BE6F07E0013160E /* PBXTargetDependency */,
+			);
+			name = "Watch Extension";
+			productName = "Watch Extension";
+			productReference = 1ACD794E1BE67F7F0013160E /* Watch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+		1ACD797E1BE6D77B0013160E /* FSCHarmonyConfigKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1ACD79881BE6D77B0013160E /* Build configuration list for PBXNativeTarget "FSCHarmonyConfigKit" */;
+			buildPhases = (
+				1ACD797A1BE6D77B0013160E /* Sources */,
+				1ACD797B1BE6D77B0013160E /* Frameworks */,
+				1ACD797C1BE6D77B0013160E /* Headers */,
+				1ACD797D1BE6D77B0013160E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FSCHarmonyConfigKit;
+			productName = FSCHarmonyConfigKit;
+			productReference = 1ACD797F1BE6D77B0013160E /* FSCHarmonyConfigKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		1ACD79BF1BE6EECA0013160E /* FSCHarmonyConfigWatchKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1ACD79D31BE6EECA0013160E /* Build configuration list for PBXNativeTarget "FSCHarmonyConfigWatchKit" */;
+			buildPhases = (
+				1ACD79C01BE6EECA0013160E /* Sources */,
+				1ACD79C81BE6EECA0013160E /* Frameworks */,
+				1ACD79C91BE6EECA0013160E /* Headers */,
+				1ACD79D21BE6EECA0013160E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FSCHarmonyConfigWatchKit;
+			productName = FSCHarmonyConfigKit;
+			productReference = 1ACD79D71BE6EECA0013160E /* FSCHarmonyConfigKit.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -348,6 +655,17 @@
 							};
 						};
 					};
+					1ACD79411BE67F7F0013160E = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 239SMQFQ7S;
+					};
+					1ACD794D1BE67F7F0013160E = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					1ACD797E1BE6D77B0013160E = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 239SMQFQ7S;
+					};
 				};
 			};
 			buildConfigurationList = 1A69F40D1A00497000860482 /* Build configuration list for PBXProject "HarmonyX" */;
@@ -366,6 +684,10 @@
 			targets = (
 				1A69F4111A00497000860482 /* HarmonyX */,
 				1A6043091A0A887B0074D6A5 /* TodayExtension */,
+				1ACD79411BE67F7F0013160E /* Watch */,
+				1ACD794D1BE67F7F0013160E /* Watch Extension */,
+				1ACD797E1BE6D77B0013160E /* FSCHarmonyConfigKit */,
+				1ACD79BF1BE6EECA0013160E /* FSCHarmonyConfigWatchKit */,
 			);
 		};
 /* End PBXProject section */
@@ -389,6 +711,37 @@
 				1AF6ED541A2BBA5B0008F3C3 /* Localizable.strings in Resources */,
 				1A69F4261A00497000860482 /* LaunchScreen.xib in Resources */,
 				1A69F4231A00497000860482 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD79401BE67F7F0013160E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1ACD79481BE67F7F0013160E /* Assets.xcassets in Resources */,
+				1ACD79461BE67F7F0013160E /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD794C1BE67F7F0013160E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1ACD795C1BE67F7F0013160E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD797D1BE6D77B0013160E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD79D21BE6EECA0013160E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,18 +801,11 @@
 			files = (
 				1AA9E71C1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */,
 				1A8AE5E61A0C1AE40047436B /* FSCHarmonyClient.m in Sources */,
-				1AC0923F1A10074400602E69 /* FSCGlobal.m in Sources */,
-				1AC092411A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */,
-				1AC092331A10074400602E69 /* FSCActivity.m in Sources */,
 				1A6043121A0A887B0074D6A5 /* TodayViewController.m in Sources */,
-				1AC092371A10074400602E69 /* FSCControlGroup.m in Sources */,
-				1AC092391A10074400602E69 /* FSCDevice.m in Sources */,
 				1A8AE5E21A0BA6900047436B /* FSCDataSharingController.m in Sources */,
 				1AA9E7241A113239000CE1DD /* FSCHarmonyViewController.m in Sources */,
 				1A2742621A275E7E00F5C933 /* FSCTransparentTouchableView.m in Sources */,
 				1AA9E7201A110595000CE1DD /* UIImage+Mask.m in Sources */,
-				1AC092351A10074400602E69 /* FSCContent.m in Sources */,
-				1AC0923D1A10074400602E69 /* FSCFunction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,21 +814,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A8AE5E11A0BA3630047436B /* FSCDataSharingController.m in Sources */,
-				1AC092381A10074400602E69 /* FSCDevice.m in Sources */,
-				1AC092321A10074400602E69 /* FSCActivity.m in Sources */,
 				1AA9E71F1A110595000CE1DD /* UIImage+Mask.m in Sources */,
-				1AC0923E1A10074400602E69 /* FSCGlobal.m in Sources */,
-				1AC092361A10074400602E69 /* FSCControlGroup.m in Sources */,
+				1ACD79DF1BE7B7B80013160E /* FSCHarmonyWatchProxy.m in Sources */,
 				1A69F41E1A00497000860482 /* ViewController.m in Sources */,
-				1AC0923C1A10074400602E69 /* FSCFunction.m in Sources */,
 				1A2742611A275E7700F5C933 /* FSCTransparentTouchableView.m in Sources */,
 				1A69F41B1A00497000860482 /* AppDelegate.m in Sources */,
 				1AA9E71B1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */,
-				1AC092341A10074400602E69 /* FSCContent.m in Sources */,
 				1A69F4181A00497000860482 /* main.m in Sources */,
-				1AC092401A10074400602E69 /* FSCHarmonyConfiguration.m in Sources */,
 				1AA9E7231A113239000CE1DD /* FSCHarmonyViewController.m in Sources */,
 				1A8AE5E51A0BC10F0047436B /* FSCHarmonyClient.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD794A1BE67F7F0013160E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1ACD79561BE67F7F0013160E /* ExtensionDelegate.swift in Sources */,
+				1ACD796C1BE683410013160E /* ActivityTableRowController.swift in Sources */,
+				1ACD795A1BE67F7F0013160E /* ComplicationController.swift in Sources */,
+				1ACD79541BE67F7F0013160E /* InterfaceController.swift in Sources */,
+				1ACD79581BE67F7F0013160E /* GlanceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD797A1BE6D77B0013160E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1ACD79A11BE6EB850013160E /* FSCControlGroup.m in Sources */,
+				1ACD79A91BE6EBBA0013160E /* FSCHarmonyConfiguration.m in Sources */,
+				1ACD799F1BE6EB790013160E /* FSCContent.m in Sources */,
+				1ACD79A31BE6EB920013160E /* FSCDevice.m in Sources */,
+				1ACD79A71BE6EBAB0013160E /* FSCGlobal.m in Sources */,
+				1ACD799D1BE6EB6C0013160E /* FSCActivity.m in Sources */,
+				1ACD79A51BE6EB9E0013160E /* FSCFunction.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1ACD79C01BE6EECA0013160E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1ACD79C11BE6EECA0013160E /* FSCControlGroup.m in Sources */,
+				1ACD79C21BE6EECA0013160E /* FSCHarmonyConfiguration.m in Sources */,
+				1ACD79C31BE6EECA0013160E /* FSCContent.m in Sources */,
+				1ACD79C41BE6EECA0013160E /* FSCDevice.m in Sources */,
+				1ACD79C51BE6EECA0013160E /* FSCGlobal.m in Sources */,
+				1ACD79C61BE6EECA0013160E /* FSCActivity.m in Sources */,
+				1ACD79C71BE6EECA0013160E /* FSCFunction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +873,26 @@
 			isa = PBXTargetDependency;
 			target = 1A6043091A0A887B0074D6A5 /* TodayExtension */;
 			targetProxy = 1A6043151A0A887B0074D6A5 /* PBXContainerItemProxy */;
+		};
+		1ACD79511BE67F7F0013160E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1ACD794D1BE67F7F0013160E /* Watch Extension */;
+			targetProxy = 1ACD79501BE67F7F0013160E /* PBXContainerItemProxy */;
+		};
+		1ACD795F1BE67F7F0013160E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1ACD79411BE67F7F0013160E /* Watch */;
+			targetProxy = 1ACD795E1BE67F7F0013160E /* PBXContainerItemProxy */;
+		};
+		1ACD79851BE6D77B0013160E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1ACD797E1BE6D77B0013160E /* FSCHarmonyConfigKit */;
+			targetProxy = 1ACD79841BE6D77B0013160E /* PBXContainerItemProxy */;
+		};
+		1ACD79DC1BE6F07E0013160E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1ACD79BF1BE6EECA0013160E /* FSCHarmonyConfigWatchKit */;
+			targetProxy = 1ACD79DB1BE6F07E0013160E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -513,6 +913,14 @@
 				1AF6ED591A2BBAA20008F3C3 /* fr */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		1ACD79441BE67F7F0013160E /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1ACD79451BE67F7F0013160E /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 		1AF6ED561A2BBA5B0008F3C3 /* Localizable.strings */ = {
@@ -681,6 +1089,292 @@
 			};
 			name = Release;
 		};
+		1ACD79611BE67F7F0013160E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IBSC_MODULE = Watch_Extension;
+				INFOPLIST_FILE = Watch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.HarmonyX.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		1ACD79621BE67F7F0013160E /* DebugStaticActivity */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IBSC_MODULE = Watch_Extension;
+				INFOPLIST_FILE = Watch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.HarmonyX.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = DebugStaticActivity;
+		};
+		1ACD79631BE67F7F0013160E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IBSC_MODULE = Watch_Extension;
+				INFOPLIST_FILE = Watch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.HarmonyX.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		1ACD79641BE67F7F0013160E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.HarmonyX.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		1ACD79651BE67F7F0013160E /* DebugStaticActivity */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.HarmonyX.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = DebugStaticActivity;
+		};
+		1ACD79661BE67F7F0013160E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.HarmonyX.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		1ACD79891BE6D77B0013160E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = FSCHarmonyConfigKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.FSCHarmonyConfigKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1ACD798A1BE6D77B0013160E /* DebugStaticActivity */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = FSCHarmonyConfigKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.FSCHarmonyConfigKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = DebugStaticActivity;
+		};
+		1ACD798B1BE6D77B0013160E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = FSCHarmonyConfigKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.FSCHarmonyConfigKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		1ACD79D41BE6EECA0013160E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "FSCHarmonyConfigWatchKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.FSCHarmonyConfigKit;
+				PRODUCT_NAME = FSCHarmonyConfigKit;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1ACD79D51BE6EECA0013160E /* DebugStaticActivity */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "FSCHarmonyConfigWatchKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.FSCHarmonyConfigKit;
+				PRODUCT_NAME = FSCHarmonyConfigKit;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = DebugStaticActivity;
+		};
+		1ACD79D61BE6EECA0013160E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "FSCHarmonyConfigWatchKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fasterre.FSCHarmonyConfigKit;
+				PRODUCT_NAME = FSCHarmonyConfigKit;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		1AE50FEF1A3A1D5400B5D817 /* DebugStaticActivity */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -788,6 +1482,46 @@
 				1A69F4361A00497000860482 /* Debug */,
 				1AE50FF01A3A1D5400B5D817 /* DebugStaticActivity */,
 				1A69F4371A00497000860482 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1ACD79671BE67F7F0013160E /* Build configuration list for PBXNativeTarget "Watch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1ACD79641BE67F7F0013160E /* Debug */,
+				1ACD79651BE67F7F0013160E /* DebugStaticActivity */,
+				1ACD79661BE67F7F0013160E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1ACD79691BE67F7F0013160E /* Build configuration list for PBXNativeTarget "Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1ACD79611BE67F7F0013160E /* Debug */,
+				1ACD79621BE67F7F0013160E /* DebugStaticActivity */,
+				1ACD79631BE67F7F0013160E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1ACD79881BE6D77B0013160E /* Build configuration list for PBXNativeTarget "FSCHarmonyConfigKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1ACD79891BE6D77B0013160E /* Debug */,
+				1ACD798A1BE6D77B0013160E /* DebugStaticActivity */,
+				1ACD798B1BE6D77B0013160E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1ACD79D31BE6EECA0013160E /* Build configuration list for PBXNativeTarget "FSCHarmonyConfigWatchKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1ACD79D41BE6EECA0013160E /* Debug */,
+				1ACD79D51BE6EECA0013160E /* DebugStaticActivity */,
+				1ACD79D61BE6EECA0013160E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -86,7 +86,6 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
     [standardDefaults synchronize];
 }
 
-
 - (void) performBlockingClientActionsWithBlock: (void (^)(FSCHarmonyClient * client))actionsBlock
                      mainThreadCompletionBlock: (void (^)(void))completionBlock
 {

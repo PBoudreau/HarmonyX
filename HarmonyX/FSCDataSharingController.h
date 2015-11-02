@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FSCHarmonyConfiguration.h"
+#import <FSCHarmonyConfigKit/FSCHarmonyConfigKit.h>
 
 @interface FSCDataSharingController : NSObject
 

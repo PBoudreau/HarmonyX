@@ -9,9 +9,10 @@
 #import "TodayViewController.h"
 #import <NotificationCenter/NotificationCenter.h>
 
+#import <FSCHarmonyConfigKit/FSCHarmonyConfigKit.h>
+
 #import "FSCHarmonyCommon.h"
 #import "FSCDataSharingController.h"
-#import "FSCControlGroup.h"
 #import "UIImage+Mask.h"
 
 static CGFloat const activityCellDim = 75.0;

@@ -141,6 +141,20 @@ NSString *const kFSCActivityImageName = @"imageName";
     return maskedImage;
 }
 
+- (UIImage *) watchImage: (BOOL) selected
+{
+    NSMutableString * imageName = [NSMutableString stringWithFormat:
+                                   @"%@-watch",
+                                   [self imageName]];
+    
+    if (selected)
+    {
+        [imageName appendString: @"-selected"];
+    }
+    
+    return [UIImage imageNamed: imageName];
+}
+
 - (FSCControlGroup *) controlGroupNamed: (NSString *) controlGroupName
 {
     FSCControlGroup * controlGroup = nil;

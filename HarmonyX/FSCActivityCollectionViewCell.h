@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FSCActivity.h"
+#import <FSCHarmonyConfigKit/FSCHarmonyConfigKit.h>
 
 static NSString * const FSCActtivityCellIdentifier = @"ActivityCell";
 

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import <FSCHarmonyConfigKit/FSCHarmonyConfigKit.h>
+
 #import "FSCHarmonyClient.h"
-#import "FSCHarmonyConfiguration.h"
 
 @interface FSCHarmonyViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 

@@ -30,6 +30,7 @@
 - (NSDictionary *)dictionaryRepresentation;
 
 - (UIImage *) maskedImageWithColor: (UIColor *) color;
+- (UIImage *) watchImage: (BOOL) selected;
 
 - (FSCControlGroup *) controlGroupNamed: (NSString *) controlGroupName;
 - (FSCControlGroup *) volumeControlGroup;

@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FSCHarmonyConfiguration.h"
-#import "FSCActivity.h"
-#import "FSCFunction.h"
+#import <FSCHarmonyConfigKit/FSCHarmonyConfigKit.h>
 
 static NSString * const FSCHarmonyClientCurrentActivityChangedNotification = @"FSCHarmonyClientCurrentActivityChangedNotification";
 static NSString * const FSCHarmonyClientCurrentActivityChangedNotificationActivityKey = @"FSCHarmonyClientCurrentActivityChangedNotificationActivityKey";
