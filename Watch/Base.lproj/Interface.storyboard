@@ -10,8 +10,8 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Watch" customModuleProvider="target">
                     <items>
-                        <imageView width="30" height="30" alignment="center" verticalAlignment="center" image="Activity" contentMode="scaleAspectFit" animationDuration="1" id="GIc-7z-CZ7"/>
-                        <table alignment="left" hidden="YES" id="8zy-oT-gnM">
+                        <imageView width="30" height="30" alignment="center" verticalAlignment="center" hidden="YES" image="Activity" contentMode="scaleAspectFit" animationDuration="1" id="GIc-7z-CZ7"/>
+                        <table alignment="left" id="8zy-oT-gnM">
                             <items>
                                 <tableRow identifier="ActivityTableRowController" id="Q5d-6K-eRU" customClass="ActivityTableRowController" customModule="Watch_Extension">
                                     <group key="rootItem" width="1" height="35" alignment="left" id="6OZ-m1-NIx">

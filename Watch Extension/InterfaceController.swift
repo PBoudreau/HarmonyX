@@ -27,12 +27,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     var harmonyConfiguration: FSCHarmonyConfiguration?
-    var dataLoadedOnce = false
+    var stateInitialized = false
     
     override init() {
         super.init()
-        
-        self.loadData()
     }
     
     override func awakeWithContext(context: AnyObject?) {
@@ -44,59 +42,122 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        
+        if (!stateInitialized)
+        {
+            stateInitialized = true
+            
+            self.initializeState()
+        }
+        else
+        {
+            // *** Doesn't seem to be getting called.
+            
+            session = WCSession.defaultSession()
+            
+            session!.sendMessage(["command": "connect"], replyHandler:
+                {
+                    (response) -> Void in
+                    
+                    
+                }) { (error) -> Void in
+                    print(error)
+            }
+        }
     }
 
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
+        
+        session = WCSession.defaultSession()
+        
+        session!.sendMessage(["command": "disconnect"], replyHandler:
+            {
+                (response) -> Void in
+                
+                
+            }) { (error) -> Void in
+                print(error)
+        }
     }
 
-    private func loadData() {
+    private func initializeState() {
         session = WCSession.defaultSession()
         
         session!.sendMessage(["command": "getHarmonyState"], replyHandler:
             {
                 (response) -> Void in
                 
-                let currentActivityDict = response["currentActivity"] as? NSDictionary
-                let currentActivity = FSCActivity.modelObjectWithDictionary(currentActivityDict as! [NSObject : AnyObject]) as FSCActivity
-                
-                if let harmonyConfigDict = response["configuration"] as? NSDictionary, harmonyConfig = FSCHarmonyConfiguration.modelObjectWithDictionary(harmonyConfigDict as [NSObject : AnyObject]) {
-                    
-                    let activities = harmonyConfig.activity
-
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-
-                        self.table.setNumberOfRows(activities.count, withRowType: "ActivityTableRowController")
+                if let currentActivityDict = response["currentActivity"] as? NSDictionary, currentActivity = FSCActivity.modelObjectWithDictionary(currentActivityDict as [NSObject : AnyObject])
+                {
+                    if let harmonyConfigDict = response["configuration"] as? NSDictionary, harmonyConfig = FSCHarmonyConfiguration.modelObjectWithDictionary(harmonyConfigDict as [NSObject : AnyObject]) {
                         
-                        for (index, element) in activities.enumerate() {
-                            let row = self.table.rowControllerAtIndex(index) as! ActivityTableRowController
-                            
-                            let activity = element as! FSCActivity
-                            
-                            row.image.setImage(activity.watchImage(currentActivity.activityIdentifier == activity.activityIdentifier))
-                            row.activityName.setText(activity.label);
+                        self.refreshTableWithConfig(harmonyConfig, currentActivity: currentActivity)
+                        
+                        self.session!.sendMessage(["command": "connect"], replyHandler:
+                            {
+                                (response) -> Void in
+                                
+                                
+                            }) { (error) -> Void in
+                                print(error)
                         }
-                        
-                        self.activityImage.stopAnimating()
-                        self.activityImage.setHidden(true)
-                        self.table.setHidden(false)
-                    })
+                    }
                 }
-                
-                self.dataLoadedOnce = true
                 
             }, errorHandler: { (error) -> Void in
                 print(error)
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    
-                    self.activityImage.stopAnimating()
-                    self.activityImage.setHidden(true)
-                    self.table.setHidden(false)
-                    
-                    self.dataLoadedOnce = true
-                })
+//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                    
+//                    self.activityImage.stopAnimating()
+//                    self.activityImage.setHidden(true)
+//                    self.table.setHidden(false)
+//                })
         })
+    }
+    
+    private func refreshTableWithConfig(harmonyConfig: FSCHarmonyConfiguration, currentActivity: FSCActivity)
+    {
+        let activities = harmonyConfig.activity
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            
+            self.table.setNumberOfRows(activities.count, withRowType: "ActivityTableRowController")
+            
+            for (index, element) in activities.enumerate() {
+                let row = self.table.rowControllerAtIndex(index) as! ActivityTableRowController
+                
+                let activity = element as! FSCActivity
+                
+                row.image.setImage(activity.watchImage(currentActivity.activityIdentifier == activity.activityIdentifier))
+                row.activityName.setText(activity.label);
+            }
+            
+//            self.activityImage.stopAnimating()
+//            self.activityImage.setHidden(true)
+//            self.table.setHidden(false)
+        })
+    }
+    
+    func session(session: WCSession,
+        didReceiveMessage message: [String : AnyObject],
+        replyHandler: ([String : AnyObject]) -> Void)
+    {
+        if let command = message["command"] as? NSString
+        {
+            if command.isEqualToString("configurationChanged") ||
+                command.isEqualToString("currentActivityChanged")
+            {
+                if let currentActivityDict = message["currentActivity"] as? NSDictionary, currentActivity = FSCActivity.modelObjectWithDictionary(currentActivityDict as [NSObject : AnyObject])
+                {
+                    if let harmonyConfigDict = message["configuration"] as? NSDictionary, harmonyConfig = FSCHarmonyConfiguration.modelObjectWithDictionary(harmonyConfigDict as [NSObject : AnyObject]) {
+                        
+                        self.refreshTableWithConfig(harmonyConfig, currentActivity: currentActivity)
+                    }
+                }
+            }
+        }
     }
 }

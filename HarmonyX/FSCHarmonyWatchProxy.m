@@ -10,12 +10,11 @@
 
 #import <WatchConnectivity/WatchConnectivity.h>
 
-#import "FSCHarmonyClient.h"
-#import "FSCDataSharingController.h"
+#import "FSCHarmonyController.h"
 
 @interface FSCHarmonyWatchProxy () <WCSessionDelegate>
 
-@property (strong, nonatomic) FSCHarmonyClient * client;
+@property (strong, nonatomic) FSCHarmonyController * harmonyController;
 
 @end
 
@@ -31,6 +30,20 @@
             
             [session setDelegate: self];
             [session activateSession];
+            
+            [self setHarmonyController: [FSCHarmonyController new]];
+            
+            [[self harmonyController] loadConfiguration];
+            
+            [[NSNotificationCenter defaultCenter] addObserver: self
+                                                     selector: @selector(handleFSCHarmonyControllerConfigurationChangedNotification:)
+                                                         name: FSCHarmonyControllerConfigurationChangedNotification
+                                                       object: [self harmonyController]];
+            
+            [[NSNotificationCenter defaultCenter] addObserver: self
+                                                     selector: @selector(handleFSCHarmonyControllerCurrentActivityChangedNotification:)
+                                                         name: FSCHarmonyControllerCurrentActivityChangedNotification
+                                                       object: [self harmonyController]];
         }
     }
     
@@ -39,33 +52,7 @@
 
 #pragma mark - Class Methods
 
-- (FSCHarmonyClient *) client
-{
-    if (!_client)
-    {
-        NSString * username;
-        NSString * password;
-        NSString * IPAddress;
-        NSUInteger port;
-        
-        [FSCDataSharingController loadUsername: &username
-                                      password: &password
-                                     IPAddress: &IPAddress
-                                          port: &port];
-        
-        if (username &&
-            password &&
-            IPAddress)
-        {
-            [self setClient: [FSCHarmonyClient clientWithMyHarmonyUsername: username
-                                                         myHarmonyPassword: password
-                                                       harmonyHubIPAddress: IPAddress
-                                                            harmonyHubPort: port]];
-        }
-    }
-    
-    return _client;
-}
+
 
 #pragma mark - WCSessionDelegate
 
@@ -80,8 +67,8 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
     {
         if ([command isEqualToString: @"getHarmonyState"])
         {
-            FSCHarmonyConfiguration * config = [[self client] configurationWithRefresh: YES];
-            FSCActivity * currentActivity = [[self client] currentActivityFromConfiguration: config];
+            FSCHarmonyConfiguration * config = [[self harmonyController] harmonyConfiguration];
+            FSCActivity * currentActivity = [[self harmonyController] currentActivity];
             
             replyHandler(@{
                            @"configuration": [config dictionaryRepresentation],
@@ -89,7 +76,60 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
                            });
 
         }
+        else if ([command isEqualToString: @"connect"])
+        {
+            if (![[self harmonyController] client])
+            {
+                [[self harmonyController] performClientActionsWithBlock: nil
+                                              mainThreadCompletionBlock: nil];
+            }
+            else
+            {
+                [[[self harmonyController] client] connect];
+            }
+        }
+        else if ([command isEqualToString: @"disconnect"])
+        {
+            [[[self harmonyController] client] disconnect];
+        }
     }
+}
+
+#pragma mark - Notification Handling
+
+
+- (void) handleFSCHarmonyControllerConfigurationChangedNotification: (NSNotification *) note
+{
+    WCSession * session = [WCSession defaultSession];
+    
+    [session sendMessage: @{
+                            @"command": @"configurationChanged",
+                            @"configuration": [[[self harmonyController] harmonyConfiguration] dictionaryRepresentation],
+                            @"activity": [[[self harmonyController] currentActivity] dictionaryRepresentation]
+                            }
+            replyHandler: nil
+            errorHandler: ^(NSError * _Nonnull error) {
+                
+                NSLog(@"%@", error);
+            }];
+}
+
+- (void) handleFSCHarmonyControllerCurrentActivityChangedNotification: (NSNotification *) note
+{
+    FSCActivity * activity = [note userInfo][FSCHarmonyClientCurrentActivityChangedNotificationActivityKey];
+    
+    WCSession * session = [WCSession defaultSession];
+    
+    [session sendMessage: @{
+                            @"command": @"currentActivityChanged",
+                            @"configuration": [[[self harmonyController] harmonyConfiguration] dictionaryRepresentation],
+                            @"activity": [activity dictionaryRepresentation]
+                            }
+            replyHandler: nil
+            errorHandler: ^(NSError * _Nonnull error) {
+                
+                NSLog(@"%@", error);
+            }];
 }
 
 @end
