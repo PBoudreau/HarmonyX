@@ -12,25 +12,45 @@
 
 #import "FSCActivityCollectionViewCell.h"
 
-#import "FSCDataSharingController.h"
-
-static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
-
-@interface FSCHarmonyViewController ()
-
-@property (nonatomic, strong) FSCActivity * currentActivity;
-
-@end
-
 @implementation FSCHarmonyViewController
 
 #pragma mark - Superclass Methods
+
+- (void) viewDidLoad
+{
+    [self setHarmonyController: [FSCHarmonyController new]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(handleFSCHarmonyControllerClientSetupBeganNotification:)
+                                                 name: FSCHarmonyControllerClientSetupBeganNotification
+                                               object: [self harmonyController]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(handleFSCHarmonyControllerClientSetupEndedNotification:)
+                                                 name: FSCHarmonyControllerClientSetupEndedNotification
+                                               object: [self harmonyController]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(handleFSCHarmonyControllerConfigurationChangedNotification:)
+                                                 name: FSCHarmonyControllerConfigurationChangedNotification
+                                               object: [self harmonyController]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(handleFSCHarmonyControllerCurrentActivityChangedNotification:)
+                                                 name: FSCHarmonyControllerCurrentActivityChangedNotification
+                                               object: [self harmonyController]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(handleFSCHarmonyControllerClientActionCompletedNotification:)
+                                                 name: FSCHarmonyControllerClientActionCompletedNotification
+                                               object: [self harmonyController]];
+}
 
 - (void) viewDidAppear: (BOOL) animated
 {
     [super viewDidAppear: animated];
     
-    if (![self client])
+    if (![[self harmonyController] client])
     {
         [self performBlockingClientActionsWithBlock: nil
                           mainThreadCompletionBlock: nil];
@@ -46,44 +66,19 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
 
 #pragma mark - Class Methods
 
-- (void) loadConfiguration
-{
-    [self setHarmonyConfiguration: [FSCDataSharingController loadHarmonyConfiguration]];
-    
-    [self loadCurrentActivity];
-}
-
 - (NSArray *) activities
 {
-    return [[self harmonyConfiguration] activity];
+    return [[self harmonyController] activities];
 }
 
-- (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
+- (void) harmonyConfigurationChanged
 {
-    _harmonyConfiguration = harmonyConfiguration;
-    
     [[self activityCollectionView] reloadData];
 }
 
-- (void) loadCurrentActivity
+- (void) currentActivityChanged: (FSCActivity *) newActivity
 {
-    NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
-    [standardDefaults synchronize];
-    NSString * currentActivityIdentifier = [standardDefaults objectForKey: standardDefaultsKeyCurrentActivity];
-    
-    FSCActivity * currentActivity = [[self harmonyConfiguration] activityWithId: currentActivityIdentifier];
-    
-    [self setCurrentActivity: currentActivity];
-    
     [self highlightCurrentActivity];
-}
-
-- (void) saveCurrentActivity
-{
-    NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
-    [standardDefaults setObject: [[self currentActivity] activityIdentifier]
-                         forKey: standardDefaultsKeyCurrentActivity];
-    [standardDefaults synchronize];
 }
 
 - (void) performBlockingClientActionsWithBlock: (void (^)(FSCHarmonyClient * client))actionsBlock
@@ -91,136 +86,8 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
 {
     [self prepareForBlockingClientAction];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        NSError * error = nil;
-        BOOL clientSetupEndedCalled = NO;
-        
-        @try
-        {
-            if (![self client])
-            {
-                NSString * username;
-                NSString * password;
-                NSString * IPAddress;
-                NSUInteger port;
-                
-                [FSCDataSharingController loadUsername: &username
-                                              password: &password
-                                             IPAddress: &IPAddress
-                                                  port: &port];
-                
-                if (username &&
-                    password &&
-                    IPAddress)
-                {
-                    [self clientSetupBegan];
-                    
-                    [self setClient: [FSCHarmonyClient clientWithMyHarmonyUsername: username
-                                                                 myHarmonyPassword: password
-                                                               harmonyHubIPAddress: IPAddress
-                                                                    harmonyHubPort: port]];
-                    
-                    [[self client] setConfiguration: [self harmonyConfiguration]];
-                    
-                    [[NSNotificationCenter defaultCenter] addObserver: self
-                                                             selector: @selector(handleFSCHarmonyClientCurrentActivityChangedNotification:)
-                                                                 name: FSCHarmonyClientCurrentActivityChangedNotification
-                                                               object: [self client]];
-                    
-                    [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
-                    
-                    [self clientSetupEnded];
-                    clientSetupEndedCalled = YES;
-                }
-                else if (username ||
-                         password ||
-                         IPAddress)
-                {
-                    @throw [NSException exceptionWithName: FSCExceptionCredentials
-                                                   reason: [NSString stringWithFormat:
-                                                            NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS", nil),
-                                                            username ? username : NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT", nil),
-                                                            password ? @"******" : NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT", nil),
-                                                            IPAddress ? IPAddress : NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-CREDENTIALS-EMPYT", nil)]
-                                                 userInfo: nil];
-                }
-                else
-                {
-                    @throw [NSException exceptionWithName: FSCExceptionSetup
-                                                   reason: NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-CONNECTION_ERROR-SETUP", nil)
-                                                 userInfo: nil];
-                }
-            }
-            else if (![[self client] isConnected])
-            {
-                [[self client] connect];
-            }
-            
-            if (actionsBlock)
-            {
-                actionsBlock([self client]);
-            }
-        }
-        @catch (NSException * exception)
-        {
-            NSString * errorDescription = [exception reason];
-            NSInteger errorCode = FSCErrorCodeErrorPerformingClientAction;
-            
-            if ([[exception name] isEqualToString: FSCExceptionSetup] ||
-                [[exception name] isEqualToString: FSCExceptionCredentials] ||
-                [[exception name] isEqualToString: FSCExceptionMyHarmonyConnection])
-            {
-                errorDescription = NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-MY_HARMONY-CONNECTION_ERROR-CREDENTIALS", nil);
-                
-                if ([[exception name] isEqualToString: FSCExceptionSetup])
-                {
-                    errorCode = FSCErrorCodeMissingSetup;
-                }
-                else if ([[exception name] isEqualToString: FSCExceptionCredentials])
-                {
-                    errorCode = FSCErrorCodeMissingCredentials;
-                }
-            }
-            else if ([[exception name] isEqualToString: FSCExceptionHarmonyHubConnection])
-            {
-                errorDescription = NSLocalizedString(@"FSCHARMONYVIEWCONTROLLER-MY_HARMONY-CONNECTION_ERROR-SETUP", nil);
-            }
-            
-            NSMutableDictionary * userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                              errorDescription, NSLocalizedDescriptionKey,
-                                              nil];
-            
-            NSError * originalError = nil;
-            
-            if ([exception userInfo] &&
-                (originalError = [[exception userInfo] objectForKey: FSCErrorUserInfoKeyOriginalError]))
-            {
-                userInfo[FSCErrorUserInfoKeyOriginalError] = [originalError localizedDescription];
-            }
-            
-            error = [NSError errorWithDomain: FSCErrorDomain
-                                        code: errorCode
-                                    userInfo: userInfo];
-        }
-        @finally
-        {
-            if (!clientSetupEndedCalled)
-            {
-                [self clientSetupEnded];
-            }
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if (completionBlock)
-            {
-                completionBlock();
-            }
-            
-            [self cleanupAfterBlockingClientActionWithError: error];
-        });
-    });
+    [[self harmonyController] performClientActionsWithBlock: actionsBlock
+                                  mainThreadCompletionBlock: completionBlock];
 }
 
 - (void) clientSetupBegan
@@ -231,15 +98,6 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
 - (void) clientSetupEnded
 {
     
-}
-
-- (void) handleCurrentActivityChanged: (FSCActivity *) newActivity
-{
-    [self setCurrentActivity: newActivity];
-    
-    [self saveCurrentActivity];
-    
-    [self highlightCurrentActivity];
 }
 
 - (void) highlightCurrentActivity
@@ -264,7 +122,7 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
 {
     NSInteger count = 0;
     
-    if ([self harmonyConfiguration])
+    if ([[self harmonyController] harmonyConfiguration])
     {
         count = [[self activities] count];
     }
@@ -280,7 +138,7 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
     
     FSCActivity * activity = [self activities][[indexPath item]];
     
-    if ([[activity activityIdentifier] isEqualToString: [[self currentActivity] activityIdentifier]])
+    if ([[activity activityIdentifier] isEqualToString: [[[self harmonyController] currentActivity] activityIdentifier]])
     {
         [cell setActivity: activity
             withMaskColor: [self inverseColorForActivityMask]
@@ -332,12 +190,33 @@ didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 
 #pragma mark - Notification Handling
 
-- (void) handleFSCHarmonyClientCurrentActivityChangedNotification: (NSNotification *) note
+- (void) handleFSCHarmonyControllerClientSetupBeganNotification: (NSNotification *) note
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [self handleCurrentActivityChanged: [[note userInfo] objectForKey: FSCHarmonyClientCurrentActivityChangedNotificationActivityKey]];
-    });
+    [self clientSetupBegan];
+}
+
+- (void) handleFSCHarmonyControllerClientSetupEndedNotification: (NSNotification *) note
+{
+    [self clientSetupEnded];
+}
+
+- (void) handleFSCHarmonyControllerConfigurationChangedNotification: (NSNotification *) note
+{
+    [self harmonyConfigurationChanged];
+}
+
+- (void) handleFSCHarmonyControllerCurrentActivityChangedNotification: (NSNotification *) note
+{
+    FSCActivity * newActivity = [note userInfo][FSCHarmonyClientCurrentActivityChangedNotificationActivityKey];
+    
+    [self currentActivityChanged: newActivity];
+}
+
+- (void) handleFSCHarmonyControllerClientActionCompletedNotification: (NSNotification *) note
+{
+    NSError * error = [note userInfo][FSCHarmonyControllerClientActionCompletedErrorKey];
+    
+    [self cleanupAfterBlockingClientActionWithError: error];
 }
 
 @end

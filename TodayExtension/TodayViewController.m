@@ -88,7 +88,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
     
     [self loadUIState];
     
-    [self loadConfiguration];
+    [[self harmonyController] loadConfiguration];
     
     [self updateContentLayout];
 }
@@ -97,9 +97,9 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 {
     [super viewDidAppear: animated];
     
-    if ([self client])
+    if ([[self harmonyController] client])
     {
-        [[self client] connect];
+        [[[self harmonyController] client] connect];
     }
 }
 
@@ -109,9 +109,9 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
     
     [self saveUIState];
     
-    if ([self client])
+    if ([[self harmonyController] client])
     {
-        [[self client] disconnect];
+        [[[self harmonyController] client] disconnect];
     }
 }
 
@@ -122,18 +122,18 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 
 - (NSArray *) activities
 {
-    NSArray * allActivities = [[self harmonyConfiguration] activity];
+    NSArray * allActivities = [super activities];
     
     return [allActivities subarrayWithRange: NSMakeRange(0, [allActivities count] - 1)];
 }
 
-- (void) setHarmonyConfiguration: (FSCHarmonyConfiguration *) harmonyConfiguration
+- (void) harmonyConfigurationChanged
 {
-    [super setHarmonyConfiguration: harmonyConfiguration];
+    [super harmonyConfigurationChanged];
     
     NSString * statusLabelText = @"";
     
-    if (![self harmonyConfiguration])
+    if (![[self harmonyController] harmonyConfiguration])
     {
         statusLabelText = NSLocalizedString(@"TODAYVIEWCONTROLLER-STATUS-NO_HARMONY_CONFIGURATION", nil);
     }
@@ -159,9 +159,9 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
     });
 }
 
-- (void) handleCurrentActivityChanged: (FSCActivity *) newActivity
+- (void) currentActivityChanged: (FSCActivity *) newActivity
 {
-    [super handleCurrentActivityChanged: newActivity];
+    [super currentActivityChanged: newActivity];
     
     [self updateUIForCurrentActivity: newActivity];
 }
@@ -302,9 +302,9 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
     
     CGFloat numRows = 0;
     
-    if ([self harmonyConfiguration])
+    if ([[self harmonyController] harmonyConfiguration])
     {
-        numRows = ceilf(([[[self harmonyConfiguration] activity] count] - 1) / numCellsPerRow);
+        numRows = ceilf(([[[[self harmonyController] harmonyConfiguration] activity] count] - 1) / numCellsPerRow);
     }
 
     CGFloat collectionViewHeight = numRows * activityCellDim;
@@ -324,7 +324,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
     
     if (!powerOffActivityHidden)
     {
-        FSCActivity * powerOffActivity = [[[self harmonyConfiguration] activity] lastObject];
+        FSCActivity * powerOffActivity = [[[[self harmonyController] harmonyConfiguration] activity] lastObject];
         
         if ([[[powerOffActivity label] lowercaseString] isEqualToString: @"poweroff"])
         {
@@ -386,7 +386,7 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 {
     [self performBlockingClientActionsWithBlock: ^(FSCHarmonyClient *client) {
         
-        FSCActivity * currentActivity = [client currentActivityFromConfiguration: [self harmonyConfiguration]];
+        FSCActivity * currentActivity = [client currentActivityFromConfiguration: [[self harmonyController] harmonyConfiguration]];
         
         FSCFunction * function = functionBlock(currentActivity);
         

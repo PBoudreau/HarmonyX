@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <FSCHarmonyConfigKit/FSCHarmonyConfigKit.h>
-
-#import "FSCHarmonyClient.h"
+#import "FSCHarmonyController.h"
 
 @interface FSCHarmonyViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -20,12 +18,12 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *activityCollectionView;
 
-@property (strong, nonatomic) FSCHarmonyClient * client;
-@property (strong, nonatomic) FSCHarmonyConfiguration * harmonyConfiguration;
+@property (strong, nonatomic) FSCHarmonyController * harmonyController;
 
-- (void) loadConfiguration;
 - (NSArray *) activities;
 
+- (void) harmonyConfigurationChanged;
+- (void) currentActivityChanged: (FSCActivity *) newActivity;
 - (void) performBlockingClientActionsWithBlock: (void (^)(FSCHarmonyClient * client))actionsBlock
                      mainThreadCompletionBlock: (void (^)(void))completionBlock;
 - (void) prepareForBlockingClientAction;
@@ -37,7 +35,5 @@
 - (UIColor *) backgroundColorForActivityMask;
 - (UIColor *) inverseColorForActivityMask;
 - (UIColor *) backgroundColorForInverseActivityMask;
-
-- (void) handleCurrentActivityChanged: (FSCActivity *) newActivity;
 
 @end

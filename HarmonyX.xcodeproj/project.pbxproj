@@ -24,6 +24,8 @@
 		1A8AE5E51A0BC10F0047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
 		1A8AE5E61A0C1AE40047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
 		1AA230D11BE811AC00B122F3 /* FSCHarmonyConfigKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD797F1BE6D77B0013160E /* FSCHarmonyConfigKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1AA230D71BE81F3200B122F3 /* FSCHarmonyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA230D61BE81F3200B122F3 /* FSCHarmonyController.m */; settings = {ASSET_TAGS = (); }; };
+		1AA230D81BE8334800B122F3 /* FSCHarmonyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA230D61BE81F3200B122F3 /* FSCHarmonyController.m */; settings = {ASSET_TAGS = (); }; };
 		1AA9E71B1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71A1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m */; };
 		1AA9E71C1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71A1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m */; };
 		1AA9E71F1A110595000CE1DD /* UIImage+Mask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71E1A110595000CE1DD /* UIImage+Mask.m */; };
@@ -221,6 +223,8 @@
 		1A8AE5E01A0BA3630047436B /* FSCDataSharingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCDataSharingController.m; sourceTree = "<group>"; };
 		1A8AE5E31A0BC10F0047436B /* FSCHarmonyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyClient.h; sourceTree = "<group>"; };
 		1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyClient.m; sourceTree = "<group>"; };
+		1AA230D51BE81F3200B122F3 /* FSCHarmonyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCHarmonyController.h; sourceTree = "<group>"; };
+		1AA230D61BE81F3200B122F3 /* FSCHarmonyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCHarmonyController.m; sourceTree = "<group>"; };
 		1AA9E7191A103A6D000CE1DD /* FSCActivityCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCActivityCollectionViewCell.h; sourceTree = "<group>"; };
 		1AA9E71A1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCActivityCollectionViewCell.m; sourceTree = "<group>"; };
 		1AA9E71D1A110595000CE1DD /* UIImage+Mask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Mask.h"; sourceTree = "<group>"; };
@@ -377,6 +381,8 @@
 			children = (
 				1A69F4191A00497000860482 /* AppDelegate.h */,
 				1A69F41A1A00497000860482 /* AppDelegate.m */,
+				1AA230D51BE81F3200B122F3 /* FSCHarmonyController.h */,
+				1AA230D61BE81F3200B122F3 /* FSCHarmonyController.m */,
 				1AA9E7211A113239000CE1DD /* FSCHarmonyViewController.h */,
 				1AA9E7221A113239000CE1DD /* FSCHarmonyViewController.m */,
 				1A69F41C1A00497000860482 /* ViewController.h */,
@@ -828,6 +834,7 @@
 				1AA9E7241A113239000CE1DD /* FSCHarmonyViewController.m in Sources */,
 				1A2742621A275E7E00F5C933 /* FSCTransparentTouchableView.m in Sources */,
 				1AA9E7201A110595000CE1DD /* UIImage+Mask.m in Sources */,
+				1AA230D81BE8334800B122F3 /* FSCHarmonyController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -843,6 +850,7 @@
 				1A69F41B1A00497000860482 /* AppDelegate.m in Sources */,
 				1AA9E71B1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */,
 				1A69F4181A00497000860482 /* main.m in Sources */,
+				1AA230D71BE81F3200B122F3 /* FSCHarmonyController.m in Sources */,
 				1AA9E7231A113239000CE1DD /* FSCHarmonyViewController.m in Sources */,
 				1A8AE5E51A0BC10F0047436B /* FSCHarmonyClient.m in Sources */,
 			);

@@ -38,7 +38,7 @@
     
     [self loadValues];
     
-    [self loadConfiguration];
+    [[self harmonyController] loadConfiguration];
     
     [[self view] layoutIfNeeded];
     
@@ -84,10 +84,10 @@
 
 - (IBAction) connectButtonTapped: (id) sender
 {
-    if ([self client])
+    if ([[self harmonyController] client])
     {
-        [[self client] disconnect];
-        [self setClient: nil];
+        [[[self harmonyController] client] disconnect];
+        [[self harmonyController] setClient: nil];
     }
     
     [[self usernameTextField] resignFirstResponder];
@@ -158,7 +158,7 @@
         }
          mainThreadCompletionBlock: ^{
              
-             [self setHarmonyConfiguration: configuration];
+             [[self harmonyController] setHarmonyConfiguration: configuration];
          }];
     }
 }
@@ -240,9 +240,9 @@
                                                     style: UIAlertActionStyleDestructive
                                                   handler: ^(UIAlertAction *action) {
                                                       
-                                                      if ([self client])
+                                                      if ([[self harmonyController] client])
                                                       {
-                                                          [[self client] renewTokens];
+                                                          [[[self harmonyController] client] renewTokens];
                                                       }
                                                   }]];
     
