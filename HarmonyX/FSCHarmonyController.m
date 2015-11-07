@@ -48,11 +48,16 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
     
     [self setCurrentActivity: currentActivity];
     
+    NSMutableDictionary * userInfo = [NSMutableDictionary new];
+    
+    if (currentActivity)
+    {
+        userInfo[FSCHarmonyClientCurrentActivityChangedNotificationActivityKey] = currentActivity;
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName: FSCHarmonyControllerCurrentActivityChangedNotification
                                                         object: self
-                                                      userInfo: @{
-                                                                  FSCHarmonyClientCurrentActivityChangedNotificationActivityKey: currentActivity
-                                                                  }];
+                                                      userInfo: userInfo];
 }
 
 - (void) saveCurrentActivity
