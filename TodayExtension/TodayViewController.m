@@ -15,7 +15,9 @@
 #import "FSCDataSharingController.h"
 #import "UIImage+Mask.h"
 
-static CGFloat const activityCellDim = 75.0;
+// For some reason, leaving this value at 75.0 like it used to be for a long time causes the
+// widget's height to be 0 - everything's invisible.
+static CGFloat const activityCellDim = 74.0;
 
 static NSArray * viewsForStatePreservation = nil;
 
