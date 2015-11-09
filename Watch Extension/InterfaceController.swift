@@ -36,41 +36,52 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        // Configure interface objects here.
+        session = WCSession.defaultSession()
     }
 
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         
-        if (!stateInitialized)
+        print("willActivate")
+
+        if (!self.stateInitialized)
         {
-            stateInitialized = true
+            self.stateInitialized = true
             
             self.initializeState()
         }
         else
         {
-            // *** Doesn't seem to be getting called.
-            
-            session = WCSession.defaultSession()
-            
-            session!.sendMessage(["command": "connect"], replyHandler:
+            // Introduce a small delay before reconnecting to Harmony Hub as otherwise, we get
+            // the error:
+            //
+            // Error connecting:  Error Domain=WCErrorDomain Code=7007 "WatchConnectivity session 
+            // on paired device is not reachable."
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), { () -> Void in
+                
+                while !self.session!.reachable
                 {
-                    (response) -> Void in
-                    
-                    
-                }) { (error) -> Void in
-                    print(error)
-            }
+                    NSThread.sleepForTimeInterval(0.25)
+                }
+                
+                self.session!.sendMessage(["command": "connect"], replyHandler:
+                    {
+                        (response) -> Void in
+                        
+                        
+                    }) { (error) -> Void in
+                        print("Error connecting: ", error)
+                }
+            })
         }
     }
-
+    
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
-        
-        session = WCSession.defaultSession()
+
+        print("didDeactivate")
         
         session!.sendMessage(["command": "disconnect"], replyHandler:
             {
@@ -78,12 +89,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 
                 
             }) { (error) -> Void in
-                print(error)
+                print("Error disconnecting: ", error)
         }
     }
 
     private func initializeState() {
-        session = WCSession.defaultSession()
+        
+        print("initializeState")
         
         session!.sendMessage(["command": "getHarmonyState"], replyHandler:
             {
@@ -101,20 +113,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                                 
                                 
                             }) { (error) -> Void in
-                                print(error)
+                                print("Error connecting: ", error)
                         }
                     }
                 }
                 
             }, errorHandler: { (error) -> Void in
-                print(error)
-                
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    
-//                    self.activityImage.stopAnimating()
-//                    self.activityImage.setHidden(true)
-//                    self.table.setHidden(false)
-//                })
+                print("Error obtaining Harmony state: ", error)
         })
     }
     
@@ -134,10 +139,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 row.image.setImage(activity.watchImage(currentActivity.activityIdentifier == activity.activityIdentifier))
                 row.activityName.setText(activity.label);
             }
-            
-//            self.activityImage.stopAnimating()
-//            self.activityImage.setHidden(true)
-//            self.table.setHidden(false)
         })
     }
     
@@ -159,5 +160,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 }
             }
         }
+        
+        replyHandler([:]);
     }
 }

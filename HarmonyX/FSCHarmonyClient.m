@@ -122,6 +122,8 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
 
 - (void) startHeartbeat
 {
+    ALog(@"%@", NSStringFromSelector(_cmd));
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self setHeartbeatTimer: [NSTimer scheduledTimerWithTimeInterval: 30
@@ -134,6 +136,8 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
 
 - (void) stopHeartbeatTimer
 {
+    ALog(@"%@", NSStringFromSelector(_cmd));
+    
     [[self heartbeatTimer] invalidate];
     [self setHeartbeatTimer: nil];
 }

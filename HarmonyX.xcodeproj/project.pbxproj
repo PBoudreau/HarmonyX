@@ -24,8 +24,8 @@
 		1A8AE5E51A0BC10F0047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
 		1A8AE5E61A0C1AE40047436B /* FSCHarmonyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8AE5E41A0BC10F0047436B /* FSCHarmonyClient.m */; };
 		1AA230D11BE811AC00B122F3 /* FSCHarmonyConfigKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD797F1BE6D77B0013160E /* FSCHarmonyConfigKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1AA230D71BE81F3200B122F3 /* FSCHarmonyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA230D61BE81F3200B122F3 /* FSCHarmonyController.m */; settings = {ASSET_TAGS = (); }; };
-		1AA230D81BE8334800B122F3 /* FSCHarmonyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA230D61BE81F3200B122F3 /* FSCHarmonyController.m */; settings = {ASSET_TAGS = (); }; };
+		1AA230D71BE81F3200B122F3 /* FSCHarmonyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA230D61BE81F3200B122F3 /* FSCHarmonyController.m */; };
+		1AA230D81BE8334800B122F3 /* FSCHarmonyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA230D61BE81F3200B122F3 /* FSCHarmonyController.m */; };
 		1AA9E71B1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71A1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m */; };
 		1AA9E71C1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71A1A103A6D000CE1DD /* FSCActivityCollectionViewCell.m */; };
 		1AA9E71F1A110595000CE1DD /* UIImage+Mask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9E71E1A110595000CE1DD /* UIImage+Mask.m */; };
@@ -42,32 +42,32 @@
 		1ACD795A1BE67F7F0013160E /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD79591BE67F7F0013160E /* ComplicationController.swift */; };
 		1ACD795C1BE67F7F0013160E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1ACD795B1BE67F7F0013160E /* Assets.xcassets */; };
 		1ACD79601BE67F7F0013160E /* Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1ACD79421BE67F7F0013160E /* Watch.app */; };
-		1ACD796C1BE683410013160E /* ActivityTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD796B1BE683410013160E /* ActivityTableRowController.swift */; settings = {ASSET_TAGS = (); }; };
+		1ACD796C1BE683410013160E /* ActivityTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD796B1BE683410013160E /* ActivityTableRowController.swift */; };
 		1ACD79721BE69CF20013160E /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD79711BE69CF20013160E /* WatchConnectivity.framework */; };
 		1ACD79821BE6D77B0013160E /* FSCHarmonyConfigKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ACD79811BE6D77B0013160E /* FSCHarmonyConfigKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1ACD79861BE6D77B0013160E /* FSCHarmonyConfigKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD797F1BE6D77B0013160E /* FSCHarmonyConfigKit.framework */; };
 		1ACD79871BE6D77B0013160E /* FSCHarmonyConfigKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD797F1BE6D77B0013160E /* FSCHarmonyConfigKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1ACD799C1BE6EB5B0013160E /* FSCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092161A10074400602E69 /* FSCActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1ACD799D1BE6EB6C0013160E /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD799D1BE6EB6C0013160E /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; };
 		1ACD799E1BE6EB700013160E /* FSCContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092181A10074400602E69 /* FSCContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1ACD799F1BE6EB790013160E /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD799F1BE6EB790013160E /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; };
 		1ACD79A01BE6EB7C0013160E /* FSCControlGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC0921A1A10074400602E69 /* FSCControlGroup.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1ACD79A11BE6EB850013160E /* FSCControlGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921B1A10074400602E69 /* FSCControlGroup.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79A11BE6EB850013160E /* FSCControlGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921B1A10074400602E69 /* FSCControlGroup.m */; };
 		1ACD79A21BE6EB8B0013160E /* FSCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC0921C1A10074400602E69 /* FSCDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1ACD79A31BE6EB920013160E /* FSCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921D1A10074400602E69 /* FSCDevice.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79A31BE6EB920013160E /* FSCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921D1A10074400602E69 /* FSCDevice.m */; };
 		1ACD79A41BE6EB970013160E /* FSCFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092201A10074400602E69 /* FSCFunction.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1ACD79A51BE6EB9E0013160E /* FSCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092211A10074400602E69 /* FSCFunction.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79A51BE6EB9E0013160E /* FSCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092211A10074400602E69 /* FSCFunction.m */; };
 		1ACD79A61BE6EBA20013160E /* FSCGlobal.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092221A10074400602E69 /* FSCGlobal.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1ACD79A71BE6EBAB0013160E /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79A71BE6EBAB0013160E /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; };
 		1ACD79A81BE6EBAF0013160E /* FSCHarmonyConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092241A10074400602E69 /* FSCHarmonyConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1ACD79A91BE6EBBA0013160E /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; settings = {ASSET_TAGS = (); }; };
-		1ACD79C11BE6EECA0013160E /* FSCControlGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921B1A10074400602E69 /* FSCControlGroup.m */; settings = {ASSET_TAGS = (); }; };
-		1ACD79C21BE6EECA0013160E /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; settings = {ASSET_TAGS = (); }; };
-		1ACD79C31BE6EECA0013160E /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; settings = {ASSET_TAGS = (); }; };
-		1ACD79C41BE6EECA0013160E /* FSCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921D1A10074400602E69 /* FSCDevice.m */; settings = {ASSET_TAGS = (); }; };
-		1ACD79C51BE6EECA0013160E /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; settings = {ASSET_TAGS = (); }; };
-		1ACD79C61BE6EECA0013160E /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; settings = {ASSET_TAGS = (); }; };
-		1ACD79C71BE6EECA0013160E /* FSCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092211A10074400602E69 /* FSCFunction.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79A91BE6EBBA0013160E /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; };
+		1ACD79C11BE6EECA0013160E /* FSCControlGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921B1A10074400602E69 /* FSCControlGroup.m */; };
+		1ACD79C21BE6EECA0013160E /* FSCHarmonyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092251A10074400602E69 /* FSCHarmonyConfiguration.m */; };
+		1ACD79C31BE6EECA0013160E /* FSCContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092191A10074400602E69 /* FSCContent.m */; };
+		1ACD79C41BE6EECA0013160E /* FSCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0921D1A10074400602E69 /* FSCDevice.m */; };
+		1ACD79C51BE6EECA0013160E /* FSCGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092231A10074400602E69 /* FSCGlobal.m */; };
+		1ACD79C61BE6EECA0013160E /* FSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092171A10074400602E69 /* FSCActivity.m */; };
+		1ACD79C71BE6EECA0013160E /* FSCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC092211A10074400602E69 /* FSCFunction.m */; };
 		1ACD79CA1BE6EECA0013160E /* FSCContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092181A10074400602E69 /* FSCContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1ACD79CB1BE6EECA0013160E /* FSCHarmonyConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092241A10074400602E69 /* FSCHarmonyConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1ACD79CC1BE6EECA0013160E /* FSCGlobal.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092221A10074400602E69 /* FSCGlobal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -77,7 +77,7 @@
 		1ACD79D01BE6EECA0013160E /* FSCHarmonyConfigKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ACD79811BE6D77B0013160E /* FSCHarmonyConfigKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1ACD79D11BE6EECA0013160E /* FSCFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC092201A10074400602E69 /* FSCFunction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1ACD79DA1BE6EFED0013160E /* FSCHarmonyConfigKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACD79D71BE6EECA0013160E /* FSCHarmonyConfigKit.framework */; };
-		1ACD79DF1BE7B7B80013160E /* FSCHarmonyWatchProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD79DE1BE7B7B80013160E /* FSCHarmonyWatchProxy.m */; settings = {ASSET_TAGS = (); }; };
+		1ACD79DF1BE7B7B80013160E /* FSCHarmonyWatchProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD79DE1BE7B7B80013160E /* FSCHarmonyWatchProxy.m */; };
 		1AF6ED541A2BBA5B0008F3C3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AF6ED561A2BBA5B0008F3C3 /* Localizable.strings */; };
 		1AF6ED5B1A2BBB630008F3C3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF6ED5D1A2BBB630008F3C3 /* MainInterface.storyboard */; };
 		1AF6ED601A2BBC970008F3C3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AF6ED561A2BBA5B0008F3C3 /* Localizable.strings */; };
@@ -655,7 +655,8 @@
 		1A69F40A1A00497000860482 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Fasterre;
 				TargetAttributes = {
 					1A6043091A0A887B0074D6A5 = {
@@ -992,6 +993,7 @@
 				);
 				INFOPLIST_FILE = TodayExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fasterre.HarmonyX.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1007,6 +1009,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = TodayExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fasterre.HarmonyX.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1034,6 +1037,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1104,6 +1108,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HarmonyX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fasterre.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1119,6 +1124,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HarmonyX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fasterre.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1443,6 +1449,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1476,6 +1483,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HarmonyX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fasterre.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1494,6 +1502,7 @@
 				);
 				INFOPLIST_FILE = TodayExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fasterre.HarmonyX.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;

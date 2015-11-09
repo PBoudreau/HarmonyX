@@ -11,6 +11,7 @@
 #import <WatchConnectivity/WatchConnectivity.h>
 
 #import "FSCHarmonyController.h"
+#import "FSCHarmonyCommon.h"
 
 @interface FSCHarmonyWatchProxy () <WCSessionDelegate>
 
@@ -24,12 +25,11 @@
 {
     if (self = [super init])
     {
+        ALog(@"Initializing Watch Proxy");
+        
         if ([WCSession isSupported])
         {
-            WCSession * session = [WCSession defaultSession];
-            
-            [session setDelegate: self];
-            [session activateSession];
+            ALog(@"Watch Connectivity Session is supported");
             
             [self setHarmonyController: [FSCHarmonyController new]];
             
@@ -44,10 +44,25 @@
                                                      selector: @selector(handleFSCHarmonyControllerCurrentActivityChangedNotification:)
                                                          name: FSCHarmonyControllerCurrentActivityChangedNotification
                                                        object: [self harmonyController]];
+            
+            ALog(@"Activating Watch Connectivity Session");
+            WCSession * session = [WCSession defaultSession];
+            
+            [session setDelegate: self];
+            [session activateSession];
+        }
+        else
+        {
+            ALog(@"Watch Connectivity Session is NOT supported");
         }
     }
     
     return self;
+}
+
+- (void) dealloc
+{
+    ALog(@"%@", NSStringFromSelector(_cmd));
 }
 
 #pragma mark - Class Methods
@@ -61,19 +76,30 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
     replyHandler: (void (^) (NSDictionary <NSString *,id> * _Nonnull)) replyHandler
 {
     NSString * command = message[@"command"];
+  
+    ALog(@"Watch Proxy received command '%@'", command);
     
     if (command &&
         [command isKindOfClass: [NSString class]])
     {
         if ([command isEqualToString: @"getHarmonyState"])
         {
-            FSCHarmonyConfiguration * config = [[self harmonyController] harmonyConfiguration];
+            FSCHarmonyConfiguration * configuration = [[self harmonyController] harmonyConfiguration];
             FSCActivity * currentActivity = [[self harmonyController] currentActivity];
+
+            NSMutableDictionary * replyContent = [NSMutableDictionary new];
             
-            replyHandler(@{
-                           @"configuration": [config dictionaryRepresentation],
-                           @"currentActivity": [currentActivity dictionaryRepresentation]
-                           });
+            if (configuration)
+            {
+                replyContent[@"configuration"] = [configuration dictionaryRepresentation];
+            }
+            
+            if (currentActivity)
+            {
+                replyContent[@"currentActivity"] = [currentActivity dictionaryRepresentation];
+            }
+            
+            replyHandler(replyContent);
 
         }
         else if ([command isEqualToString: @"connect"])
@@ -87,10 +113,16 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
             {
                 [[[self harmonyController] client] connect];
             }
+            
+            replyHandler(@{});
         }
         else if ([command isEqualToString: @"disconnect"])
         {
+            ALog(@"Disconnect controller: %@; client: %@", self.harmonyController, self.harmonyController.client);
+            
             [[[self harmonyController] client] disconnect];
+            
+            replyHandler(@{});
         }
     }
 }
@@ -100,35 +132,43 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
 
 - (void) handleFSCHarmonyControllerConfigurationChangedNotification: (NSNotification *) note
 {
+    ALog(@"Watch Proxy notified of Harmony configuration change");
+    
+    FSCHarmonyConfiguration * configuration = [[self harmonyController] harmonyConfiguration];
+    FSCActivity * activity = [[self harmonyController] currentActivity];
+    
     WCSession * session = [WCSession defaultSession];
     
     [session sendMessage: @{
                             @"command": @"configurationChanged",
-                            @"configuration": [[[self harmonyController] harmonyConfiguration] dictionaryRepresentation],
-                            @"activity": [[[self harmonyController] currentActivity] dictionaryRepresentation]
+                            @"configuration": [configuration dictionaryRepresentation],
+                            @"activity": [activity dictionaryRepresentation]
                             }
             replyHandler: nil
             errorHandler: ^(NSError * _Nonnull error) {
                 
-                NSLog(@"%@", error);
+                ALog(@"%@", error);
             }];
 }
 
 - (void) handleFSCHarmonyControllerCurrentActivityChangedNotification: (NSNotification *) note
 {
+    ALog(@"Watch Proxy notified of Harmony activity change");
+    
+    FSCHarmonyConfiguration * configuration = [[self harmonyController] harmonyConfiguration];
     FSCActivity * activity = [note userInfo][FSCHarmonyClientCurrentActivityChangedNotificationActivityKey];
     
     WCSession * session = [WCSession defaultSession];
     
     [session sendMessage: @{
                             @"command": @"currentActivityChanged",
-                            @"configuration": [[[self harmonyController] harmonyConfiguration] dictionaryRepresentation],
+                            @"configuration": [configuration dictionaryRepresentation],
                             @"activity": [activity dictionaryRepresentation]
                             }
             replyHandler: nil
             errorHandler: ^(NSError * _Nonnull error) {
                 
-                NSLog(@"%@", error);
+                ALog(@"%@", error);
             }];
 }
 
