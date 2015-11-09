@@ -25,6 +25,25 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
     [self loadCurrentActivity];
 }
 
+- (void) reloadConfigurationAndCurrentActivity
+{
+    __block FSCHarmonyConfiguration * configuration = nil;
+    
+    [self performClientActionsWithBlock: ^(FSCHarmonyClient *client)
+     {
+         configuration = [client configurationWithRefresh: YES];
+      
+         [client currentActivityFromConfiguration: configuration
+                                      withRefresh: YES];
+         
+         [FSCDataSharingController saveHarmonyConfiguration: configuration];
+     }
+              mainThreadCompletionBlock: ^
+     {
+         [self setHarmonyConfiguration: configuration];
+     }];
+}
+
 - (NSArray *) activities
 {
     return [[self harmonyConfiguration] activity];
@@ -109,7 +128,8 @@ static NSString * const standardDefaultsKeyCurrentActivity = @"currentActivity";
                                                                  name: FSCHarmonyClientCurrentActivityChangedNotification
                                                                object: [self client]];
                     
-                    [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]];
+                    [[self client] currentActivityFromConfiguration: [self harmonyConfiguration]
+                                                        withRefresh: NO];
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName: FSCHarmonyControllerClientSetupEndedNotification
                                                                         object: self];

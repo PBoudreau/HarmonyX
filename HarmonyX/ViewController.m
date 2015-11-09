@@ -145,21 +145,8 @@
                                       password: passsword
                                      IPAddress: IPAddress
                                           port: port];
-        
-        __block FSCHarmonyConfiguration * configuration = nil;
-        
-        [self performBlockingClientActionsWithBlock: ^(FSCHarmonyClient *client) {
-            
-            configuration = [client configurationWithRefresh: YES];
-            
-            ALog(@"Current activity: %@", [[client currentActivityFromConfiguration: configuration] label]);
-            
-            [FSCDataSharingController saveHarmonyConfiguration: configuration];
-        }
-         mainThreadCompletionBlock: ^{
-             
-             [[self harmonyController] setHarmonyConfiguration: configuration];
-         }];
+     
+        [[self harmonyController] reloadConfigurationAndCurrentActivity];
     }
 }
 

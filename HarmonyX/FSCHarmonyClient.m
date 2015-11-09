@@ -606,8 +606,10 @@ static NSTimeInterval const TIMEOUT_DEFAULT = 10;
 }
 
 - (FSCActivity *) currentActivityFromConfiguration: (FSCHarmonyConfiguration *) configuration
+                                       withRefresh: (BOOL) refresh
 {
-    if (![self currentActivity])
+    if (![self currentActivity] ||
+        refresh)
     {
         ALog(@"%@", NSStringFromSelector(_cmd));
         

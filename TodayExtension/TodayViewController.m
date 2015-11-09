@@ -388,7 +388,8 @@ static CGFloat const backwardForwardGestureMinimumDelta = 5.0;
 {
     [self performBlockingClientActionsWithBlock: ^(FSCHarmonyClient *client) {
         
-        FSCActivity * currentActivity = [client currentActivityFromConfiguration: [[self harmonyController] harmonyConfiguration]];
+        FSCActivity * currentActivity = [client currentActivityFromConfiguration: [[self harmonyController] harmonyConfiguration]
+                                                                     withRefresh: NO];
         
         FSCFunction * function = functionBlock(currentActivity);
         

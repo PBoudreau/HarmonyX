@@ -26,6 +26,7 @@ static NSString * const FSCHarmonyControllerClientActionCompletedErrorKey = @"FS
 @property (strong, nonatomic) FSCActivity * currentActivity;
 
 - (void) loadConfiguration;
+- (void) reloadConfigurationAndCurrentActivity;
 - (NSArray *) activities;
 
 - (void) performClientActionsWithBlock: (void (^)(FSCHarmonyClient * client))actionsBlock

@@ -33,7 +33,8 @@ typedef NS_ENUM(NSUInteger, FSCHarmonyClientFunctionType) {
 - (void) disconnect;
 
 - (FSCHarmonyConfiguration *) configurationWithRefresh: (BOOL) refresh;
-- (FSCActivity *) currentActivityFromConfiguration: (FSCHarmonyConfiguration *) configuration;
+- (FSCActivity *) currentActivityFromConfiguration: (FSCHarmonyConfiguration *) configuration
+                                       withRefresh: (BOOL) refresh;
 
 - (void) startActivity: (FSCActivity *) activity;
 

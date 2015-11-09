@@ -84,9 +84,9 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
     {
         if ([command isEqualToString: @"getHarmonyState"])
         {
-            FSCHarmonyConfiguration * configuration = [[self harmonyController] harmonyConfiguration];
-            FSCActivity * currentActivity = [[self harmonyController] currentActivity];
-
+            FSCHarmonyConfiguration * configuration  = [[self harmonyController] harmonyConfiguration];
+            FSCActivity * currentActivity  = [[self harmonyController] currentActivity];
+            
             NSMutableDictionary * replyContent = [NSMutableDictionary new];
             
             if (configuration)
@@ -100,17 +100,26 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
             }
             
             replyHandler(replyContent);
-
+        }
+        else if ([command isEqualToString: @"refreshHarmonyState"])
+        {
+            [[self harmonyController] reloadConfigurationAndCurrentActivity];
+            
+            replyHandler(@{});
         }
         else if ([command isEqualToString: @"connect"])
         {
             if (![[self harmonyController] client])
             {
+                ALog(@"No client instance, creating");
+                
                 [[self harmonyController] performClientActionsWithBlock: nil
                                               mainThreadCompletionBlock: nil];
             }
             else
             {
+                ALog(@"Client instance exists, connecting");
+                
                 [[[self harmonyController] client] connect];
             }
             
@@ -147,7 +156,7 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
             replyHandler: nil
             errorHandler: ^(NSError * _Nonnull error) {
                 
-                ALog(@"%@", error);
+                ALog(@"Error notifying watch of configuration change: %@", error);
             }];
 }
 
@@ -168,7 +177,7 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
             replyHandler: nil
             errorHandler: ^(NSError * _Nonnull error) {
                 
-                ALog(@"%@", error);
+                ALog(@"Error notifying watch of activity change: %@", error);
             }];
 }
 

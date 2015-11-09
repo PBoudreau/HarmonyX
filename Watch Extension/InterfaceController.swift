@@ -14,8 +14,11 @@ import FSCHarmonyConfigKit
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate {
 
-    @IBOutlet var activityImage: WKInterfaceImage!
     @IBOutlet var table: WKInterfaceTable!
+    
+    @IBOutlet var statusGroup: WKInterfaceGroup!
+    @IBOutlet var statusLabel: WKInterfaceLabel!
+    @IBOutlet var activityImage: WKInterfaceImage!
     
     var session: WCSession? {
         didSet {
@@ -27,7 +30,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     var harmonyConfiguration: FSCHarmonyConfiguration?
-    var stateInitialized = false
+    var startingUp = true
     
     override init() {
         super.init()
@@ -37,6 +40,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         super.awakeWithContext(context)
         
         session = WCSession.defaultSession()
+        
+        self.showStatus(true,
+            withMessage: "Loading...",
+            showActivity:  true)
     }
 
     override func willActivate() {
@@ -45,11 +52,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         
         print("willActivate")
 
-        if (!self.stateInitialized)
+        if (self.startingUp)
         {
-            self.stateInitialized = true
+            self.startingUp = false
             
-            self.initializeState()
+            self.obtainInitialHarmonyHubState()
         }
         else
         {
@@ -69,6 +76,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                     {
                         (response) -> Void in
                         
+                        self.refreshHarmonyHubState()
                         
                     }) { (error) -> Void in
                         print("Error connecting: ", error)
@@ -93,8 +101,21 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
     }
 
-    private func initializeState() {
+    func showStatus(showStatus: Bool,
+        withMessage message: String?,
+        showActivity showAcrivity: Bool)
+    {
+        self.statusGroup.setHidden(!showStatus);
+        self.activityImage.setHidden(!showStatus && !showAcrivity)
         
+        if let unwrappedMessage = message {
+            
+            self.statusLabel.setText(unwrappedMessage)
+        }
+    }
+    
+    private func obtainInitialHarmonyHubState() {
+    
         print("initializeState")
         
         session!.sendMessage(["command": "getHarmonyState"], replyHandler:
@@ -123,6 +144,19 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         })
     }
     
+    private func refreshHarmonyHubState() {
+        
+        print("refreshHarmonyHubState")
+        
+        session!.sendMessage(["command": "refreshHarmonyState"], replyHandler:
+            {
+                (response) -> Void in
+                                
+            }, errorHandler: { (error) -> Void in
+                print("Error refreshing Harmony state: ", error)
+        })
+    }
+    
     private func refreshTableWithConfig(harmonyConfig: FSCHarmonyConfiguration, currentActivity: FSCActivity)
     {
         let activities = harmonyConfig.activity
@@ -139,19 +173,24 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 row.image.setImage(activity.watchImage(currentActivity.activityIdentifier == activity.activityIdentifier))
                 row.activityName.setText(activity.label);
             }
+            
+            self.showStatus(false,
+                withMessage: nil,
+                showActivity: false);
         })
     }
     
     func session(session: WCSession,
-        didReceiveMessage message: [String : AnyObject],
-        replyHandler: ([String : AnyObject]) -> Void)
+        didReceiveMessage message: [String : AnyObject])
     {
         if let command = message["command"] as? NSString
         {
+            print("Watch App received command", command)
+            
             if command.isEqualToString("configurationChanged") ||
                 command.isEqualToString("currentActivityChanged")
             {
-                if let currentActivityDict = message["currentActivity"] as? NSDictionary, currentActivity = FSCActivity.modelObjectWithDictionary(currentActivityDict as [NSObject : AnyObject])
+                if let currentActivityDict = message["activity"] as? NSDictionary, currentActivity = FSCActivity.modelObjectWithDictionary(currentActivityDict as [NSObject : AnyObject])
                 {
                     if let harmonyConfigDict = message["configuration"] as? NSDictionary, harmonyConfig = FSCHarmonyConfiguration.modelObjectWithDictionary(harmonyConfigDict as [NSObject : AnyObject]) {
                         
@@ -160,7 +199,5 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 }
             }
         }
-        
-        replyHandler([:]);
     }
 }

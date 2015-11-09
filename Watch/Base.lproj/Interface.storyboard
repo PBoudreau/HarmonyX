@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8191" systemVersion="15B42" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8092"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="9019"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
@@ -10,7 +10,6 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Watch" customModuleProvider="target">
                     <items>
-                        <imageView width="30" height="30" alignment="center" verticalAlignment="center" hidden="YES" image="Activity" contentMode="scaleAspectFit" animationDuration="1" id="GIc-7z-CZ7"/>
                         <table alignment="left" id="8zy-oT-gnM">
                             <items>
                                 <tableRow identifier="ActivityTableRowController" id="Q5d-6K-eRU" customClass="ActivityTableRowController" customModule="Watch_Extension">
@@ -27,9 +26,17 @@
                                 </tableRow>
                             </items>
                         </table>
+                        <group alignment="center" verticalAlignment="center" layout="vertical" id="Gdj-Kd-4YT">
+                            <items>
+                                <imageView width="30" height="30" alignment="center" verticalAlignment="center" image="Activity" contentMode="scaleAspectFit" animationDuration="1" id="GIc-7z-CZ7"/>
+                                <label alignment="center" verticalAlignment="bottom" text="Loading..." textAlignment="center" id="kqR-rf-hci"/>
+                            </items>
+                        </group>
                     </items>
                     <connections>
                         <outlet property="activityImage" destination="GIc-7z-CZ7" id="OOL-FU-SxS"/>
+                        <outlet property="statusGroup" destination="Gdj-Kd-4YT" id="tND-Rj-m0w"/>
+                        <outlet property="statusLabel" destination="kqR-rf-hci" id="U7Q-bG-r2P"/>
                         <outlet property="table" destination="8zy-oT-gnM" id="pB3-CD-k2n"/>
                     </connections>
                 </controller>
