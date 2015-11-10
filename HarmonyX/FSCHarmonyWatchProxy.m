@@ -133,6 +133,22 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
             
             replyHandler(@{});
         }
+        else if ([command isEqualToString: @"startActivity"])
+        {
+            NSDictionary * activityDict = message[@"activity"];
+            FSCActivity * activity = [FSCActivity modelObjectWithDictionary: activityDict];
+            
+            if (activity)
+            {
+                [[self harmonyController] performClientActionsWithBlock: ^(FSCHarmonyClient *client) {
+                    
+                    [client startActivity: activity];
+                }
+                                              mainThreadCompletionBlock: nil];
+            }
+            
+            replyHandler(@{});
+        }
     }
 }
 

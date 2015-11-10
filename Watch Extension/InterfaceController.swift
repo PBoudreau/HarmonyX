@@ -29,7 +29,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
     }
     
+    var activities: NSMutableArray?
     var harmonyConfiguration: FSCHarmonyConfiguration?
+    var activeActivity: FSCActivity?
     var startingUp = true
     
     override init() {
@@ -126,7 +128,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 {
                     if let harmonyConfigDict = response["configuration"] as? NSDictionary, harmonyConfig = FSCHarmonyConfiguration.modelObjectWithDictionary(harmonyConfigDict as [NSObject : AnyObject]) {
                         
-                        self.refreshTableWithConfig(harmonyConfig, currentActivity: currentActivity)
+                        self.setHarmonyConfiguration(harmonyConfig, currentActivity: currentActivity)
+                        
+                        self.refreshTableWithConfig()
                         
                         self.session!.sendMessage(["command": "connect"], replyHandler:
                             {
@@ -157,26 +161,61 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         })
     }
     
-    private func refreshTableWithConfig(harmonyConfig: FSCHarmonyConfiguration, currentActivity: FSCActivity)
+    private func setHarmonyConfiguration(harmonyConfig: FSCHarmonyConfiguration,
+        currentActivity activity: FSCActivity)
     {
-        let activities = harmonyConfig.activity
+        harmonyConfiguration = harmonyConfig
+        activeActivity = activity
+        activities = NSMutableArray(array: harmonyConfiguration!.activity)
         
+        for (_, element) in activities!.enumerate()
+        {
+            let activity = element as! FSCActivity
+            
+            if (activity.activityIdentifier == "-1")
+            {
+                activities?.removeObject(activity)
+                activities?.addObject(activity)
+                
+                break
+            }
+        }
+    }
+    
+    private func refreshTableWithConfig()
+    {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+     
+            self.table.setNumberOfRows(self.activities!.count, withRowType: "ActivityTableRowController")
             
-            self.table.setNumberOfRows(activities.count, withRowType: "ActivityTableRowController")
-            
-            for (index, element) in activities.enumerate() {
+            for (index, element) in self.activities!.enumerate()
+            {
                 let row = self.table.rowControllerAtIndex(index) as! ActivityTableRowController
                 
                 let activity = element as! FSCActivity
                 
-                row.image.setImage(activity.watchImage(currentActivity.activityIdentifier == activity.activityIdentifier))
+                row.image.setImage(activity.watchImage(self.activeActivity!.activityIdentifier == activity.activityIdentifier))
                 row.activityName.setText(activity.label);
             }
             
             self.showStatus(false,
                 withMessage: nil,
                 showActivity: false);
+        })
+    }
+    
+    override func table(table: WKInterfaceTable,
+        didSelectRowAtIndex rowIndex: Int)
+    {
+        let tappedActivity = activities?.objectAtIndex(rowIndex) as! FSCActivity
+        
+        session!.sendMessage(["command": "startActivity",
+            "activity": tappedActivity.dictionaryRepresentation()], replyHandler:
+            {
+                (response) -> Void in
+                
+            }, errorHandler: { (error) -> Void in
+                print("Error starting activity: ", error)
         })
     }
     
@@ -194,7 +233,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 {
                     if let harmonyConfigDict = message["configuration"] as? NSDictionary, harmonyConfig = FSCHarmonyConfiguration.modelObjectWithDictionary(harmonyConfigDict as [NSObject : AnyObject]) {
                         
-                        self.refreshTableWithConfig(harmonyConfig, currentActivity: currentActivity)
+                        self.setHarmonyConfiguration(harmonyConfig, currentActivity: currentActivity)
+                        
+                        self.refreshTableWithConfig()
                     }
                 }
             }
