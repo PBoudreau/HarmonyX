@@ -146,6 +146,8 @@
                                      IPAddress: IPAddress
                                           port: port];
      
+        [self prepareForBlockingClientAction];
+        
         [[self harmonyController] reloadConfigurationAndCurrentActivity];
     }
 }

@@ -454,9 +454,9 @@
 		1ACD79521BE67F7F0013160E /* Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				1ACD79551BE67F7F0013160E /* ExtensionDelegate.swift */,
 				1ACD79531BE67F7F0013160E /* InterfaceController.swift */,
 				1ACD796B1BE683410013160E /* ActivityTableRowController.swift */,
-				1ACD79551BE67F7F0013160E /* ExtensionDelegate.swift */,
 				1ACD79571BE67F7F0013160E /* GlanceController.swift */,
 				1ACD79591BE67F7F0013160E /* ComplicationController.swift */,
 				1ACD795B1BE67F7F0013160E /* Assets.xcassets */,

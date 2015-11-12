@@ -33,8 +33,6 @@
             
             [self setHarmonyController: [FSCHarmonyController new]];
             
-            [[self harmonyController] loadConfiguration];
-            
             [[NSNotificationCenter defaultCenter] addObserver: self
                                                      selector: @selector(handleFSCHarmonyControllerConfigurationChangedNotification:)
                                                          name: FSCHarmonyControllerConfigurationChangedNotification
@@ -84,6 +82,8 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
     {
         if ([command isEqualToString: @"getHarmonyState"])
         {
+            [[self harmonyController] loadConfiguration];
+            
             FSCHarmonyConfiguration * configuration  = [[self harmonyController] harmonyConfiguration];
             FSCActivity * currentActivity  = [[self harmonyController] currentActivity];
             
@@ -162,18 +162,22 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
     FSCHarmonyConfiguration * configuration = [[self harmonyController] harmonyConfiguration];
     FSCActivity * activity = [[self harmonyController] currentActivity];
     
-    WCSession * session = [WCSession defaultSession];
-    
-    [session sendMessage: @{
-                            @"command": @"configurationChanged",
-                            @"configuration": [configuration dictionaryRepresentation],
-                            @"activity": [activity dictionaryRepresentation]
-                            }
-            replyHandler: nil
-            errorHandler: ^(NSError * _Nonnull error) {
-                
-                ALog(@"Error notifying watch of configuration change: %@", error);
-            }];
+    if (configuration &&
+        activity)
+    {
+        WCSession * session = [WCSession defaultSession];
+        
+        [session sendMessage: @{
+                                @"command": @"configurationChanged",
+                                @"configuration": [configuration dictionaryRepresentation],
+                                @"activity": [activity dictionaryRepresentation]
+                                }
+                replyHandler: nil
+                errorHandler: ^(NSError * _Nonnull error) {
+                    
+                    ALog(@"Error notifying watch of configuration change: %@", error);
+                }];
+    }
 }
 
 - (void) handleFSCHarmonyControllerCurrentActivityChangedNotification: (NSNotification *) note
@@ -183,18 +187,22 @@ didReceiveMessage: (NSDictionary <NSString *, id> *) message
     FSCHarmonyConfiguration * configuration = [[self harmonyController] harmonyConfiguration];
     FSCActivity * activity = [note userInfo][FSCHarmonyClientCurrentActivityChangedNotificationActivityKey];
     
-    WCSession * session = [WCSession defaultSession];
-    
-    [session sendMessage: @{
-                            @"command": @"currentActivityChanged",
-                            @"configuration": [configuration dictionaryRepresentation],
-                            @"activity": [activity dictionaryRepresentation]
-                            }
-            replyHandler: nil
-            errorHandler: ^(NSError * _Nonnull error) {
-                
-                ALog(@"Error notifying watch of activity change: %@", error);
-            }];
+    if (configuration &&
+        activity)
+    {
+        WCSession * session = [WCSession defaultSession];
+        
+        [session sendMessage: @{
+                                @"command": @"currentActivityChanged",
+                                @"configuration": [configuration dictionaryRepresentation],
+                                @"activity": [activity dictionaryRepresentation]
+                                }
+                replyHandler: nil
+                errorHandler: ^(NSError * _Nonnull error) {
+                    
+                    ALog(@"Error notifying watch of activity change: %@", error);
+                }];
+    }
 }
 
 @end

@@ -33,6 +33,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     var harmonyConfiguration: FSCHarmonyConfiguration?
     var activeActivity: FSCActivity?
     var startingUp = true
+    var initialHarmonyStateLoaded = false
     
     override init() {
         super.init()
@@ -62,6 +63,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
         else
         {
+            if (!initialHarmonyStateLoaded)
+            {
+                self.showStatus(true,
+                    withMessage: "Loading...",
+                    showActivity:  true)
+            }
+            
             // Introduce a small delay before reconnecting to Harmony Hub as otherwise, we get
             // the error:
             //
@@ -73,15 +81,22 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 {
                     NSThread.sleepForTimeInterval(0.25)
                 }
-                
-                self.session!.sendMessage(["command": "connect"], replyHandler:
-                    {
-                        (response) -> Void in
-                        
-                        self.refreshHarmonyHubState()
-                        
-                    }) { (error) -> Void in
-                        print("Error connecting: ", error)
+
+                if (self.initialHarmonyStateLoaded)
+                {
+                    self.session!.sendMessage(["command": "connect"], replyHandler:
+                        {
+                            (response) -> Void in
+                            
+                            self.refreshHarmonyHubState()
+                            
+                        }) { (error) -> Void in
+                            print("Error connecting: ", error)
+                    }
+                }
+                else
+                {
+                    self.obtainInitialHarmonyHubState()
                 }
             })
         }
@@ -107,12 +122,26 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         withMessage message: String?,
         showActivity showAcrivity: Bool)
     {
-        self.statusGroup.setHidden(!showStatus);
-        self.activityImage.setHidden(!showStatus && !showAcrivity)
-        
-        if let unwrappedMessage = message {
+        let statusUpdateBlock:()->Void = {
+            () -> Void in
             
-            self.statusLabel.setText(unwrappedMessage)
+            if let unwrappedMessage = message {
+                
+                self.statusLabel.setText(unwrappedMessage)
+            }
+            
+            self.activityImage.setHidden(showStatus && !showAcrivity)
+            
+            self.statusGroup.setHidden(!showStatus);
+        };
+        
+        if (NSThread.currentThread().isMainThread)
+        {
+            statusUpdateBlock()
+        }
+        else
+        {
+            dispatch_sync(dispatch_get_main_queue(), statusUpdateBlock)
         }
     }
     
@@ -130,6 +159,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                         
                         self.setHarmonyConfiguration(harmonyConfig, currentActivity: currentActivity)
                         
+                        self.initialHarmonyStateLoaded = true
+                        
                         self.refreshTableWithConfig()
                         
                         self.session!.sendMessage(["command": "connect"], replyHandler:
@@ -141,6 +172,12 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                                 print("Error connecting: ", error)
                         }
                     }
+                }
+                else
+                {
+                    self.showStatus(true,
+                        withMessage: "Please use the app to load activities.",
+                        showActivity: false)
                 }
                 
             }, errorHandler: { (error) -> Void in
